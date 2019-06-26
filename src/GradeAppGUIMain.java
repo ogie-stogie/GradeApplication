@@ -14,7 +14,7 @@ import java.awt.Font;
 import javax.swing.UIManager;
 import java.awt.Color;
 
-public class gradeAppGUIMain {
+public class GradeAppGUIMain {
 
 	private JFrame frame;
 	private JTextField textFieldAddGrade;
@@ -34,7 +34,7 @@ public class gradeAppGUIMain {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					gradeAppGUIMain window = new gradeAppGUIMain();
+					GradeAppGUIMain window = new GradeAppGUIMain();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,7 +46,7 @@ public class gradeAppGUIMain {
 	/**
 	 * Create the application.
 	 */
-	public gradeAppGUIMain() {
+	public GradeAppGUIMain() {
 		initialize();
 	}
 
