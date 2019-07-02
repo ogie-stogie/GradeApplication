@@ -15,6 +15,8 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.UIManager;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class GradeAppGUIMain {
 
@@ -27,7 +29,7 @@ public class GradeAppGUIMain {
 	private JTextField textFieldGradeF;
 	private JTextField txtEnterMinimum;
 	private JTextField txtEnterMaximum;
-	private JTextField textFieldPercentile;
+	
 
 	/**
 	 * Launch the application.
@@ -48,6 +50,7 @@ public class GradeAppGUIMain {
 	/**
 	 * Create the application.
 	 */
+	
 	public GradeAppGUIMain() {
 		initialize();
 	}
@@ -57,6 +60,7 @@ public class GradeAppGUIMain {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.getContentPane().setBackground(new Color(255, 250, 205));
 		frame.setBounds(100, 100, 1009, 735);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -295,12 +299,6 @@ public class GradeAppGUIMain {
 		buttonPercentile.setBounds(12, 532, 190, 45);
 		frame.getContentPane().add(buttonPercentile);
 		
-		textFieldPercentile = new JTextField();
-		textFieldPercentile.setText("Enter Percentile");
-		textFieldPercentile.setColumns(10);
-		textFieldPercentile.setBounds(210, 532, 120, 45);
-		frame.getContentPane().add(textFieldPercentile);
-		
 		JButton buttonExit = new JButton("Exit Program");
 		buttonExit.setForeground(Color.WHITE);
 		buttonExit.setFont(new Font("Dialog", Font.BOLD, 16));
@@ -344,5 +342,6 @@ public class GradeAppGUIMain {
 		labelFCount.setFont(new Font("Dialog", Font.BOLD, 16));
 		labelFCount.setBounds(391, 490, 50, 45);
 		frame.getContentPane().add(labelFCount);
+		
 	}
 }
