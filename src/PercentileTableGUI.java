@@ -1,5 +1,4 @@
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
@@ -7,6 +6,8 @@ import java.awt.Window.Type;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Color;
+
+//Created by Taylor Bart
 
 public class PercentileTableGUI {
 
