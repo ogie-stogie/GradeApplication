@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -312,6 +313,24 @@ public class GradeAppGUIMain {
 		buttonClearEverything.setBackground(new Color(128, 0, 128));
 		buttonClearEverything.setBounds(458, 644, 190, 45);
 		frame.getContentPane().add(buttonClearEverything);
+		buttonClearEverything.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String msg = "You clicked ClearAll";
+				JOptionPane.showMessageDialog(null, msg);
+				textFieldGradeA.setText("90");
+				textFieldGradeB.setText("80");
+				textFieldGradeC.setText("70");
+				textFieldGradeD.setText("60");
+				textFieldGradeF.setText("60");
+				textFieldAddGrade.setText("Enter Grade");
+				txtEnterMinimum.setText("Enter Minimum");
+				txtEnterMaximum.setText("Enter Maximum");
+				
+				
+			}
+		});
 		
 		JLabel labelACount = new JLabel("0");
 		labelACount.setFont(new Font("Dialog", Font.BOLD, 16));
