@@ -1,4 +1,5 @@
 // Error message test file 
+// Test 2
 
 import java.awt.EventQueue;
 
