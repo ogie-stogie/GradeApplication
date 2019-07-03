@@ -372,6 +372,7 @@ public class GradeAppGUIMain {
 		buttonSetMinGrade.setBackground(new Color(128, 0, 128));
 		buttonSetMinGrade.setBounds(12, 290, 190, 45);
 		frame.getContentPane().add(buttonSetMinGrade);
+		
 		buttonSetMinGrade.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -401,6 +402,7 @@ public class GradeAppGUIMain {
 		btnSetMaxGrade.setBackground(new Color(128, 0, 128));
 		btnSetMaxGrade.setBounds(12, 340, 190, 45);
 		frame.getContentPane().add(btnSetMaxGrade);
+		
 		btnSetMaxGrade.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
