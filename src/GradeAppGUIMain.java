@@ -139,6 +139,7 @@ public class GradeAppGUIMain {
 			}
 		});	
 		
+		/*
 		tfEnterMinimum.addFocusListener(new FocusListener() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -149,7 +150,7 @@ public class GradeAppGUIMain {
 			public void focusGained(FocusEvent e) {		
 			}
 		});
-		
+		*/
 		
 		JTextField tfEnterMaximum = new JTextField();
 		tfEnterMaximum.setText(Float.toString(maximumGrade));
@@ -165,14 +166,13 @@ public class GradeAppGUIMain {
 			}
 		});
 		
+		//NEEDS MORE WORK
 		tfEnterMaximum.addFocusListener(new FocusListener() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				tfEnterMaximum.setText(Float.toString(maximumGrade));
 			}
-
 			@Override
-			public void focusGained(FocusEvent e) {		
+			public void focusGained(FocusEvent e) {
 			}
 		});
 		
