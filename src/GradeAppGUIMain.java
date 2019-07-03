@@ -379,6 +379,9 @@ public class GradeAppGUIMain {
 					if (Float.parseFloat(tfEnterMinimum.getText()) > maximumGrade) {
 						JOptionPane.showMessageDialog(null, "Minimum Grade cannot be greater than Maximum Grade. Minimum Grade not changed!");
 					}
+					else if (Float.parseFloat(tfEnterMinimum.getText()) < 0) {
+						JOptionPane.showMessageDialog(null, "Minimum Grade cannot be less than 0");
+					}
 					else {
 						minimumGrade = Float.parseFloat(tfEnterMinimum.getText());
 					}
