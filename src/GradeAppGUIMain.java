@@ -7,6 +7,8 @@ import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JList;
@@ -22,8 +24,9 @@ import java.awt.event.MouseEvent;
 public class GradeAppGUIMain {
 
 	private JFrame frame;
-	//
-
+	private float minimumGrade = 0.0f, maximumGrade = 100.0f;
+	
+	
 	/*
 	 * ########################################################################
 	 * Launch the application.
@@ -42,6 +45,7 @@ public class GradeAppGUIMain {
 		});
 	}
 
+	
 	/*
 	 * ########################################################################
 	 * Create the application.
@@ -52,6 +56,7 @@ public class GradeAppGUIMain {
 		initialize();
 	}
 
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -121,16 +126,55 @@ public class GradeAppGUIMain {
 		frame.getContentPane().add(tfGradeF);
 		
 		JTextField tfEnterMinimum = new JTextField();
-		tfEnterMinimum.setText("Enter Minimum");
+		tfEnterMinimum.setText(Float.toString(minimumGrade));
 		tfEnterMinimum.setColumns(10);
 		tfEnterMinimum.setBounds(210, 291, 120, 45);
 		frame.getContentPane().add(tfEnterMinimum);
 		
+		//Mouse and Focus Events for JTextField tfEnterMinimum
+		tfEnterMinimum.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				tfEnterMinimum.setText("");
+			}
+		});	
+		
+		tfEnterMinimum.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				tfEnterMinimum.setText(Float.toString(minimumGrade));
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {		
+			}
+		});
+		
+		
 		JTextField tfEnterMaximum = new JTextField();
-		tfEnterMaximum.setText("Enter Maximum");
+		tfEnterMaximum.setText(Float.toString(maximumGrade));
 		tfEnterMaximum.setColumns(10);
 		tfEnterMaximum.setBounds(210, 341, 120, 45);
 		frame.getContentPane().add(tfEnterMaximum);
+
+		//Mouse and Focus Events for JTextField tfEnterMaximum
+		tfEnterMaximum.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				tfEnterMaximum.setText("");
+			}
+		});
+		
+		tfEnterMaximum.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				tfEnterMaximum.setText(Float.toString(maximumGrade));
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {		
+			}
+		});
 		
 	/*
 	 * ########################################################################
@@ -138,9 +182,11 @@ public class GradeAppGUIMain {
 	 * ########################################################################
 	 */
 		JList listGradeList = new JList();
+		listGradeList.setFont(new Font("Dialog", Font.BOLD, 20));
 		listGradeList.setBackground(Color.WHITE);
 		listGradeList.setBounds(663, 59, 327, 628);
 		frame.getContentPane().add(listGradeList);
+		
 		
 	/*
 	 * ########################################################################
@@ -225,25 +271,25 @@ public class GradeAppGUIMain {
 		lblAverageGrade.setBounds(22, 490, 190, 30);
 		frame.getContentPane().add(lblAverageGrade);
 		
-		JLabel lblLowestGradeOutput = new JLabel("1");
+		JLabel lblLowestGradeOutput = new JLabel("");
 		lblLowestGradeOutput.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLowestGradeOutput.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblLowestGradeOutput.setBounds(210, 400, 120, 30);
 		frame.getContentPane().add(lblLowestGradeOutput);
 		
-		JLabel lblHighestGradeOutput = new JLabel("2");
+		JLabel lblHighestGradeOutput = new JLabel("");
 		lblHighestGradeOutput.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHighestGradeOutput.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblHighestGradeOutput.setBounds(211, 430, 120, 30);
 		frame.getContentPane().add(lblHighestGradeOutput);
 		
-		JLabel lblMedianGradeOutput = new JLabel("3");
+		JLabel lblMedianGradeOutput = new JLabel("");
 		lblMedianGradeOutput.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMedianGradeOutput.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblMedianGradeOutput.setBounds(211, 460, 120, 30);
 		frame.getContentPane().add(lblMedianGradeOutput);
 		
-		JLabel lblAverageGradeOutput = new JLabel("4");
+		JLabel lblAverageGradeOutput = new JLabel("");
 		lblAverageGradeOutput.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAverageGradeOutput.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblAverageGradeOutput.setBounds(211, 490, 120, 30);
@@ -278,6 +324,7 @@ public class GradeAppGUIMain {
 		lblFCount.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblFCount.setBounds(391, 490, 50, 45);
 		frame.getContentPane().add(lblFCount);
+		
 		
 	/*
 	 * ########################################################################
@@ -319,12 +366,31 @@ public class GradeAppGUIMain {
 		btnAmendGrade.setBounds(468, 160, 180, 45);
 		frame.getContentPane().add(btnAmendGrade);
 		
-		JButton buttonSetMin = new JButton("Set Min Grade");
-		buttonSetMin.setForeground(Color.WHITE);
-		buttonSetMin.setFont(new Font("Dialog", Font.BOLD, 16));
-		buttonSetMin.setBackground(new Color(128, 0, 128));
-		buttonSetMin.setBounds(12, 290, 190, 45);
-		frame.getContentPane().add(buttonSetMin);
+		JButton buttonSetMinGrade = new JButton("Set Min Grade");
+		buttonSetMinGrade.setForeground(Color.WHITE);
+		buttonSetMinGrade.setFont(new Font("Dialog", Font.BOLD, 16));
+		buttonSetMinGrade.setBackground(new Color(128, 0, 128));
+		buttonSetMinGrade.setBounds(12, 290, 190, 45);
+		frame.getContentPane().add(buttonSetMinGrade);
+		buttonSetMinGrade.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if (Float.parseFloat(tfEnterMinimum.getText()) > maximumGrade) {
+						JOptionPane.showMessageDialog(null, "Minimum Grade cannot be greater than Maximum Grade. Minimum Grade not changed!");
+					}
+					else {
+						minimumGrade = Float.parseFloat(tfEnterMinimum.getText());
+					}
+				}
+				catch(NumberFormatException error) {
+					JOptionPane.showMessageDialog(null, "Error! Must enter a number");
+					 System.err.println("NumberFormatException: " + error.getMessage());
+				}
+				
+				tfEnterMinimum.setText(Float.toString(minimumGrade));
+			}
+		});
 		
 		JButton btnSetMaxGrade = new JButton("Set Max Grade");
 		btnSetMaxGrade.setForeground(Color.WHITE);
@@ -332,6 +398,25 @@ public class GradeAppGUIMain {
 		btnSetMaxGrade.setBackground(new Color(128, 0, 128));
 		btnSetMaxGrade.setBounds(12, 340, 190, 45);
 		frame.getContentPane().add(btnSetMaxGrade);
+		btnSetMaxGrade.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if (Float.parseFloat(tfEnterMaximum.getText()) < minimumGrade) {
+						JOptionPane.showMessageDialog(null, "Maximum Grade cannot be less than Minimum Grade. Maximum Grade not changed!");
+					}
+					else {
+						maximumGrade = Float.parseFloat(tfEnterMaximum.getText());
+					}
+				}
+				catch(NumberFormatException error) {
+					JOptionPane.showMessageDialog(null, "Error! Must enter a number");
+					 System.err.println("NumberFormatException: " + error.getMessage());
+				}
+				
+				tfEnterMaximum.setText(Float.toString(maximumGrade));
+			}
+		});
 		
 		JButton btnPercentile = new JButton("Percentile Rank");
 		btnPercentile.setForeground(Color.WHITE);
@@ -372,8 +457,8 @@ public class GradeAppGUIMain {
 				tfGradeD.setText("60");
 				tfGradeF.setText("60");
 				tfAddGrade.setText("Enter Grade");
-				tfEnterMinimum.setText("Enter Minimum");
-				tfEnterMaximum.setText("Enter Maximum");				
+				tfEnterMinimum.setText(Float.toString(minimumGrade));
+				tfEnterMaximum.setText(Float.toString(maximumGrade));				
 			}
 		});			
 	}
