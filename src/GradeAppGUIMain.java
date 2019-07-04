@@ -1,11 +1,12 @@
 // This is a gitHub test.. Please help!
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -17,12 +18,16 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.UIManager;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.*;
 
 public class GradeAppGUIMain {
 
+	//Global Variables
 	private JFrame frame;
 	private float minimumGrade = 0.0f, maximumGrade = 100.0f;
 	
@@ -337,6 +342,42 @@ public class GradeAppGUIMain {
 		btnOpenFile.setFont(new Font("Dialog", Font.BOLD, 16));
 		btnOpenFile.setBounds(12, 60, 190, 45);
 		frame.getContentPane().add(btnOpenFile);
+		
+		btnOpenFile.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent openFileEvent) {
+				JFileChooser chooser = new JFileChooser();
+			    int returnVal = chooser.showOpenDialog(null);
+			    if(returnVal == JFileChooser.APPROVE_OPTION) {
+			    	JOptionPane.showMessageDialog(null, 
+			    			"You chose to open this file: " +
+			            chooser.getSelectedFile().getName());
+			    }
+			    File fileName = chooser.getSelectedFile();
+				String line = null;
+				try {
+					FileReader fileReader = new FileReader(fileName);
+					BufferedReader bufferedReader = 
+							new BufferedReader(fileReader);	
+					while( ( line = bufferedReader.readLine() ) != null) {
+						System.out.println(line);
+					}
+					bufferedReader.close();
+				}
+				catch(FileNotFoundException fileException) {
+					JOptionPane.showMessageDialog(null, "Error! File " 
+							+ fileName + " not found.");
+					 System.err.println("FileNotFoundException: " 
+							+ fileException.getMessage());
+				}
+				catch(IOException IOException) {
+					JOptionPane.showMessageDialog(null, "Error! File" 
+							+ fileName + "contains unreadable characters.");
+					 System.err.println("IOException: " 
+							+ IOException.getMessage());
+				}
+			}
+		});
 		
 		JButton btnSaveFile = new JButton("Save File");
 		btnSaveFile.setForeground(Color.WHITE);
