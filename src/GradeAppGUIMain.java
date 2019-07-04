@@ -386,6 +386,44 @@ public class GradeAppGUIMain {
 		btnSaveFile.setBounds(12, 110, 190, 45);
 		frame.getContentPane().add(btnSaveFile);
 		
+		btnSaveFile.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent saveFileEvent) {
+				JFileChooser chooser = new JFileChooser();
+			    int returnVal = chooser.showSaveDialog(null);
+			    if(returnVal == JFileChooser.APPROVE_OPTION) {
+			    	JOptionPane.showMessageDialog(null, 
+			    			"You chose to open this file: " +
+			            chooser.getSelectedFile().getName());
+			    }
+			    File file = chooser.getSelectedFile();
+			    String fileName = file.getAbsolutePath();
+				try {
+					if (!file.exists()) {
+						file.createNewFile();
+					}
+					FileWriter fileWriter =
+							new FileWriter(fileName);
+					BufferedWriter bufferedWriter =
+							new BufferedWriter(fileWriter);
+					bufferedWriter.write("Hello World");
+					bufferedWriter.close();
+				}
+				catch(FileNotFoundException fileException) {
+					JOptionPane.showMessageDialog(null, "Error! File " 
+							+ fileName + " not found.");
+					 System.err.println("FileNotFoundException: " 
+							+ fileException.getMessage());
+				}
+				catch(IOException IOException) {
+					JOptionPane.showMessageDialog(null, "Error! File" 
+							+ fileName + "contains unreadable characters.");
+					 System.err.println("IOException: " 
+							+ IOException.getMessage());
+				}
+			}
+		});
+		
 		JButton btnAddGrade = new JButton("Add Grade");
 		btnAddGrade.setBackground(new Color(128, 0, 128));
 		btnAddGrade.setForeground(Color.WHITE);
