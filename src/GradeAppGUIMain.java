@@ -24,14 +24,15 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GradeAppGUIMain {
 
 	//Global Variables
 	private JFrame frame;
 	private float minimumGrade = 0.0f, maximumGrade = 100.0f;
-	
-	
+	private List<Float> grades;
 	/*
 	 * ########################################################################
 	 * Launch the application.
@@ -72,8 +73,6 @@ public class GradeAppGUIMain {
 		frame.setBounds(100, 100, 1009, 735);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
-	
 	/*
 	 * ########################################################################
 	 * TextField Group
@@ -355,26 +354,35 @@ public class GradeAppGUIMain {
 			    }
 			    File fileName = chooser.getSelectedFile();
 				String line = null;
+				float gradeInput;
+				GradeAppGUIMain.this.grades = new ArrayList<Float>();
 				try {
 					FileReader fileReader = new FileReader(fileName);
 					BufferedReader bufferedReader = 
-							new BufferedReader(fileReader);	
+							new BufferedReader(fileReader);
 					while( ( line = bufferedReader.readLine() ) != null) {
-						System.out.println(line);
+						gradeInput = Float.parseFloat(line);
+						GradeAppGUIMain.this.grades.add(gradeInput);
 					}
 					bufferedReader.close();
 				}
 				catch(FileNotFoundException fileException) {
 					JOptionPane.showMessageDialog(null, "Error! File " 
 							+ fileName + " not found.");
-					 System.err.println("FileNotFoundException: " 
+					System.err.println("FileNotFoundException: " 
 							+ fileException.getMessage());
 				}
 				catch(IOException IOException) {
 					JOptionPane.showMessageDialog(null, "Error! File" 
 							+ fileName + "contains unreadable characters.");
-					 System.err.println("IOException: " 
+					System.err.println("IOException: " 
 							+ IOException.getMessage());
+				}
+				catch(NumberFormatException numberFormatException) {
+					JOptionPane.showMessageDialog(null, "Error! File" 
+							+ fileName + "has incorrect formatting.");
+					 System.err.println("NumberFormatException: " 
+							+ numberFormatException.getMessage());
 				}
 			}
 		});
@@ -406,7 +414,12 @@ public class GradeAppGUIMain {
 							new FileWriter(fileName);
 					BufferedWriter bufferedWriter =
 							new BufferedWriter(fileWriter);
-					bufferedWriter.write("Hello World");
+					for(float gradeInput : GradeAppGUIMain.this.grades) {
+						String formattedGradeInput
+							= Float.toString(gradeInput);
+						bufferedWriter.write(formattedGradeInput);
+						bufferedWriter.newLine();
+					}
 					bufferedWriter.close();
 				}
 				catch(FileNotFoundException fileException) {
