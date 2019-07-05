@@ -333,7 +333,9 @@ public class GradeAppGUIMain {
 			    File fileName = chooser.getSelectedFile();
 				String line = null;
 				float gradeInput;
-				GradeAppGUIMain.this.grades = new ArrayList<Float>();
+				if(GradeAppGUIMain.this.grades == null) {
+					GradeAppGUIMain.this.grades = new ArrayList<Float>();
+				}
 				try {
 					FileReader fileReader = new FileReader(fileName);
 					BufferedReader bufferedReader = 
@@ -421,6 +423,20 @@ public class GradeAppGUIMain {
 		btnAddGrade.setFont(new Font("Dialog", Font.BOLD, 16));
 		btnAddGrade.setBounds(468, 60, 180, 45);
 		frame.getContentPane().add(btnAddGrade);
+		
+		btnAddGrade.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent addGradeEvent) {
+					JFrame frame = new JFrame("Add Grade");
+					String addedGrade 
+						= JOptionPane.showInputDialog(frame, "Enter grade: ");
+					float gradeInput = Float.parseFloat(addedGrade);
+					if (GradeAppGUIMain.this.grades == null) {
+						GradeAppGUIMain.this.grades = new ArrayList<Float>();
+					}
+					GradeAppGUIMain.this.grades.add(gradeInput);
+			}
+		});
 		
 		JButton btnRemoveGrade = new JButton("Remove Grade");
 		btnRemoveGrade.setBackground(new Color(128, 0, 128));
