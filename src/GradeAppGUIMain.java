@@ -73,16 +73,6 @@ public class GradeAppGUIMain {
 		frame.setBounds(100, 100, 1009, 735);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-	/*
-	 * ########################################################################
-	 * TextField Group
-	 * ########################################################################
-	 */
-		JTextField tfAddGrade = new JTextField();
-		tfAddGrade.setText("Enter Grade");
-		tfAddGrade.setBounds(336, 61, 120, 45);
-		frame.getContentPane().add(tfAddGrade);
-		tfAddGrade.setColumns(10);
 		
 		JTextField tfGradeA = new JTextField();
 		tfGradeA.setHorizontalAlignment(SwingConstants.CENTER);
@@ -128,34 +118,6 @@ public class GradeAppGUIMain {
 		tfGradeF.setColumns(10);
 		tfGradeF.setBounds(528, 490, 120, 45);
 		frame.getContentPane().add(tfGradeF);
-		
-		JTextField tfEnterMinimum = new JTextField();
-		tfEnterMinimum.setText(Float.toString(minimumGrade));
-		tfEnterMinimum.setColumns(10);
-		tfEnterMinimum.setBounds(210, 291, 120, 45);
-		frame.getContentPane().add(tfEnterMinimum);
-		
-		//Mouse and Focus Events for JTextField tfEnterMinimum
-		tfEnterMinimum.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				tfEnterMinimum.setText("");
-			}
-		});	
-		
-		JTextField tfEnterMaximum = new JTextField();
-		tfEnterMaximum.setText(Float.toString(maximumGrade));
-		tfEnterMaximum.setColumns(10);
-		tfEnterMaximum.setBounds(210, 341, 120, 45);
-		frame.getContentPane().add(tfEnterMaximum);
-
-		//Mouse and Focus Events for JTextField tfEnterMaximum
-		tfEnterMaximum.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				tfEnterMaximum.setText("");
-			}
-		});
 
 		
 	/*
@@ -306,6 +268,18 @@ public class GradeAppGUIMain {
 		lblFCount.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblFCount.setBounds(391, 490, 50, 45);
 		frame.getContentPane().add(lblFCount);
+		
+		JLabel lblMinGrade = new JLabel("0");
+		lblMinGrade.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMinGrade.setFont(new Font("Dialog", Font.BOLD, 16));
+		lblMinGrade.setBounds(210, 290, 50, 45);
+		frame.getContentPane().add(lblMinGrade);
+		
+		JLabel lblMaxGrade = new JLabel("100");
+		lblMaxGrade.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMaxGrade.setFont(new Font("Dialog", Font.BOLD, 16));
+		lblMaxGrade.setBounds(210, 340, 50, 45);
+		frame.getContentPane().add(lblMaxGrade);
 		
 		
 	/*
@@ -462,23 +436,32 @@ public class GradeAppGUIMain {
 		buttonSetMinGrade.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				JFrame frame = new JFrame("Set Minimum Grade");
+				String minGradeInput = JOptionPane.showInputDialog(frame,
+					"Enter minimum possible grade: ");
+				float newMinGrade = Float.parseFloat(minGradeInput);
 				try {
-					if (Float.parseFloat(tfEnterMinimum.getText()) > maximumGrade) {
-						JOptionPane.showMessageDialog(null, "Minimum Grade cannot be greater than Maximum Grade. Minimum Grade not changed!");
+					if 
+					(newMinGrade > maximumGrade) {
+						JOptionPane.showMessageDialog(null, "Minimum Grade "
+								+ "cannot be greater than Maximum Grade. "
+								+ "Minimum Grade not changed!");
 					}
-					else if (Float.parseFloat(tfEnterMinimum.getText()) < 0) {
-						JOptionPane.showMessageDialog(null, "Minimum Grade cannot be less than 0");
+					else if (newMinGrade < 0) {
+						JOptionPane.showMessageDialog(
+								null, "Minimum Grade cannot be less than 0");
 					}
 					else {
-						minimumGrade = Float.parseFloat(tfEnterMinimum.getText());
+						minimumGrade = newMinGrade;
+						lblMinGrade.setText(minGradeInput);
 					}
 				}
 				catch(NumberFormatException error) {
-					JOptionPane.showMessageDialog(null, "Error! Must enter a number");
-					 System.err.println("NumberFormatException: " + error.getMessage());
+					JOptionPane.showMessageDialog(null, 
+							"Error! Must enter a number");
+						System.err.println("NumberFormatException: " 
+						+ error.getMessage());
 				}
-				
-				tfEnterMinimum.setText(Float.toString(minimumGrade));
 			}
 		});
 		
@@ -492,20 +475,28 @@ public class GradeAppGUIMain {
 		btnSetMaxGrade.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				JFrame frame = new JFrame("Set Maximum Grade");
+				String maxGradeInput = JOptionPane.showInputDialog(frame,
+					"Enter maximum possible grade: ");
+				float newMaxGrade = Float.parseFloat(maxGradeInput);
 				try {
-					if (Float.parseFloat(tfEnterMaximum.getText()) < minimumGrade) {
-						JOptionPane.showMessageDialog(null, "Maximum Grade cannot be less than Minimum Grade. Maximum Grade not changed!");
+					if 
+					(newMaxGrade < minimumGrade) {
+						JOptionPane.showMessageDialog(null, "Maximum Grade "
+								+ "cannot be greater than Minimum Grade. "
+								+ "Maximum Grade not changed!");
 					}
 					else {
-						maximumGrade = Float.parseFloat(tfEnterMaximum.getText());
+						maximumGrade = newMaxGrade;
+						lblMaxGrade.setText(maxGradeInput);
 					}
 				}
 				catch(NumberFormatException error) {
-					JOptionPane.showMessageDialog(null, "Error! Must enter a number");
-					 System.err.println("NumberFormatException: " + error.getMessage());
-				}
-				
-				tfEnterMaximum.setText(Float.toString(maximumGrade));
+					JOptionPane.showMessageDialog(null, 
+							"Error! Must enter a number");
+						System.err.println("NumberFormatException: " 
+						+ error.getMessage());
+				}				
 			}
 		});
 		
@@ -536,8 +527,8 @@ public class GradeAppGUIMain {
 		btnClearEverything.setBackground(new Color(128, 0, 128));
 		btnClearEverything.setBounds(458, 644, 190, 45);
 		frame.getContentPane().add(btnClearEverything);
-		btnClearEverything.addActionListener(new ActionListener() {
 
+		btnClearEverything.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String msg = "You clicked ClearAll";
@@ -547,9 +538,8 @@ public class GradeAppGUIMain {
 				tfGradeC.setText("70");
 				tfGradeD.setText("60");
 				tfGradeF.setText("60");
-				tfAddGrade.setText("Enter Grade");
-				tfEnterMinimum.setText(Float.toString(minimumGrade));
-				tfEnterMaximum.setText(Float.toString(maximumGrade));				
+				lblMinGrade.setText(Float.toString(minimumGrade));
+				lblMaxGrade.setText(Float.toString(maximumGrade));				
 			}
 		});			
 	}
