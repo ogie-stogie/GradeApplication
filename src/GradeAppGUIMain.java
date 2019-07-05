@@ -14,6 +14,8 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
+
 import java.awt.Font;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -71,6 +73,7 @@ public class GradeAppGUIMain {
 		frame.setBounds(100, 100, 1009, 735);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
 	/*
 	 * ########################################################################
 	 * TextField Group
@@ -534,5 +537,33 @@ public class GradeAppGUIMain {
 				tfEnterMaximum.setText(Float.toString(maximumGrade));				
 			}
 		});			
+	
+		ActionListener update = new ActionListener() {
+			public void actionPerformed(ActionEvent update) {
+				//Calculate Lowest Grade, Highest Grade, Median Grade, Average Grade
+				float lowestGrade = grades.get(0);
+				float highestGrade = grades.get(0);
+				float medianGrade;
+				float averageGrade = 0;
+				
+				for (int gradeIndex = 0; gradeIndex < grades.size(); gradeIndex++) {
+					if (grades.get(gradeIndex) >= minimumGrade || grades.get(gradeIndex) <= maximumGrade) {
+						
+						averageGrade = averageGrade + grades.get(gradeIndex);
+						
+						if (lowestGrade > grades.get(gradeIndex)) {
+							lowestGrade = grades.get(gradeIndex);
+						}
+						if (highestGrade < grades.get(gradeIndex)) {
+							highestGrade = grades.get(gradeIndex);
+						}
+					}
+				}
+			}
+		};
+		Timer timer = new Timer(5000, update);
+		timer.setRepeats(true);
+		timer.start();
+		
 	}
 }
