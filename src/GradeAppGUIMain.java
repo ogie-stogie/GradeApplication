@@ -73,7 +73,7 @@ public class GradeAppGUIMain {
 		frame.setBounds(100, 100, 1009, 735);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+
 	/*
 	 * ########################################################################
 	 * TextField Group
