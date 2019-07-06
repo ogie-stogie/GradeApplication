@@ -37,9 +37,23 @@ public class GradeAppGUIMain {
 
 	//Global Variables
 	private JFrame frame;
+	private JTextField tfGradeF;
+	private JLabel lblLowestGradeOutput, lblHighestGradeOutput;
+	private JLabel lblMedianGradeOutput, lblAverageGradeOutput;
+	private JLabel lblACount, lblBCount, lblCCount;
+	private JLabel lblDCount, lblFCount;
+	
 	private float minimumGrade = 0.0f, maximumGrade = 100.0f;
-	private JLabel lblLowestGradeOutput, lblHighestGradeOutput, lblMedianGradeOutput, lblAverageGradeOutput;
 	private float lowestGrade, highestGrade, medianGrade, averageGrade;
+	private float percentA = 90.0f, percentB = 80.0f;
+	private float percentC = 70.0f, percentD = 60.0f;
+	
+	private int countA = 0;
+	private int countB = 0;
+	private int countC = 0;
+	private int countD = 0;
+	private int countF = 0;
+	
 	private List<Float> grades, tempGrades;
 	/*
 	 * ########################################################################
@@ -84,48 +98,183 @@ public class GradeAppGUIMain {
 		
 		JTextField tfGradeA = new JTextField();
 		tfGradeA.setHorizontalAlignment(SwingConstants.CENTER);
-		tfGradeA.setText("90");
+		tfGradeA.setText(Float.toString(percentA));
 		tfGradeA.setBackground(Color.GREEN);
 		tfGradeA.setFont(new Font("Dialog", Font.BOLD, 18));
 		tfGradeA.setColumns(10);
 		tfGradeA.setBounds(528, 290, 120, 45);
 		frame.getContentPane().add(tfGradeA);
 		
+		tfGradeA.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent changeScale) {
+				JFrame frame = new JFrame("Grade Scale");
+				String gradePercentage = 
+					JOptionPane.showInputDialog(frame, "Enter Grade for "
+							+ "\"A\": ");
+				try {
+					percentA = Float.parseFloat(gradePercentage);
+					if (percentA <= percentB) {
+						JOptionPane.showMessageDialog(frame, "Percentage "
+								+ "for an \"A\" cannot be less than or "
+								+ "equal to the percentage for a \"B\"");
+					}
+					else {
+						tfGradeA.setText(Float.toString(percentA));
+						updateGradeData();
+					}
+				}
+				catch(NumberFormatException error) {
+					JOptionPane.showMessageDialog(null, "Error! "
+							+ "Must enter a number");
+					System.err.println("NumberFormatException: "
+							+ error.getMessage());
+				}
+			}
+		});
+		
 		JTextField tfGradeB = new JTextField();
 		tfGradeB.setHorizontalAlignment(SwingConstants.CENTER);
-		tfGradeB.setText("80");
+		tfGradeB.setText(Float.toString(percentB));
 		tfGradeB.setBackground(new Color(204, 255, 51));
 		tfGradeB.setFont(new Font("Dialog", Font.BOLD, 18));
 		tfGradeB.setColumns(10);
 		tfGradeB.setBounds(528, 340, 120, 45);
 		frame.getContentPane().add(tfGradeB);
 		
+		tfGradeB.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent changeScale) {
+				JFrame frame = new JFrame("Grade Scale");
+				String gradePercentage = 
+					JOptionPane.showInputDialog(frame, "Enter Grade for "
+							+ "\"B\": ");
+				try {
+					percentB = Float.parseFloat(gradePercentage);
+					if (percentB <= percentC) {
+						JOptionPane.showMessageDialog(frame, "Percentage "
+								+ "for \"B\" cannot be less than or equal "
+								+ " to the percentage for a \"C\"");
+					}
+					else if (percentB >= percentA) {
+						JOptionPane.showMessageDialog(frame, "Percentage "
+								+ "for \"B\" cannot be greater than or "
+								+ "equal to the percentage for an \"A\""
+								+ "");
+					}
+					else {
+						tfGradeB.setText(Float.toString(percentB));
+						updateGradeData();
+					}
+				}
+				catch(NumberFormatException error) {
+					JOptionPane.showMessageDialog(null, "Error! "
+							+ "Must enter a number");
+					System.err.println("NumberFormatException: "
+							+ error.getMessage());
+				}
+			}
+		});
+		
 		JTextField tfGradeC = new JTextField();
 		tfGradeC.setHorizontalAlignment(SwingConstants.CENTER);
-		tfGradeC.setText("70");
+		tfGradeC.setText(Float.toString(percentC));
 		tfGradeC.setBackground(Color.YELLOW);
 		tfGradeC.setFont(new Font("Dialog", Font.BOLD, 18));
 		tfGradeC.setColumns(10);
 		tfGradeC.setBounds(528, 390, 120, 45);
 		frame.getContentPane().add(tfGradeC);
+		
+		tfGradeC.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent changeScale) {
+				JFrame frame = new JFrame("Grade Scale");
+				String gradePercentage = 
+					JOptionPane.showInputDialog(frame, "Enter Grade for "
+							+ "\"B\": ");
+				try {
+					percentC = Float.parseFloat(gradePercentage);
+					if (percentC <= percentD) {
+						JOptionPane.showMessageDialog(frame, "Percentage "
+								+ "for \"C\" cannot be less than or equal "
+								+ " to the percentage for a \"D\"");
+				}
+					else if (percentC >= percentB) {
+						JOptionPane.showMessageDialog(frame, "Percentage "
+								+ "for \"C\" cannot be greater than or "
+								+ "equal to the percentage for an \"B\""
+								+ "");
+					}
+					else {
+						tfGradeC.setText(Float.toString(percentC));
+						updateGradeData();
+					}
+				}
+				catch(NumberFormatException error) {
+					JOptionPane.showMessageDialog(null, "Error! "
+							+ "Must enter a number");
+					System.err.println("NumberFormatException: "
+							+ error.getMessage());
+				}
+			}
+		});
 
 		JTextField tfGradeD = new JTextField();
 		tfGradeD.setHorizontalAlignment(SwingConstants.CENTER);
-		tfGradeD.setText("60");
+		tfGradeD.setText(Float.toString(percentD));
 		tfGradeD.setBackground(new Color(255, 102, 51));
 		tfGradeD.setFont(new Font("Dialog", Font.BOLD, 18));
 		tfGradeD.setColumns(10);
 		tfGradeD.setBounds(528, 440, 120, 45);
 		frame.getContentPane().add(tfGradeD);
 		
-		JTextField tfGradeF = new JTextField();
+		tfGradeD.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent changeScale) {
+				JFrame frame = new JFrame("Grade Scale");
+				String gradePercentage = 
+					JOptionPane.showInputDialog(frame, "Enter Grade for "
+							+ "\"D\": ");
+				try {
+					percentD = Float.parseFloat(gradePercentage);
+					if (percentD >= percentC) {
+						JOptionPane.showMessageDialog(frame, "Percentage "
+								+ "for \"D\" cannot be greater than or "
+								+ "equal to the percentage for an \"C\""
+								+ "");
+					}
+					else {
+						tfGradeD.setText(Float.toString(percentD));
+						tfGradeF.setText(Float.toString(percentD));
+						updateGradeData();
+					}
+				}
+				catch(NumberFormatException error) {
+					JOptionPane.showMessageDialog(null, "Error! "
+							+ "Must enter a number");
+					System.err.println("NumberFormatException: "
+							+ error.getMessage());
+				}
+			}
+		});
+		
+		tfGradeF = new JTextField();
 		tfGradeF.setHorizontalAlignment(SwingConstants.CENTER);
-		tfGradeF.setText("60");
+		tfGradeF.setText(Float.toString(percentD));
 		tfGradeF.setBackground(Color.RED);
 		tfGradeF.setFont(new Font("Dialog", Font.BOLD, 18));
 		tfGradeF.setColumns(10);
 		tfGradeF.setBounds(528, 490, 120, 45);
 		frame.getContentPane().add(tfGradeF);
+		
+		tfGradeF.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent changeScale) {
+				JOptionPane.showMessageDialog(frame, "Anything less than a "
+						+ "\"D\" is an \"F\"");
+			}
+		});
+		
 
 		
 	/*
@@ -252,38 +401,38 @@ public class GradeAppGUIMain {
 		lblGradeCount.setBounds(355, 233, 120, 45);
 		frame.getContentPane().add(lblGradeCount);
 		
-		JLabel lblACount = new JLabel("0");
+		lblACount = new JLabel("0");
 		lblACount.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblACount.setBounds(391, 290, 50, 45);
 		frame.getContentPane().add(lblACount);
 
-		JLabel lblBCount = new JLabel("0");
+		lblBCount = new JLabel("0");
 		lblBCount.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblBCount.setBounds(391, 340, 50, 45);
 		frame.getContentPane().add(lblBCount);
 		
-		JLabel lblCCount = new JLabel("0");
+		lblCCount = new JLabel("0");
 		lblCCount.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblCCount.setBounds(391, 390, 50, 45);
 		frame.getContentPane().add(lblCCount);
 		
-		JLabel lblDCount = new JLabel("0");
+		lblDCount = new JLabel("0");
 		lblDCount.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblDCount.setBounds(391, 440, 50, 45);
 		frame.getContentPane().add(lblDCount);
 		
-		JLabel lblFCount = new JLabel("0");
+		lblFCount = new JLabel("0");
 		lblFCount.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblFCount.setBounds(391, 490, 50, 45);
 		frame.getContentPane().add(lblFCount);
 		
-		JLabel lblMinGrade = new JLabel("0");
+		JLabel lblMinGrade = new JLabel(Float.toString(minimumGrade));
 		lblMinGrade.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMinGrade.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblMinGrade.setBounds(210, 290, 50, 45);
 		frame.getContentPane().add(lblMinGrade);
 		
-		JLabel lblMaxGrade = new JLabel("100");
+		JLabel lblMaxGrade = new JLabel(Float.toString(maximumGrade));
 		lblMaxGrade.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMaxGrade.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblMaxGrade.setBounds(210, 340, 50, 45);
@@ -551,20 +700,38 @@ public class GradeAppGUIMain {
 		btnClearEverything.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//String msg = "You clicked ClearAll";
-				//JOptionPane.showMessageDialog(null, msg);
-				tfGradeA.setText("90");
-				tfGradeB.setText("80");
-				tfGradeC.setText("70");
-				tfGradeD.setText("60");
-				tfGradeF.setText("60");
+				
+				percentA = 90.0f;
+				percentB = 80.0f;
+				percentC = 70.0f;
+				percentD = 60.0f;
+				
+				tfGradeA.setText(Float.toString(percentA));
+				tfGradeB.setText(Float.toString(percentB));
+				tfGradeC.setText(Float.toString(percentC));
+				tfGradeD.setText(Float.toString(percentD));
+				tfGradeF.setText(Float.toString(percentD));
+				
+				countA = 0;
+				countB = 0;
+				countC = 0;
+				countD = 0;
+				countF = 0;
+				
+				lblACount.setText(Integer.toString(countA));;
+				lblBCount.setText(Integer.toString(countB));;
+				lblCCount.setText(Integer.toString(countC));;
+				lblDCount.setText(Integer.toString(countD));;
+				lblFCount.setText(Integer.toString(countF));;
 				
 				lblLowestGradeOutput.setText("");
 				lblHighestGradeOutput.setText("");
 				lblMedianGradeOutput.setText("");
 				lblAverageGradeOutput.setText("");
+				
 				minimumGrade = 0;
 				maximumGrade = 100;
+				
 				lblMinGrade.setText(Float.toString(minimumGrade));
 				lblMaxGrade.setText(Float.toString(maximumGrade));
 				
@@ -587,6 +754,12 @@ public class GradeAppGUIMain {
 		GradeAppGUIMain.this.tempGrades = new ArrayList<Float>();
 		try {
 			averageGrade = 0;
+			countA = 0;
+			countB = 0;
+			countC = 0;
+			countD = 0;
+			countF = 0;
+			
 			for (int gIndex = 0; gIndex < grades.size(); gIndex++) {
 				if (grades.get(gIndex) >= minimumGrade 
 					&& grades.get(gIndex) <= maximumGrade) {
@@ -597,6 +770,29 @@ public class GradeAppGUIMain {
 			}
 
 			Collections.sort(tempGrades);
+			for (int gIndex = 0; gIndex < tempGrades.size(); gIndex++) {
+				if (tempGrades.get(gIndex) >= percentA) {
+					countA++;
+				}
+				else if (tempGrades.get(gIndex) >= percentB) {
+					countB++;
+				}
+				else if (tempGrades.get(gIndex) >= percentC) {
+					countC++;
+				}
+				else if (tempGrades.get(gIndex) >= percentD) {
+					countD++;
+				}
+				else {
+					countF++;
+				}
+			}
+			
+			lblACount.setText(Integer.toString(countA));;
+			lblBCount.setText(Integer.toString(countB));;
+			lblCCount.setText(Integer.toString(countC));;
+			lblDCount.setText(Integer.toString(countD));;
+			lblFCount.setText(Integer.toString(countF));;
 			
 			lowestGrade = tempGrades.get(0);
 			highestGrade = tempGrades.get(tempGrades.size()-1);
