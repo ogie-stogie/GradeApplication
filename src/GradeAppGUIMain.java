@@ -543,6 +543,7 @@ public class GradeAppGUIMain {
 			}
 		});			
 	
+		// Timer ActionListener
 		ActionListener update = new ActionListener() {
 			public void actionPerformed(ActionEvent update) {
 				//Calculate Lowest Grade, Highest Grade, Median Grade, Average Grade
