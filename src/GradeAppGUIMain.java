@@ -1,5 +1,4 @@
 // This is a gitHub test.. Please help!
-
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import java.awt.GridLayout;
@@ -18,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.UIManager;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.Color;
@@ -26,13 +27,18 @@ import java.awt.event.MouseEvent;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ListSelectionModel;
+import javax.swing.AbstractListModel;
+import javax.swing.DefaultListModel;
 
 public class GradeAppGUIMain {
 
 	//Global Variables
 	private JFrame frame;
+	private DefaultListModel gradeListModel = new DefaultListModel<>();
 	private float minimumGrade = 0.0f, maximumGrade = 100.0f;
-	private List<Float> grades;
+	private List<Grade> grades = new ArrayList<Grade>();
+	private int selectedGrade;
 	/*
 	 * ########################################################################
 	 * Launch the application.
@@ -118,18 +124,6 @@ public class GradeAppGUIMain {
 		tfGradeF.setColumns(10);
 		tfGradeF.setBounds(528, 490, 120, 45);
 		frame.getContentPane().add(tfGradeF);
-
-		
-	/*
-	 * ########################################################################
-	 * JList
-	 * ########################################################################
-	 */
-		JList listGradeList = new JList();
-		listGradeList.setFont(new Font("Dialog", Font.BOLD, 20));
-		listGradeList.setBackground(Color.WHITE);
-		listGradeList.setBounds(663, 59, 327, 628);
-		frame.getContentPane().add(listGradeList);
 		
 		
 	/*
@@ -142,13 +136,13 @@ public class GradeAppGUIMain {
 		lblTitle.setBounds(12, 12, 636, 36);
 		frame.getContentPane().add(lblTitle);
 		
-		JLabel lblGradeJList = new JLabel("Grades");
+		JLabel lblGradeJList = new JLabel("Letter Grade");
 		lblGradeJList.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblGradeJList.setHorizontalAlignment(SwingConstants.CENTER);
-		lblGradeJList.setBounds(703, 15, 90, 45);
+		lblGradeJList.setBounds(683, 15, 128, 45);
 		frame.getContentPane().add(lblGradeJList);
 		
-		JLabel lblLetterGrade = new JLabel("Letter Grade");
+		JLabel lblLetterGrade = new JLabel("Grade");
 		lblLetterGrade.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblLetterGrade.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLetterGrade.setBounds(823, 15, 130, 45);
@@ -281,6 +275,17 @@ public class GradeAppGUIMain {
 		lblMaxGrade.setBounds(210, 340, 50, 45);
 		frame.getContentPane().add(lblMaxGrade);
 		
+		/*
+		 * List
+		 */
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(660, 60, 331, 627);
+		frame.getContentPane().add(scrollPane);
+		JList gradeList = new JList(gradeListModel);
+		gradeList.setFont(new Font("Tahoma", Font.BOLD, 16));
+		gradeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane.setViewportView(gradeList);
+		
 		
 	/*
 	 * ########################################################################
@@ -306,9 +311,10 @@ public class GradeAppGUIMain {
 			    }
 			    File fileName = chooser.getSelectedFile();
 				String line = null;
+				String letterGrade = "A";
 				float gradeInput;
 				if(GradeAppGUIMain.this.grades == null) {
-					GradeAppGUIMain.this.grades = new ArrayList<Float>();
+					GradeAppGUIMain.this.grades = new ArrayList<Grade>();
 				}
 				try {
 					FileReader fileReader = new FileReader(fileName);
@@ -316,7 +322,9 @@ public class GradeAppGUIMain {
 							new BufferedReader(fileReader);
 					while( ( line = bufferedReader.readLine() ) != null) {
 						gradeInput = Float.parseFloat(line);
-						GradeAppGUIMain.this.grades.add(gradeInput);
+						Grade newGrade = new Grade(gradeInput,letterGrade);
+						GradeAppGUIMain.this.grades.add(newGrade);
+						GradeAppGUIMain.this.gradeListModel.addElement(newGrade.toString());
 					}
 					bufferedReader.close();
 				}
@@ -340,6 +348,7 @@ public class GradeAppGUIMain {
 				}
 			}
 		});
+		
 		
 		JButton btnSaveFile = new JButton("Save File");
 		btnSaveFile.setForeground(Color.WHITE);
@@ -368,9 +377,9 @@ public class GradeAppGUIMain {
 							new FileWriter(fileName);
 					BufferedWriter bufferedWriter =
 							new BufferedWriter(fileWriter);
-					for(float gradeInput : GradeAppGUIMain.this.grades) {
+					for(Grade gradeInput : GradeAppGUIMain.this.grades) {
 						String formattedGradeInput
-							= Float.toString(gradeInput);
+							= Float.toString(gradeInput.getGrade());
 						bufferedWriter.write(formattedGradeInput);
 						bufferedWriter.newLine();
 					}
@@ -405,10 +414,13 @@ public class GradeAppGUIMain {
 					String addedGrade 
 						= JOptionPane.showInputDialog(frame, "Enter grade: ");
 					float gradeInput = Float.parseFloat(addedGrade);
+					String letterGradeInput = "A";
 					if (GradeAppGUIMain.this.grades == null) {
-						GradeAppGUIMain.this.grades = new ArrayList<Float>();
+						GradeAppGUIMain.this.grades = new ArrayList<Grade>();
 					}
-					GradeAppGUIMain.this.grades.add(gradeInput);
+					Grade newGrade = new Grade(gradeInput,letterGradeInput);
+					GradeAppGUIMain.this.grades.add(newGrade);
+					GradeAppGUIMain.this.gradeListModel.addElement(newGrade.toString());
 			}
 		});
 		
@@ -418,6 +430,17 @@ public class GradeAppGUIMain {
 		btnRemoveGrade.setFont(new Font("Dialog", Font.BOLD, 16));
 		btnRemoveGrade.setBounds(468, 110, 180, 45);
 		frame.getContentPane().add(btnRemoveGrade);
+		
+		btnRemoveGrade.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent removeGradeEvent) {
+				if(GradeAppGUIMain.this.grades != null) {
+					GradeAppGUIMain.this.grades.remove(
+							GradeAppGUIMain.this.selectedGrade);
+				}
+			}
+		});
+		
 		
 		JButton btnAmendGrade = new JButton("Amend Grade");
 		btnAmendGrade.setBackground(new Color(128, 0, 128));
@@ -511,7 +534,7 @@ public class GradeAppGUIMain {
 		btnGenerateReport.setForeground(new Color(255, 255, 255));
 		btnGenerateReport.setFont(new Font("Dialog", Font.BOLD, 16));
 		btnGenerateReport.setBackground(new Color(128, 0, 128));
-		btnGenerateReport.setBounds(12, 589, 639, 43);
+		btnGenerateReport.setBounds(12, 589, 636, 43);
 		frame.getContentPane().add(btnGenerateReport);
 		
 		JButton btnExit = new JButton("Exit Program");
@@ -527,7 +550,17 @@ public class GradeAppGUIMain {
 		btnClearEverything.setBackground(new Color(128, 0, 128));
 		btnClearEverything.setBounds(458, 644, 190, 45);
 		frame.getContentPane().add(btnClearEverything);
-
+		
+		
+		gradeList.addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				GradeAppGUIMain.this.selectedGrade
+					= gradeList.getSelectedIndex();
+			}
+		});
+		
 		btnClearEverything.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -539,8 +572,9 @@ public class GradeAppGUIMain {
 				tfGradeD.setText("60");
 				tfGradeF.setText("60");
 				lblMinGrade.setText(Float.toString(minimumGrade));
-				lblMaxGrade.setText(Float.toString(maximumGrade));				
+				lblMaxGrade.setText(Float.toString(maximumGrade));
+				grades.clear();
 			}
-		});			
+		});
 	}
 }
