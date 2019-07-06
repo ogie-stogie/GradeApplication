@@ -1,38 +1,46 @@
-import java.awt.EventQueue;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import javax.swing.JFrame;
-import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
-
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.Timer;
+import javax.swing.UIManager;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.NumberFormatter;
 
 import java.awt.Font;
-import javax.swing.UIManager;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.ActionEvent;
+import java.awt.GridLayout;
+import java.awt.EventQueue;
+
+
+
+
 
 public class GradeAppGUIMain {
 
 	//Global Variables
 	private JFrame frame;
 	private float minimumGrade = 0.0f, maximumGrade = 100.0f;
-	private List<Float> grades;
+	private JLabel lblLowestGradeOutput, lblHighestGradeOutput, lblMedianGradeOutput, lblAverageGradeOutput;
+	private float lowestGrade, highestGrade, medianGrade, averageGrade;
+	private List<Float> grades, tempGrades;
 	/*
 	 * ########################################################################
 	 * Launch the application.
@@ -170,7 +178,7 @@ public class GradeAppGUIMain {
 		lblB.setBounds(468, 340, 50, 45);
 		frame.getContentPane().add(lblB);
 		
-		JLabel lblC = new JLabel("C =>");
+		JLabel lblC = new JLabel("C >=");
 		lblC.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblC.setBounds(468, 390, 50, 45);
 		frame.getContentPane().add(lblC);
@@ -215,25 +223,25 @@ public class GradeAppGUIMain {
 		lblAverageGrade.setBounds(22, 490, 190, 30);
 		frame.getContentPane().add(lblAverageGrade);
 		
-		JLabel lblLowestGradeOutput = new JLabel("");
+		lblLowestGradeOutput = new JLabel("");
 		lblLowestGradeOutput.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLowestGradeOutput.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblLowestGradeOutput.setBounds(210, 400, 120, 30);
 		frame.getContentPane().add(lblLowestGradeOutput);
 		
-		JLabel lblHighestGradeOutput = new JLabel("");
+		lblHighestGradeOutput = new JLabel("");
 		lblHighestGradeOutput.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHighestGradeOutput.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblHighestGradeOutput.setBounds(211, 430, 120, 30);
 		frame.getContentPane().add(lblHighestGradeOutput);
 		
-		JLabel lblMedianGradeOutput = new JLabel("");
+		lblMedianGradeOutput = new JLabel("");
 		lblMedianGradeOutput.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMedianGradeOutput.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblMedianGradeOutput.setBounds(211, 460, 120, 30);
 		frame.getContentPane().add(lblMedianGradeOutput);
 		
-		JLabel lblAverageGradeOutput = new JLabel("");
+		lblAverageGradeOutput = new JLabel("");
 		lblAverageGradeOutput.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAverageGradeOutput.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblAverageGradeOutput.setBounds(211, 490, 120, 30);
@@ -319,6 +327,7 @@ public class GradeAppGUIMain {
 						GradeAppGUIMain.this.grades.add(gradeInput);
 					}
 					bufferedReader.close();
+					updateGradeData();
 				}
 				catch(FileNotFoundException fileException) {
 					JOptionPane.showMessageDialog(null, "Error! File " 
@@ -409,6 +418,7 @@ public class GradeAppGUIMain {
 						GradeAppGUIMain.this.grades = new ArrayList<Float>();
 					}
 					GradeAppGUIMain.this.grades.add(gradeInput);
+					updateGradeData();
 			}
 		});
 		
@@ -454,6 +464,7 @@ public class GradeAppGUIMain {
 					else {
 						minimumGrade = newMinGrade;
 						lblMinGrade.setText(minGradeInput);
+						updateGradeData();
 					}
 				}
 				catch(NumberFormatException error) {
@@ -489,7 +500,9 @@ public class GradeAppGUIMain {
 					else {
 						maximumGrade = newMaxGrade;
 						lblMaxGrade.setText(maxGradeInput);
+						updateGradeData();
 					}
+					
 				}
 				catch(NumberFormatException error) {
 					JOptionPane.showMessageDialog(null, 
@@ -521,6 +534,13 @@ public class GradeAppGUIMain {
 		btnExit.setBounds(12, 644, 190, 45);
 		frame.getContentPane().add(btnExit);
 		
+		btnExit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);			
+			}
+		});
+		
 		JButton btnClearEverything = new JButton("Clear Everything");
 		btnClearEverything.setForeground(Color.WHITE);
 		btnClearEverything.setFont(new Font("Dialog", Font.BOLD, 16));
@@ -531,45 +551,69 @@ public class GradeAppGUIMain {
 		btnClearEverything.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String msg = "You clicked ClearAll";
-				JOptionPane.showMessageDialog(null, msg);
+				//String msg = "You clicked ClearAll";
+				//JOptionPane.showMessageDialog(null, msg);
 				tfGradeA.setText("90");
 				tfGradeB.setText("80");
 				tfGradeC.setText("70");
 				tfGradeD.setText("60");
 				tfGradeF.setText("60");
-				lblMinGrade.setText(Float.toString(minimumGrade));
-				lblMaxGrade.setText(Float.toString(maximumGrade));				
-			}
-		});			
-	
-		// Timer ActionListener
-		ActionListener update = new ActionListener() {
-			public void actionPerformed(ActionEvent update) {
-				//Calculate Lowest Grade, Highest Grade, Median Grade, Average Grade
-				float lowestGrade = grades.get(0);
-				float highestGrade = grades.get(0);
-				float medianGrade;
-				float averageGrade = 0;
 				
-				for (int gradeIndex = 0; gradeIndex < grades.size(); gradeIndex++) {
-					if (grades.get(gradeIndex) >= minimumGrade || grades.get(gradeIndex) <= maximumGrade) {
-						
-						averageGrade = averageGrade + grades.get(gradeIndex);
-						
-						if (lowestGrade > grades.get(gradeIndex)) {
-							lowestGrade = grades.get(gradeIndex);
-						}
-						if (highestGrade < grades.get(gradeIndex)) {
-							highestGrade = grades.get(gradeIndex);
-						}
-					}
+				lblLowestGradeOutput.setText("");
+				lblHighestGradeOutput.setText("");
+				lblMedianGradeOutput.setText("");
+				lblAverageGradeOutput.setText("");
+				minimumGrade = 0;
+				maximumGrade = 100;
+				lblMinGrade.setText(Float.toString(minimumGrade));
+				lblMaxGrade.setText(Float.toString(maximumGrade));
+				
+				grades.clear();
+			}
+		});		
+	}
+	
+	
+	/**
+	 * Method Name: updateGradeData
+	 * Description: copies grade elements from grades ArrayList that fall
+	 * 			within the min and max grade limits and adds those values
+	 * 			to a tempGrade ArrayList which is then sorted and used
+	 * 			to find the Lowest, Highest, Median, Average Grade and update
+	 * 			the appropriate labels.
+	 */
+	public void updateGradeData() {
+		
+		GradeAppGUIMain.this.tempGrades = new ArrayList<Float>();
+		try {
+			averageGrade = 0;
+			for (int gIndex = 0; gIndex < grades.size(); gIndex++) {
+				if (grades.get(gIndex) >= minimumGrade 
+					&& grades.get(gIndex) <= maximumGrade) {
+					
+					tempGrades.add(grades.get(gIndex));
+					averageGrade = averageGrade + grades.get(gIndex);
 				}
 			}
-		};
-		Timer timer = new Timer(5000, update);
-		timer.setRepeats(true);
-		timer.start();
-		
-	}
+
+			Collections.sort(tempGrades);
+			
+			lowestGrade = tempGrades.get(0);
+			highestGrade = tempGrades.get(tempGrades.size()-1);
+			medianGrade = tempGrades.get(tempGrades.size()/2);
+			averageGrade = averageGrade / tempGrades.size();
+			
+			lblLowestGradeOutput.setText(Float.toString(lowestGrade));
+			lblHighestGradeOutput.setText(Float.toString(highestGrade));
+			lblMedianGradeOutput.setText(Float.toString(medianGrade));
+			lblAverageGradeOutput.setText(String.format("%.1f", averageGrade));
+		}
+		catch (NullPointerException error) {
+			/*
+			 *  NullPointerException occurs if there are no elements
+			 *	in the grades ArrayList.
+			 */
+			
+		}
+	}	
 }
