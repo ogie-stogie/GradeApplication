@@ -44,7 +44,6 @@ public class GradeAppGUIMain {
 
 	//Global Variables
 	private JFrame frame;
-	private DefaultListModel gradeListModel = new DefaultListModel<>();
 	private JTextField tfGradeF;
 	private JLabel lblLowestGradeOutput, lblHighestGradeOutput;
 	private JLabel lblMedianGradeOutput, lblAverageGradeOutput;
@@ -53,7 +52,6 @@ public class GradeAppGUIMain {
 	
 	private float minimumGrade = 0.0f, maximumGrade = 100.0f;
 	private List<Grade> grades = new ArrayList<Grade>();
-	private int selectedGrade;
 	private float lowestGrade, highestGrade, medianGrade, averageGrade;
 	private float percentA = 90.0f, percentB = 80.0f;
 	private float percentC = 70.0f, percentD = 60.0f;
@@ -285,19 +283,7 @@ public class GradeAppGUIMain {
 						+ "\"D\" is an \"F\"");
 			}
 		});
-		
-
-	/*
-	 * ########################################################################
-	 * JList
-	 * ########################################################################
-	 */
-		JList listGradeList = new JList();
-		listGradeList.setFont(new Font("Dialog", Font.BOLD, 20));
-		listGradeList.setBackground(Color.WHITE);
-		listGradeList.setBounds(663, 59, 327, 628);
-		frame.getContentPane().add(listGradeList);
-		
+				
 		
 	/*
 	 * ########################################################################
@@ -454,6 +440,7 @@ public class GradeAppGUIMain {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(660, 60, 331, 627);
 		frame.getContentPane().add(scrollPane);
+		DefaultListModel gradeListModel = new DefaultListModel<>();
 		JList gradeList = new JList(gradeListModel);
 		gradeList.setFont(new Font("Tahoma", Font.BOLD, 16));
 		gradeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -497,7 +484,8 @@ public class GradeAppGUIMain {
 						gradeInput = Float.parseFloat(line);
 						Grade newGrade = new Grade(gradeInput,letterGrade);
 						GradeAppGUIMain.this.grades.add(newGrade);
-						GradeAppGUIMain.this.gradeListModel.addElement(newGrade.toString());
+						gradeListModel.addElement(newGrade.toString());
+						gradeList.clearSelection();
 					}
 					bufferedReader.close();
 					updateGradeData();
@@ -584,6 +572,7 @@ public class GradeAppGUIMain {
 		btnAddGrade.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent addGradeEvent) {
+				try {
 					JFrame frame = new JFrame("Add Grade");
 					String addedGrade 
 						= JOptionPane.showInputDialog(frame, "Enter grade: ");
@@ -593,10 +582,19 @@ public class GradeAppGUIMain {
 						GradeAppGUIMain.this.grades = new ArrayList<Grade>();
 					}
 					Grade newGrade = new Grade(gradeInput,letterGradeInput);
+					gradeListModel.addElement(
+							newGrade.toString());
 					GradeAppGUIMain.this.grades.add(newGrade);
-					GradeAppGUIMain.this.gradeListModel.addElement(newGrade.toString());
-					GradeAppGUIMain.this.grades.add(newGrade);
+					gradeList.clearSelection();
 					updateGradeData();
+				}
+				catch(NumberFormatException incorrectAddEvent) {
+					JOptionPane.showMessageDialog(null, "Incorrect input,"
+							+ " value not added");
+					 System.err.println("NumberFormatException: " 
+							+ incorrectAddEvent.getMessage());
+				}
+				gradeList.clearSelection();
 			}
 		});
 		
@@ -610,9 +608,20 @@ public class GradeAppGUIMain {
 		btnRemoveGrade.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent removeGradeEvent) {
-				if(GradeAppGUIMain.this.grades != null) {
-					GradeAppGUIMain.this.grades.remove(
-							GradeAppGUIMain.this.selectedGrade);
+				try {
+					if(GradeAppGUIMain.this.grades != null) {
+						GradeAppGUIMain.this.grades.remove(
+								gradeList.getSelectedIndex());
+						gradeListModel.remove(
+								gradeList.getSelectedIndex());
+						gradeList.clearSelection();
+					}
+				}
+				catch(IndexOutOfBoundsException incorrectSelectionEvent) {
+					JOptionPane.showMessageDialog(null, "Make a selection on "
+							+ "the list");
+					 System.err.println("IOException: " 
+							+ incorrectSelectionEvent.getMessage());
 				}
 			}
 		});
@@ -624,6 +633,37 @@ public class GradeAppGUIMain {
 		btnAmendGrade.setFont(new Font("Dialog", Font.BOLD, 16));
 		btnAmendGrade.setBounds(468, 160, 180, 45);
 		frame.getContentPane().add(btnAmendGrade);
+		
+		btnAmendGrade.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ammendGradeEvent) {
+				try {
+					JFrame frame = new JFrame("Amend Grade");
+					String ammendedGrade 
+						= JOptionPane.showInputDialog(frame, "Change grade: ");
+					float gradeInput = Float.parseFloat(ammendedGrade);
+					String letterGradeInput = "A";
+					Grade newGrade = new Grade(gradeInput,letterGradeInput);
+					gradeListModel.setElementAt(newGrade,
+							gradeList.getSelectedIndex());
+					GradeAppGUIMain.this.grades.set(gradeList.getSelectedIndex(), newGrade);
+					gradeList.clearSelection();
+					}
+				
+				catch(IndexOutOfBoundsException incorrectSelectionEvent) {
+					JOptionPane.showMessageDialog(null, "Make a selection on "
+							+ "the list");
+					 System.err.println("IOException: " 
+							+ incorrectSelectionEvent.getMessage());
+				}
+				catch(NumberFormatException incorrectInputEvent) {
+					JOptionPane.showMessageDialog(null, 
+							"Error! Must enter a number");
+					System.err.println("NumberFormatException: " 
+							+ incorrectInputEvent.getMessage());
+				}
+			}
+		});
 		
 		JButton buttonSetMinGrade = new JButton("Set Min Grade");
 		buttonSetMinGrade.setForeground(Color.WHITE);
@@ -737,15 +777,6 @@ public class GradeAppGUIMain {
 		btnClearEverything.setBounds(458, 644, 190, 45);
 		frame.getContentPane().add(btnClearEverything);
 		
-		
-		gradeList.addListSelectionListener(new ListSelectionListener() {
-			
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				GradeAppGUIMain.this.selectedGrade
-					= gradeList.getSelectedIndex();
-			}
-		});
 		
 		btnClearEverything.addActionListener(new ActionListener() {
 			@Override
