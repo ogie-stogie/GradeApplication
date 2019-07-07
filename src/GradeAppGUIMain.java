@@ -615,6 +615,7 @@ public class GradeAppGUIMain {
 						gradeListModel.remove(
 								gradeList.getSelectedIndex());
 						gradeList.clearSelection();
+						updateGradeData();
 					}
 				}
 				catch(IndexOutOfBoundsException incorrectSelectionEvent) {
@@ -648,6 +649,7 @@ public class GradeAppGUIMain {
 							gradeList.getSelectedIndex());
 					GradeAppGUIMain.this.grades.set(gradeList.getSelectedIndex(), newGrade);
 					gradeList.clearSelection();
+					updateGradeData();
 					}
 				
 				catch(IndexOutOfBoundsException incorrectSelectionEvent) {
@@ -748,6 +750,13 @@ public class GradeAppGUIMain {
 		btnPercentile.setBackground(new Color(128, 0, 128));
 		btnPercentile.setBounds(12, 532, 190, 45);
 		frame.getContentPane().add(btnPercentile);
+		
+		btnPercentile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				PercentileTableGUI frame = new PercentileTableGUI();
+				frame.main(null);
+			}
+		});
 		
 		JButton btnGenerateReport = new JButton("Generate Report");
 		btnGenerateReport.setForeground(new Color(255, 255, 255));

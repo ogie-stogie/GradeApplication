@@ -3,9 +3,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.Window.Type;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Color;
+import javax.swing.JButton;
 
 //Created by Taylor Bart
 
@@ -44,9 +48,11 @@ public class PercentileTableGUI {
 		frmTableOfPercentile.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 16));
 		frmTableOfPercentile.getContentPane().setBackground(Color.CYAN);
 		frmTableOfPercentile.setTitle("Table of Percentile Ranks");
-		frmTableOfPercentile.setBounds(100, 100, 817, 144);
+		frmTableOfPercentile.setBounds(100, 100, 817, 210);
 		frmTableOfPercentile.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmTableOfPercentile.getContentPane().setLayout(null);
+		frmTableOfPercentile.setVisible(false);
+		
 		
 		JLabel lblTenthPercentile = new JLabel("10th");
 		lblTenthPercentile.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -155,5 +161,19 @@ public class PercentileTableGUI {
 		lblNinetiethPercentileOutput.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNinetiethPercentileOutput.setBounds(708, 56, 75, 30);
 		frmTableOfPercentile.getContentPane().add(lblNinetiethPercentileOutput);
+		
+		JButton btnClose = new JButton("Close");
+		btnClose.setForeground(new Color(255, 255, 255));
+		btnClose.setFont(new Font("Dialog", Font.BOLD, 18));
+		btnClose.setBackground(new Color(139, 0, 139));
+		btnClose.setBounds(99, 110, 597, 50);
+		frmTableOfPercentile.getContentPane().add(btnClose);
+		
+		btnClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				frmTableOfPercentile.setVisible(false);
+			}
+			
+		});
 	}
 }
