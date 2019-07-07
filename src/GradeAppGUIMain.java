@@ -54,7 +54,7 @@ public class GradeAppGUIMain {
 	private float minimumGrade = 0.0f, maximumGrade = 100.0f;
 	private List<Grade> grades = new ArrayList<Grade>();
 	private int selectedGrade;
-	private float lowestGrade, highestGrade, medianGrade, averageGrade;
+	private float lowestGrade, highestGrade, medianGrade, averageGrade, temp;
 	private float percentA = 90.0f, percentB = 80.0f;
 	private float percentC = 70.0f, percentD = 60.0f;
 	
@@ -516,7 +516,7 @@ public class GradeAppGUIMain {
 				}
 				catch(NumberFormatException numberFormatException) {
 					JOptionPane.showMessageDialog(null, "Error! File" 
-							+ fileName + "has incorrect formatting.");
+							+ fileName + " has incorrect formatting.");
 					 System.err.println("NumberFormatException: " 
 							+ numberFormatException.getMessage());
 				}
@@ -595,7 +595,7 @@ public class GradeAppGUIMain {
 					Grade newGrade = new Grade(gradeInput,letterGradeInput);
 					GradeAppGUIMain.this.grades.add(newGrade);
 					GradeAppGUIMain.this.gradeListModel.addElement(newGrade.toString());
-					GradeAppGUIMain.this.grades.add(newGrade);
+					//GradeAppGUIMain.this.grades.add(newGrade);
 					updateGradeData();
 			}
 		});
@@ -785,7 +785,6 @@ public class GradeAppGUIMain {
 				lblMinGrade.setText(Float.toString(minimumGrade));
 				lblMaxGrade.setText(Float.toString(maximumGrade));
 				
-				grades.clear();
 			}
 		});
 	}
@@ -803,6 +802,7 @@ public class GradeAppGUIMain {
 		
 		GradeAppGUIMain.this.tempGrades = new ArrayList<Float>();
 		try {
+			temp = 0;
 			averageGrade = 0;
 			countA = 0;
 			countB = 0;
@@ -810,17 +810,20 @@ public class GradeAppGUIMain {
 			countD = 0;
 			countF = 0;
 			
-			/*for (int gIndex = 0; gIndex < grades.size(); gIndex++) {
-				if (grades.get(gIndex) >= minimumGrade 
-					&& grades.get(gIndex) <= maximumGrade) {
-					
-					tempGrades.add(grades.get(gIndex));
-					averageGrade = averageGrade + grades.get(gIndex);
+			for(Grade gradeInput:grades) {
+				temp = gradeInput.getGrade();
+				if (temp < minimumGrade) {
+					tempGrades.add(minimumGrade);
+				}
+				else if (temp > maximumGrade) {
+					tempGrades.add(maximumGrade);
+				}
+				else {
+					tempGrades.add(temp);
 				}
 			}
-			*/
-
 			Collections.sort(tempGrades);
+			
 			for (int gIndex = 0; gIndex < tempGrades.size(); gIndex++) {
 				if (tempGrades.get(gIndex) >= percentA) {
 					countA++;
@@ -837,7 +840,10 @@ public class GradeAppGUIMain {
 				else {
 					countF++;
 				}
+				
+				averageGrade = averageGrade + tempGrades.get(gIndex);
 			}
+			System.out.println(averageGrade);
 			lblACount.setText(Integer.toString(countA));;
 			lblBCount.setText(Integer.toString(countB));;
 			lblCCount.setText(Integer.toString(countC));;
@@ -846,8 +852,15 @@ public class GradeAppGUIMain {
 			
 			lowestGrade = tempGrades.get(0);
 			highestGrade = tempGrades.get(tempGrades.size()-1);
-			medianGrade = tempGrades.get(tempGrades.size()/2);
 			averageGrade = averageGrade / tempGrades.size();
+			//Median Grade Calculation
+			if (tempGrades.size() % 2 == 0) {
+				medianGrade = (tempGrades.get(tempGrades.size()/2) + 
+						tempGrades.get(tempGrades.size()-1)) / 2;
+			}
+			else {
+				medianGrade = (tempGrades.get(tempGrades.size() / 2));
+			}
 			
 			lblLowestGradeOutput.setText(Float.toString(lowestGrade));
 			lblHighestGradeOutput.setText(Float.toString(highestGrade));
