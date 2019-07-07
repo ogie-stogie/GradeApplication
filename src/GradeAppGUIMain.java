@@ -1,13 +1,8 @@
-<<<<<<< HEAD
-// This is a gitHub test.. Please help!
 import java.awt.EventQueue;
-=======
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
->>>>>>> refs/heads/btveach_edit
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
@@ -17,27 +12,21 @@ import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-<<<<<<< HEAD
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-=======
 import javax.swing.JFileChooser;
->>>>>>> refs/heads/btveach_edit
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.NumberFormatter;
-
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-<<<<<<< HEAD
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ListSelectionModel;
 import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
-=======
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.ActionListener;
@@ -50,27 +39,21 @@ import java.awt.EventQueue;
 
 
 
->>>>>>> refs/heads/btveach_edit
 
 public class GradeAppGUIMain {
 
 	//Global Variables
 	private JFrame frame;
-<<<<<<< HEAD
 	private DefaultListModel gradeListModel = new DefaultListModel<>();
-=======
 	private JTextField tfGradeF;
 	private JLabel lblLowestGradeOutput, lblHighestGradeOutput;
 	private JLabel lblMedianGradeOutput, lblAverageGradeOutput;
 	private JLabel lblACount, lblBCount, lblCCount;
 	private JLabel lblDCount, lblFCount;
 	
->>>>>>> refs/heads/btveach_edit
 	private float minimumGrade = 0.0f, maximumGrade = 100.0f;
-<<<<<<< HEAD
 	private List<Grade> grades = new ArrayList<Grade>();
 	private int selectedGrade;
-=======
 	private float lowestGrade, highestGrade, medianGrade, averageGrade;
 	private float percentA = 90.0f, percentB = 80.0f;
 	private float percentC = 70.0f, percentD = 60.0f;
@@ -81,8 +64,8 @@ public class GradeAppGUIMain {
 	private int countD = 0;
 	private int countF = 0;
 	
-	private List<Float> grades, tempGrades;
->>>>>>> refs/heads/btveach_edit
+	private List<Float> tempGrades;
+
 	/*
 	 * ########################################################################
 	 * Launch the application.
@@ -294,8 +277,6 @@ public class GradeAppGUIMain {
 		tfGradeF.setColumns(10);
 		tfGradeF.setBounds(528, 490, 120, 45);
 		frame.getContentPane().add(tfGradeF);
-<<<<<<< HEAD
-=======
 		
 		tfGradeF.addMouseListener(new MouseAdapter() {
 			@Override
@@ -306,7 +287,6 @@ public class GradeAppGUIMain {
 		});
 		
 
-		
 	/*
 	 * ########################################################################
 	 * JList
@@ -317,7 +297,6 @@ public class GradeAppGUIMain {
 		listGradeList.setBackground(Color.WHITE);
 		listGradeList.setBounds(663, 59, 327, 628);
 		frame.getContentPane().add(listGradeList);
->>>>>>> refs/heads/btveach_edit
 		
 		
 	/*
@@ -613,14 +592,11 @@ public class GradeAppGUIMain {
 					if (GradeAppGUIMain.this.grades == null) {
 						GradeAppGUIMain.this.grades = new ArrayList<Grade>();
 					}
-<<<<<<< HEAD
 					Grade newGrade = new Grade(gradeInput,letterGradeInput);
 					GradeAppGUIMain.this.grades.add(newGrade);
 					GradeAppGUIMain.this.gradeListModel.addElement(newGrade.toString());
-=======
-					GradeAppGUIMain.this.grades.add(gradeInput);
+					GradeAppGUIMain.this.grades.add(newGrade);
 					updateGradeData();
->>>>>>> refs/heads/btveach_edit
 			}
 		});
 		
@@ -808,17 +784,10 @@ public class GradeAppGUIMain {
 				
 				lblMinGrade.setText(Float.toString(minimumGrade));
 				lblMaxGrade.setText(Float.toString(maximumGrade));
-<<<<<<< HEAD
-=======
 				
->>>>>>> refs/heads/btveach_edit
 				grades.clear();
 			}
-<<<<<<< HEAD
 		});
-=======
-		});		
->>>>>>> refs/heads/btveach_edit
 	}
 	
 	
@@ -841,6 +810,7 @@ public class GradeAppGUIMain {
 			countD = 0;
 			countF = 0;
 			
+			/*
 			for (int gIndex = 0; gIndex < grades.size(); gIndex++) {
 				if (grades.get(gIndex) >= minimumGrade 
 					&& grades.get(gIndex) <= maximumGrade) {
@@ -849,6 +819,7 @@ public class GradeAppGUIMain {
 					averageGrade = averageGrade + grades.get(gIndex);
 				}
 			}
+			*/
 
 			Collections.sort(tempGrades);
 			for (int gIndex = 0; gIndex < tempGrades.size(); gIndex++) {
