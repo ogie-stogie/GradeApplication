@@ -825,6 +825,8 @@ public class GradeAppGUIMain {
 				lblMinGrade.setText(Float.toString(minimumGrade));
 				lblMaxGrade.setText(Float.toString(maximumGrade));
 				
+				gradeListModel.clear();
+				
 			}
 		});
 	}
@@ -854,14 +856,32 @@ public class GradeAppGUIMain {
 				temp = gradeInput.getGrade();
 				if (temp < minimumGrade) {
 					tempGrades.add(minimumGrade);
+					gradeInput.setLetterGrade("F");
 				}
 				else if (temp > maximumGrade) {
 					tempGrades.add(maximumGrade);
+					gradeInput.setLetterGrade("A");
 				}
 				else {
 					tempGrades.add(temp);
+					if (temp >= percentA) {
+						gradeInput.setLetterGrade("A");
+					}
+					else if (temp >= percentB) {
+						gradeInput.setLetterGrade("B");
+					}
+					else if (temp >= percentC) {
+						gradeInput.setLetterGrade("C");
+					}
+					else if (temp >= percentD) {
+						gradeInput.setLetterGrade("D");
+					}
+					else {
+						gradeInput.setLetterGrade("F");
+					}
 				}
 			}
+			
 			Collections.sort(tempGrades);
 			
 			for (int gIndex = 0; gIndex < tempGrades.size(); gIndex++) {
