@@ -65,6 +65,7 @@ public class GradeAppGUIMain {
 	private int countF = 0;
 	
 	private List<Float> tempGrades;
+
 	/*
 	 * ########################################################################
 	 * Launch the application.
@@ -286,7 +287,6 @@ public class GradeAppGUIMain {
 		});
 		
 
-		
 	/*
 	 * ########################################################################
 	 * JList
@@ -818,8 +818,9 @@ public class GradeAppGUIMain {
 					averageGrade = averageGrade + grades.get(gIndex);
 				}
 			}
+			*/
 
-			*/Collections.sort(tempGrades);
+			Collections.sort(tempGrades);
 			for (int gIndex = 0; gIndex < tempGrades.size(); gIndex++) {
 				if (tempGrades.get(gIndex) >= percentA) {
 					countA++;
