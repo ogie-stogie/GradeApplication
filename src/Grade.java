@@ -1,4 +1,5 @@
 
+
 public class Grade {
 	
 	private float grade;
@@ -30,3 +31,4 @@ public class Grade {
 				this.getGrade());
 	}
 }
+
