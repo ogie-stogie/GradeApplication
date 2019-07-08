@@ -998,12 +998,14 @@ public class GradeAppGUIMain {
 			
 			for(Grade gradeInput:grades) {
 				temp = gradeInput.getGrade();
-				roundedTemp = (int) Math.round(gradeInput.getGrade());
+				roundedTemp = Math.round(gradeInput.getGrade());
 				if (temp < minimumGrade) {
 					tempGrades.add(minimumGrade);
+					roundedTemp = Math.round(minimumGrade);
 				}
 				else if (temp > maximumGrade) {
 					tempGrades.add(maximumGrade);
+					roundedTemp = Math.round(maximumGrade);
 				}
 				else {
 					tempGrades.add(temp);
