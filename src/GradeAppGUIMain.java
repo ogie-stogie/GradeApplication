@@ -918,6 +918,8 @@ public class GradeAppGUIMain {
 			if (tempGrades.size() % 2 == 0) {
 				medianGrade = (tempGrades.get( tempGrades.size() / 2 ) + 
 						tempGrades.get( ( tempGrades.size() / 2 ) - 1) ) / 2;
+				medianGrade = ((tempGrades.get(tempGrades.size() / 2) + 
+						tempGrades.get(tempGrades.size() / 2) - 1 )) / 2;
 			}
 			else {
 				medianGrade = (tempGrades.get(tempGrades.size() / 2));
