@@ -1,3 +1,4 @@
+package GradeApplication;
 
 public class Grade {
 	
@@ -30,3 +31,4 @@ public class Grade {
 				this.getGrade());
 	}
 }
+

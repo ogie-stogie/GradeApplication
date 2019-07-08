@@ -1,3 +1,16 @@
+/*	Names: Taylor Bart, Vipul Vadodaria, Benjamin Veach
+ * 	Class ID: 41792
+ * 	Grading Analytics System
+ * 	Description:	Contains the entire GUI framework for the system
+ * 					Contains two frames for the main GUI and the percentile table
+ * 					Contains five textfields and eighteen labels
+ * 					Contains two lists: one for holding Grade objects, the other 
+ * 										for holding float variables
+ * 					Contains ten private float variables and five private int variables
+ * 
+ */
+
+package GradeApplication;
 import java.awt.EventQueue;
 import java.io.*;
 import java.util.ArrayList;
@@ -42,9 +55,9 @@ import java.awt.EventQueue;
 
 public class GradeAppGUIMain {
 
-	//Global Variables
+	/* Global Variables */
 	private JFrame frame, frmTableOfPercentile;
-	private JTextField tfGradeF;
+	private JTextField tfGradeA, tfGradeB, tfGradeC, tfGradeD, tfGradeF;
 	private JLabel lblLowestGradeOutput, lblHighestGradeOutput;
 	private JLabel lblMedianGradeOutput, lblAverageGradeOutput;
 	private JLabel lblACount, lblBCount, lblCCount;
@@ -110,7 +123,8 @@ public class GradeAppGUIMain {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JTextField tfGradeA = new JTextField();
+		tfGradeA = new JTextField();
+		tfGradeA.setEditable(false);
 		tfGradeA.setHorizontalAlignment(SwingConstants.CENTER);
 		tfGradeA.setText(Float.toString(percentA));
 		tfGradeA.setBackground(Color.GREEN);
@@ -147,7 +161,8 @@ public class GradeAppGUIMain {
 			}
 		});
 		
-		JTextField tfGradeB = new JTextField();
+		tfGradeB = new JTextField();
+		tfGradeB.setEditable(false);
 		tfGradeB.setHorizontalAlignment(SwingConstants.CENTER);
 		tfGradeB.setText(Float.toString(percentB));
 		tfGradeB.setBackground(new Color(204, 255, 51));
@@ -190,7 +205,8 @@ public class GradeAppGUIMain {
 			}
 		});
 		
-		JTextField tfGradeC = new JTextField();
+		tfGradeC = new JTextField();
+		tfGradeC.setEditable(false);
 		tfGradeC.setHorizontalAlignment(SwingConstants.CENTER);
 		tfGradeC.setText(Float.toString(percentC));
 		tfGradeC.setBackground(Color.YELLOW);
@@ -233,7 +249,8 @@ public class GradeAppGUIMain {
 			}
 		});
 
-		JTextField tfGradeD = new JTextField();
+		tfGradeD = new JTextField();
+		tfGradeD.setEditable(false);
 		tfGradeD.setHorizontalAlignment(SwingConstants.CENTER);
 		tfGradeD.setText(Float.toString(percentD));
 		tfGradeD.setBackground(new Color(255, 102, 51));
@@ -273,6 +290,7 @@ public class GradeAppGUIMain {
 		});
 		
 		tfGradeF = new JTextField();
+		tfGradeF.setEditable(false);
 		tfGradeF.setHorizontalAlignment(SwingConstants.CENTER);
 		tfGradeF.setText(Float.toString(percentD));
 		tfGradeF.setBackground(Color.RED);
@@ -664,7 +682,7 @@ public class GradeAppGUIMain {
 			    int returnVal = chooser.showSaveDialog(null);
 			    if(returnVal == JFileChooser.APPROVE_OPTION) {
 			    	JOptionPane.showMessageDialog(null, 
-			    			"You chose to open this file: " +
+			    			"You chose to save to this file: " +
 			            chooser.getSelectedFile().getName());
 			    }
 			    File file = chooser.getSelectedFile();
@@ -697,6 +715,13 @@ public class GradeAppGUIMain {
 					 System.err.println("IOException: " 
 							+ IOException.getMessage());
 				}
+				catch(IllegalArgumentException argumentException)
+				{
+					JOptionPane.showMessageDialog(null, "Error! File "
+							+ fileName + "contains invalid characters.");
+					System.err.println("ArgumentException: "
+							+ argumentException.getMessage());
+				}
 			}
 		});
 		
@@ -714,16 +739,27 @@ public class GradeAppGUIMain {
 					JFrame frame = new JFrame("Add Grade");
 					String addedGrade 
 						= JOptionPane.showInputDialog(frame, "Enter grade: ");
-					float gradeInput = Float.parseFloat(addedGrade);
 					String letterGradeInput = "A";
+					float gradeInput = Float.parseFloat(addedGrade);
+					if (gradeInput < minimumGrade || gradeInput > maximumGrade)
+					{
+						JOptionPane.showMessageDialog(null, "Grade cannot be less"
+								+ " than minimum set grade, or greater"
+								+ " than the maximum set grade.");
+						gradeInput = Float.parseFloat(addedGrade);
+					}
+					else
+					{
+						Grade newGrade = new Grade(gradeInput,letterGradeInput);
+						gradeListModel.addElement(newGrade.toString());
+						GradeAppGUIMain.this.grades.add(newGrade);
+						gradeList.clearSelection();
+						updateGradeData();
+					}
 					if (GradeAppGUIMain.this.grades == null) {
 						GradeAppGUIMain.this.grades = new ArrayList<Grade>();
 					}
-					Grade newGrade = new Grade(gradeInput,letterGradeInput);
-					gradeListModel.addElement(newGrade.toString());
-					GradeAppGUIMain.this.grades.add(newGrade);
-					gradeList.clearSelection();
-					updateGradeData();
+					
 				}
 				catch(NumberFormatException incorrectAddEvent) {
 					JOptionPane.showMessageDialog(null, "Incorrect input,"
@@ -841,6 +877,7 @@ public class GradeAppGUIMain {
 						System.err.println("NumberFormatException: " 
 						+ error.getMessage());
 				}
+				
 			}
 		});
 		
