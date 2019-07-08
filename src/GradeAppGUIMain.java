@@ -58,7 +58,7 @@ public class GradeAppGUIMain {
 	private List<Float> tempGrades, originalGrades;
 
 	private float minimumGrade = 0.0f, maximumGrade = 100.0f;
-	private float lowestGrade, highestGrade, medianGrade, averageGrade, temp;
+	private float lowestGrade, highestGrade, medianGrade, averageGrade;
 	private float percentA = 90.0f, percentB = 80.0f;
 	private float percentC = 70.0f, percentD = 60.0f;
 	
@@ -987,7 +987,8 @@ public class GradeAppGUIMain {
 		
 		GradeAppGUIMain.this.tempGrades = new ArrayList<Float>();
 		try {
-			temp = 0;
+			float temp = 0;
+			float roundedTemp =  0;
 			averageGrade = 0;
 			countA = 0;
 			countB = 0;
@@ -997,31 +998,31 @@ public class GradeAppGUIMain {
 			
 			for(Grade gradeInput:grades) {
 				temp = gradeInput.getGrade();
+				roundedTemp = (int) Math.round(gradeInput.getGrade());
 				if (temp < minimumGrade) {
 					tempGrades.add(minimumGrade);
-					gradeInput.setLetterGrade("F");
 				}
 				else if (temp > maximumGrade) {
 					tempGrades.add(maximumGrade);
-					gradeInput.setLetterGrade("A");
 				}
 				else {
 					tempGrades.add(temp);
-					if (temp >= percentA) {
-						gradeInput.setLetterGrade("A");
-					}
-					else if (temp >= percentB) {
-						gradeInput.setLetterGrade("B");
-					}
-					else if (temp >= percentC) {
-						gradeInput.setLetterGrade("C");
-					}
-					else if (temp >= percentD) {
-						gradeInput.setLetterGrade("D");
-					}
-					else {
-						gradeInput.setLetterGrade("F");
-					}
+				}
+				
+				if (roundedTemp >= percentA) {
+					gradeInput.setLetterGrade("A");
+				}
+				else if (roundedTemp >= percentB) {
+					gradeInput.setLetterGrade("B");
+				}
+				else if (roundedTemp >= percentC) {
+					gradeInput.setLetterGrade("C");
+				}
+				else if (roundedTemp >= percentD) {
+					gradeInput.setLetterGrade("D");
+				}
+				else {
+					gradeInput.setLetterGrade("F");
 				}
 			}
 			
