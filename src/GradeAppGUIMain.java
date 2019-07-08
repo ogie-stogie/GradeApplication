@@ -10,7 +10,6 @@
  * 
  */
 
-package GradeApplication;
 import java.awt.EventQueue;
 import java.io.*;
 import java.util.ArrayList;
