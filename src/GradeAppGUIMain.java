@@ -915,8 +915,8 @@ public class GradeAppGUIMain {
 			averageGrade = averageGrade / tempGrades.size();
 			//Median Grade Calculation
 			if (tempGrades.size() % 2 == 0) {
-				medianGrade = (tempGrades.get(tempGrades.size()/2) + 
-						tempGrades.get(tempGrades.size()-1)) / 2;
+				medianGrade = ((tempGrades.get(tempGrades.size() / 2) + 
+						tempGrades.get(tempGrades.size() / 2) - 1 )) / 2;
 			}
 			else {
 				medianGrade = (tempGrades.get(tempGrades.size() / 2));
