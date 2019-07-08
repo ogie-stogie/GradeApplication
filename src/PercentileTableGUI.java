@@ -149,7 +149,7 @@ public class PercentileTableGUI {
 		lblSeventiethPercentileOutput.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSeventiethPercentileOutput.setBounds(534, 56, 75, 30);
 		frmTableOfPercentile.getContentPane().add(lblSeventiethPercentileOutput);
-		
+				
 		JLabel lblEightiethPercentileOutput = new JLabel("80");
 		lblEightiethPercentileOutput.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblEightiethPercentileOutput.setHorizontalAlignment(SwingConstants.CENTER);

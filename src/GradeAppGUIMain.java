@@ -766,6 +766,12 @@ public class GradeAppGUIMain {
 		btnGenerateReport.setBounds(12, 589, 636, 43);
 		frame.getContentPane().add(btnGenerateReport);
 		
+		btnGenerateReport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				generateReport();
+			}
+		});
+		
 		JButton btnExit = new JButton("Exit Program");
 		btnExit.setForeground(Color.WHITE);
 		btnExit.setFont(new Font("Dialog", Font.BOLD, 16));
@@ -827,6 +833,7 @@ public class GradeAppGUIMain {
 				lblMaxGrade.setText(Float.toString(maximumGrade));
 				
 				gradeListModel.clear();
+				grades.clear();
 				
 			}
 		});
@@ -941,5 +948,108 @@ public class GradeAppGUIMain {
 			 */
 			
 		}
-	}	
+	}
+	
+	/*
+	 * Method Name: generateReport()
+	 * Description: generates a text file to be saved by a user. The report
+	 * contains a summary of the grade data in an easy to ready format.
+	 */
+	public void generateReport() {
+		/*
+		JFileChooser chooser = new JFileChooser();
+	    int returnVal = chooser.showSaveDialog(null);
+	    if(returnVal == JFileChooser.APPROVE_OPTION) {
+	    	JOptionPane.showMessageDialog(null, 
+	    			"Saving Report to: " +
+	            chooser.getSelectedFile().getName());
+	    }
+	    File file = chooser.getSelectedFile();
+	    String fileName = file.getAbsolutePath();
+		try {
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			FileWriter fileWriter =
+					new FileWriter(fileName);
+			BufferedWriter bufferedWriter =
+					new BufferedWriter(fileWriter);
+			*/
+			//REPORT START
+			StringBuilder sb = new StringBuilder();
+			
+			sb.append(String.format("%-80s%n", "####################"
+					+ "########################################"
+					+ "####################"));
+			sb.append(String.format("%45s%n", "Grade Report"));
+			sb.append(String.format("%-80s%n", "####################"
+					+ "########################################"
+					+ "####################"));
+			
+			sb.append(String.format("%n"));
+			
+			sb.append(String.format("%-20s %-20s%n", "Total Grades:", 
+							"<GradeValues>"));
+			
+			sb.append(String.format("%n"));
+			
+			sb.append(String.format("%-20s %-20s %-20s %-20s%n", 
+					"Minimum Grade", "Maximum Grade", "Median Grade",
+					"Average Grade"));
+			sb.append(String.format("%-20s %-20s %-20s %-20s%n", 
+					"-------------", "-------------", "------------",
+					"-------------"));
+			sb.append(String.format("%-20s %-20s %-20s %-20s%n", 
+					minimumGrade, maximumGrade, medianGrade,
+					averageGrade));
+			
+			sb.append(String.format("%n"));
+			
+			sb.append(String.format("%-8s %-18s %-8s%n", "Grade", 
+					"  Percentage", "Total"));
+			sb.append(String.format("%-8s %-18s %-8s%n", "-----", 
+					"--------------", "-----"));
+			sb.append(String.format("%-1s %-6s %-18s %-8s%n", "", "A", 
+					percentA + "% - " + maximumGrade + "%", countA));
+			sb.append(String.format("%-1s %-6s %-18s %-85s%n", "", "B", 
+					percentB + "% -  " + percentA + "%", countB));
+			sb.append(String.format("%-1s %-6s %-18s %-8s%n", "", "C",
+					percentC + "% -  " + percentB + "%", countC));
+			sb.append(String.format("%-1s %-6s %-18s %-8s%n", "", "D",
+					percentD + "% -  " + percentD + "%", countD));
+			sb.append(String.format("%-1s %-6s %-18s %-8s%n", "", "F",
+					" " + minimumGrade + "% -  " + percentD + "%", countF));
+			
+			sb.append(String.format("%n"));
+			
+			sb.append(String.format("%47s%n", "Percentile Chart"));
+			sb.append(String.format("%-8s %-8s %-8s %-8s %-8s %-8s %-8s %-8s"
+					+ " %-8s%n", "10th","20th","30th", "40th", "50th", "60th",
+					"70th", "80th", "90th"));
+			sb.append(String.format("%-8s %-8s %-8s %-8s %-8s %-8s %-8s %-8s"
+					+ "%-8s%n", "----","----","----", "----", "----", "----",
+					"----", "----", "----"));
+			sb.append(String.format("%-8s %-8s %-8s %-8s %-8s %-8s %-8s %-8s"
+					+ " %-8s%n", "<value>", "<value>", "<value>", "<value>",
+					"<value>", "<value>", "<value>", "<value>", "<value>"));
+			
+			System.out.print(sb.toString());
+			//bufferedWriter.write(sb.toString());
+			//bufferedWriter.close();
+		/*
+		}
+		catch(FileNotFoundException fileException) {
+			JOptionPane.showMessageDialog(null, "Error! File " 
+					+ fileName + " not found.");
+			 System.err.println("FileNotFoundException: " 
+					+ fileException.getMessage());
+		}
+		catch(IOException IOException) {
+			JOptionPane.showMessageDialog(null, "Error! File" 
+					+ fileName + "contains unreadable characters.");
+			 System.err.println("IOException: " 
+					+ IOException.getMessage());
+		}
+		*/
+	}
 }
