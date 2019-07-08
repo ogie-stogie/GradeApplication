@@ -1126,7 +1126,6 @@ public class GradeAppGUIMain {
 	 * contains a summary of the grade data in an easy to ready format.
 	 */
 	public void generateReport() {
-		/*
 		JFileChooser chooser = new JFileChooser();
 	    int returnVal = chooser.showSaveDialog(null);
 	    if(returnVal == JFileChooser.APPROVE_OPTION) {
@@ -1144,8 +1143,6 @@ public class GradeAppGUIMain {
 					new FileWriter(fileName);
 			BufferedWriter bufferedWriter =
 					new BufferedWriter(fileWriter);
-			*/
-			//REPORT START
 			StringBuilder sb = new StringBuilder();
 			
 			sb.append(String.format("%-80s%n", "####################"
@@ -1159,7 +1156,7 @@ public class GradeAppGUIMain {
 			sb.append(String.format("%n"));
 			
 			sb.append(String.format("%-20s %-20s%n", "Total Grades:", 
-							"<GradeValues>"));
+							tempGrades.size()));
 			
 			sb.append(String.format("%n"));
 			
@@ -1181,7 +1178,7 @@ public class GradeAppGUIMain {
 					"--------------", "-----"));
 			sb.append(String.format("%-1s %-6s %-18s %-8s%n", "", "A", 
 					percentA + "% - " + maximumGrade + "%", countA));
-			sb.append(String.format("%-1s %-6s %-18s %-85s%n", "", "B", 
+			sb.append(String.format("%-1s %-6s %-18s %-8s%n", "", "B", 
 					percentB + "% -  " + percentA + "%", countB));
 			sb.append(String.format("%-1s %-6s %-18s %-8s%n", "", "C",
 					percentC + "% -  " + percentB + "%", countC));
@@ -1194,19 +1191,24 @@ public class GradeAppGUIMain {
 			
 			sb.append(String.format("%47s%n", "Percentile Chart"));
 			sb.append(String.format("%-8s %-8s %-8s %-8s %-8s %-8s %-8s %-8s"
-					+ " %-8s%n", "10th","20th","30th", "40th", "50th", "60th",
+					+ "%-8s%n", "10th","20th","30th", "40th", "50th", "60th",
 					"70th", "80th", "90th"));
 			sb.append(String.format("%-8s %-8s %-8s %-8s %-8s %-8s %-8s %-8s"
 					+ "%-8s%n", "----","----","----", "----", "----", "----",
 					"----", "----", "----"));
 			sb.append(String.format("%-8s %-8s %-8s %-8s %-8s %-8s %-8s %-8s"
-					+ " %-8s%n", "<value>", "<value>", "<value>", "<value>",
-					"<value>", "<value>", "<value>", "<value>", "<value>"));
+					+ "%-8s%n", lblTenthPercentileOutput.getText(),
+					lblTwentiethPercentileOutput.getText(),
+					lblThirtiethPercentileOutput.getText(),
+					lblFourtiethPercentileOutput.getText(),
+					lblFiftiethPercentileOutput.getText(),
+					lblSixtiethPercentileOutput.getText(),
+					lblSeventiethPercentileOutput.getText(),
+					lblEightiethPercentileOutput.getText(),
+					lblNinetiethPercentileOutput.getText()));
 			
-			System.out.print(sb.toString());
-			//bufferedWriter.write(sb.toString());
-			//bufferedWriter.close();
-		/*
+			bufferedWriter.write(sb.toString());
+			bufferedWriter.close();
 		}
 		catch(FileNotFoundException fileException) {
 			JOptionPane.showMessageDialog(null, "Error! File " 
@@ -1220,6 +1222,11 @@ public class GradeAppGUIMain {
 			 System.err.println("IOException: " 
 					+ IOException.getMessage());
 		}
-		*/
+		catch(NullPointerException nullException) {
+			JOptionPane.showConfirmDialog(null, "Error! Cannot generate "
+					+ "report with zero entered grades.");
+			System.err.println("NullException: "
+					+ nullException.getMessage());
+		}
 	}
 }
