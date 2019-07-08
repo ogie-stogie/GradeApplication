@@ -49,10 +49,12 @@ public class GradeAppGUIMain {
 	private JLabel lblMedianGradeOutput, lblAverageGradeOutput;
 	private JLabel lblACount, lblBCount, lblCCount;
 	private JLabel lblDCount, lblFCount;
+	DefaultListModel gradeListModel;
 	
-	private float minimumGrade = 0.0f, maximumGrade = 100.0f;
 	private List<Grade> grades = new ArrayList<Grade>();
-	private int selectedGrade;
+	private List<Float> tempGrades, originalGrades;
+
+	private float minimumGrade = 0.0f, maximumGrade = 100.0f;
 	private float lowestGrade, highestGrade, medianGrade, averageGrade, temp;
 	private float percentA = 90.0f, percentB = 80.0f;
 	private float percentC = 70.0f, percentD = 60.0f;
@@ -63,7 +65,6 @@ public class GradeAppGUIMain {
 	private int countD = 0;
 	private int countF = 0;
 	
-	private List<Float> tempGrades;
 
 	/*
 	 * ########################################################################
@@ -441,7 +442,7 @@ public class GradeAppGUIMain {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(660, 60, 331, 627);
 		frame.getContentPane().add(scrollPane);
-		DefaultListModel gradeListModel = new DefaultListModel<>();
+		gradeListModel = new DefaultListModel<>();
 		JList gradeList = new JList(gradeListModel);
 		gradeList.setFont(new Font("Tahoma", Font.BOLD, 16));
 		gradeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -915,8 +916,8 @@ public class GradeAppGUIMain {
 			averageGrade = averageGrade / tempGrades.size();
 			//Median Grade Calculation
 			if (tempGrades.size() % 2 == 0) {
-				medianGrade = (tempGrades.get(tempGrades.size()/2) + 
-						tempGrades.get(tempGrades.size()-1)) / 2;
+				medianGrade = (tempGrades.get( tempGrades.size() / 2 ) + 
+						tempGrades.get( ( tempGrades.size() / 2 ) - 1) ) / 2;
 			}
 			else {
 				medianGrade = (tempGrades.get(tempGrades.size() / 2));
@@ -926,6 +927,10 @@ public class GradeAppGUIMain {
 			lblHighestGradeOutput.setText(Float.toString(highestGrade));
 			lblMedianGradeOutput.setText(Float.toString(medianGrade));
 			lblAverageGradeOutput.setText(String.format("%.1f", averageGrade));
+			gradeListModel.clear();
+			for (Grade updatedGrades : grades) {
+				gradeListModel.addElement(updatedGrades.toString());
+			}
 		}
 		catch (NullPointerException error) {
 			/*
