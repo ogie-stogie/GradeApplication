@@ -43,12 +43,15 @@ import java.awt.EventQueue;
 public class GradeAppGUIMain {
 
 	//Global Variables
-	private JFrame frame;
+	private JFrame frame, frmTableOfPercentile;
 	private JTextField tfGradeF;
 	private JLabel lblLowestGradeOutput, lblHighestGradeOutput;
 	private JLabel lblMedianGradeOutput, lblAverageGradeOutput;
 	private JLabel lblACount, lblBCount, lblCCount;
 	private JLabel lblDCount, lblFCount;
+	private JLabel lblTenthPercentileOutput, lblTwentiethPercentileOutput, lblThirtiethPercentileOutput;
+	private JLabel lblFourtiethPercentileOutput, lblFiftiethPercentileOutput, lblSixtiethPercentileOutput;
+	private JLabel lblSeventiethPercentileOutput, lblEightiethPercentileOutput, lblNinetiethPercentileOutput;
 	DefaultListModel gradeListModel;
 	
 	private List<Grade> grades = new ArrayList<Grade>();
@@ -292,6 +295,139 @@ public class GradeAppGUIMain {
 	 * JLabel Group
 	 * ########################################################################
 	 */
+		
+		frmTableOfPercentile = new JFrame();
+		frmTableOfPercentile.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 16));
+		frmTableOfPercentile.getContentPane().setBackground(Color.CYAN);
+		frmTableOfPercentile.setTitle("Table of Percentile Ranks");
+		frmTableOfPercentile.setBounds(100, 100, 817, 210);
+		frmTableOfPercentile.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmTableOfPercentile.getContentPane().setLayout(null);
+		frmTableOfPercentile.setVisible(false);
+		
+		
+		JLabel lblTenthPercentile = new JLabel("10th");
+		lblTenthPercentile.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblTenthPercentile.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTenthPercentile.setBounds(12, 13, 75, 30);
+		frmTableOfPercentile.getContentPane().add(lblTenthPercentile);
+		
+		JLabel lblTwentiethPercentile = new JLabel("20th");
+		lblTwentiethPercentile.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblTwentiethPercentile.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTwentiethPercentile.setBounds(99, 13, 75, 30);
+		frmTableOfPercentile.getContentPane().add(lblTwentiethPercentile);
+		
+		JLabel lblThirtiethPercentile = new JLabel("30th");
+		lblThirtiethPercentile.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblThirtiethPercentile.setHorizontalAlignment(SwingConstants.CENTER);
+		lblThirtiethPercentile.setBounds(186, 13, 75, 30);
+		frmTableOfPercentile.getContentPane().add(lblThirtiethPercentile);
+		
+		JLabel lblFourtiethPercentile = new JLabel("40th");
+		lblFourtiethPercentile.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblFourtiethPercentile.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFourtiethPercentile.setBounds(273, 13, 75, 30);
+		frmTableOfPercentile.getContentPane().add(lblFourtiethPercentile);
+		
+		JLabel lblFiftiethPercentile = new JLabel("50th");
+		lblFiftiethPercentile.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblFiftiethPercentile.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFiftiethPercentile.setBounds(360, 13, 75, 30);
+		frmTableOfPercentile.getContentPane().add(lblFiftiethPercentile);
+		
+		JLabel lblSixtiethPercentile = new JLabel("60th");
+		lblSixtiethPercentile.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblSixtiethPercentile.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSixtiethPercentile.setBounds(447, 13, 75, 30);
+		frmTableOfPercentile.getContentPane().add(lblSixtiethPercentile);
+		
+		JLabel lblSeventiethPercentile = new JLabel("70th");
+		lblSeventiethPercentile.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblSeventiethPercentile.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSeventiethPercentile.setBounds(534, 13, 75, 30);
+		frmTableOfPercentile.getContentPane().add(lblSeventiethPercentile);
+		
+		JLabel lblEightiethPercentile = new JLabel("80th");
+		lblEightiethPercentile.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblEightiethPercentile.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEightiethPercentile.setBounds(621, 13, 75, 30);
+		frmTableOfPercentile.getContentPane().add(lblEightiethPercentile);
+		
+		JLabel lblNinetiethPercentile = new JLabel("90th");
+		lblNinetiethPercentile.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNinetiethPercentile.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNinetiethPercentile.setBounds(708, 13, 75, 30);
+		frmTableOfPercentile.getContentPane().add(lblNinetiethPercentile);
+		
+		lblTenthPercentileOutput = new JLabel("0");
+		lblTenthPercentileOutput.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblTenthPercentileOutput.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTenthPercentileOutput.setBounds(12, 56, 75, 30);
+		frmTableOfPercentile.getContentPane().add(lblTenthPercentileOutput);
+		
+		lblTwentiethPercentileOutput = new JLabel("0");
+		lblTwentiethPercentileOutput.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblTwentiethPercentileOutput.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTwentiethPercentileOutput.setBounds(99, 56, 75, 30);
+		frmTableOfPercentile.getContentPane().add(lblTwentiethPercentileOutput);
+		
+		lblThirtiethPercentileOutput = new JLabel("0");
+		lblThirtiethPercentileOutput.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblThirtiethPercentileOutput.setHorizontalAlignment(SwingConstants.CENTER);
+		lblThirtiethPercentileOutput.setBounds(186, 56, 75, 30);
+		frmTableOfPercentile.getContentPane().add(lblThirtiethPercentileOutput);
+		
+		lblFourtiethPercentileOutput = new JLabel("0");
+		lblFourtiethPercentileOutput.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblFourtiethPercentileOutput.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFourtiethPercentileOutput.setBounds(273, 56, 75, 30);
+		frmTableOfPercentile.getContentPane().add(lblFourtiethPercentileOutput);
+		
+		lblFiftiethPercentileOutput = new JLabel("0");
+		lblFiftiethPercentileOutput.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblFiftiethPercentileOutput.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFiftiethPercentileOutput.setBounds(360, 56, 75, 30);
+		frmTableOfPercentile.getContentPane().add(lblFiftiethPercentileOutput);
+		
+		lblSixtiethPercentileOutput = new JLabel("0");
+		lblSixtiethPercentileOutput.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblSixtiethPercentileOutput.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSixtiethPercentileOutput.setBounds(447, 56, 75, 30);
+		frmTableOfPercentile.getContentPane().add(lblSixtiethPercentileOutput);
+		
+		lblSeventiethPercentileOutput = new JLabel("0");
+		lblSeventiethPercentileOutput.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblSeventiethPercentileOutput.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSeventiethPercentileOutput.setBounds(534, 56, 75, 30);
+		frmTableOfPercentile.getContentPane().add(lblSeventiethPercentileOutput);
+		
+		lblEightiethPercentileOutput = new JLabel("0");
+		lblEightiethPercentileOutput.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblEightiethPercentileOutput.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEightiethPercentileOutput.setBounds(621, 56, 75, 30);
+		frmTableOfPercentile.getContentPane().add(lblEightiethPercentileOutput);
+		
+		lblNinetiethPercentileOutput = new JLabel("0");
+		lblNinetiethPercentileOutput.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNinetiethPercentileOutput.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNinetiethPercentileOutput.setBounds(708, 56, 75, 30);
+		frmTableOfPercentile.getContentPane().add(lblNinetiethPercentileOutput);
+		
+		JButton btnClose = new JButton("Close");
+		btnClose.setForeground(new Color(255, 255, 255));
+		btnClose.setFont(new Font("Dialog", Font.BOLD, 18));
+		btnClose.setBackground(new Color(139, 0, 139));
+		btnClose.setBounds(99, 110, 597, 50);
+		frmTableOfPercentile.getContentPane().add(btnClose);
+		
+		btnClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				frmTableOfPercentile.setVisible(false);
+			}
+			
+		});
+		
 		JLabel lblTitle = new JLabel("Grade Helper v23");
 		lblTitle.setFont(new Font("Dialog", Font.BOLD, 20));
 		lblTitle.setBounds(12, 12, 636, 36);
@@ -754,8 +890,7 @@ public class GradeAppGUIMain {
 		
 		btnPercentile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				PercentileTableGUI frame = new PercentileTableGUI();
-				frame.main(null);
+				frmTableOfPercentile.setVisible(true);
 			}
 		});
 		
@@ -932,6 +1067,38 @@ public class GradeAppGUIMain {
 			gradeListModel.clear();
 			for (Grade updatedGrades : grades) {
 				gradeListModel.addElement(updatedGrades.toString());
+			}
+			for (int rankIndex = tempGrades.size() - 1; rankIndex >= 0; rankIndex--) {
+				double total = tempGrades.size();
+				double rank = rankIndex + 1;
+				String rankOutput = tempGrades.get(rankIndex).toString();
+				if(rank / total > 0.10) {
+					lblTenthPercentileOutput.setText(rankOutput);
+				}
+				if(rank / total > 0.20) {
+					lblTwentiethPercentileOutput.setText(rankOutput);
+				}
+				if(rank / total > 0.30) {
+					lblThirtiethPercentileOutput.setText(rankOutput);
+				}
+				if(rank / total > 0.40) {
+					lblFourtiethPercentileOutput.setText(rankOutput);
+				}
+				if(rank / total > 0.50) {
+					lblFiftiethPercentileOutput.setText(rankOutput);
+				}
+				if(rank / total > 0.60) {
+					lblSixtiethPercentileOutput.setText(rankOutput);
+				}
+				if(rank / total > 0.70) {
+					lblSeventiethPercentileOutput.setText(rankOutput);
+				}
+				if(rank / total > 0.80) {
+					lblEightiethPercentileOutput.setText(rankOutput);
+				}
+				if(rank / total > 0.90) {
+					lblNinetiethPercentileOutput.setText(rankOutput);
+				}
 			}
 		}
 		catch (NullPointerException error) {
