@@ -1,4 +1,4 @@
-package GradeApplication;
+
 
 public class Grade {
 	
