@@ -1068,10 +1068,13 @@ public class GradeAppGUIMain {
 			for (Grade updatedGrades : grades) {
 				gradeListModel.addElement(updatedGrades.toString());
 			}
-			for (int rankIndex = tempGrades.size() - 1; rankIndex >= 0; rankIndex--) {
+			for (int rankIndex = tempGrades.size() - 1; rankIndex >= 0;
+					rankIndex--) {
+				
 				double total = tempGrades.size();
 				double rank = rankIndex + 1;
 				String rankOutput = tempGrades.get(rankIndex).toString();
+				
 				if(rank / total > 0.10) {
 					lblTenthPercentileOutput.setText(rankOutput);
 				}
