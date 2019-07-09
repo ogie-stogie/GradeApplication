@@ -1,12 +1,26 @@
 /*	Names: Taylor Bart, Vipul Vadodaria, Benjamin Veach
  * 	Class ID: 41792
  * 	Grading Analytics System
- * 	Description:	Contains the entire GUI framework for the system
- * 					Contains two frames for the main GUI and the percentile table
- * 					Contains five textfields and eighteen labels
- * 					Contains two lists: one for holding Grade objects, the other 
+ * 	Description:	Contains the entire GUI framework for the Grading Analytics
+ * 					system and all input, output, analysis, report making, 
+ * 					and file opening and saving is done through this class
+ * 
+ * 					Contains two JFrames for the main GUI and the percentile table
+ * 
+ * 					Contains five JTextfields for use in editing the grade cutoffs
+ * 					
+ * 					Contains eighteen JLabels to label all portions of input and output
+ * 
+ * 					Contains three lists: one for holding Grade objects, the other two 
  * 										for holding float variables
- * 					Contains ten private float variables and five private int variables
+ * 
+ * 					Contains ten private float variables for storing results of analysis
+ * 				
+ * 					Contains five private int variables for holding the amount of grades
+ * 					in each cutoff
+ * 
+ * 					Contains twenty three methods for implementation of all functionality
+ * 					of the system
  * 
  */
 
@@ -48,6 +62,219 @@ import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
 import java.awt.EventQueue;
 
+/*	This main class contains two JFrames, five JTextfields, eighteen JLabels,
+ * 	three lists, ten private float variables, five private int variables, and 
+ * 	twenty-three methods
+ * 
+ * 	<JFrame frame>
+ * 	The main GUI frame
+ * 
+ * 	<JFrame frmTableOfPercentile>
+ * 	The GUI frame for the percentile rank table
+ * 
+ * 	<JTextField tfGradeA>
+ * 	Text field for displaying cutoff for "A" grades
+ * 
+ * 	<JTextField tfGradeB>
+ * 	Text field for displaying cutoff for "B" grades
+ * 
+ * 	<JTextField tfGradeC>
+ * 	Text field for displaying cutoff for "C" grades
+ * 
+ * 	<JTextField tfGradeD>
+ * 	Text field for displaying cutoff for "D" grades
+ * 
+ * 	<JTextField tfGradeF>
+ * 	Text field for displaying cutoff for "F" grades
+ * 
+ * 	<JLabel lblLowestGradeOutput>
+ * 	Label for displaying lowest grade detected
+ * 
+ * 	<JLabel lblHighestGradeOutput>
+ * 	Label for displaying highest grade detected
+ * 
+ * 	<JLabel lblMedianGradeOutput>
+ * 	Label for displaying median grade calculated
+ * 
+ * 	<JLabel lblAverageGradeOutput>
+ * 	Label for displaying average grade calculated
+ * 
+ * 	<JLabel lblACount>
+ * 	Label for displaying amount of "A" grades detected
+ * 
+ * 	<JLabel lblBCount>
+ * 	Label for displaying amount of "B" grades detected
+ * 
+ * 	<JLabel lblCCount>
+ * 	Label for displaying amount of "C" grades detected
+ * 
+ * 	<JLabel lblDCount>
+ * 	Label for displaying amount of "D" grades detected
+ * 
+ * 	<JLabel lblFCount>
+ * 	Label for displaying amount of "F" grades detected
+ * 
+ * 	<JLabel lblTenthPercentileOutput>
+ * 	Label for displaying grade cutoff for tenth percentile of grades
+ * 
+ * 	<JLabel lblTwentiethPercentileOutput>
+ * 	Label for displaying grade cutoff for twentieth percentile of grades
+ * 
+ * 	<Jlabel lblThirtiethPercentileOutput>
+ * 	Label for displaying grade cutoff for thirtieth percentile of grades
+ * 
+ * 	<JLabel lblFourtiethPercentileOutput>
+ * 	Label for displaying grade cutoff for fortieth percentile of grades
+ * 
+ * 	<JLabel lblFiftiethPercentileOutput>
+ * 	Label for displaying grade cutoff for fiftieth percentile of grades
+ * 
+ * 	<JLabel lblSixtiethPercentileOutput>
+ * 	Label for displaying grade cutoff for sixtieth percentile of grades
+ * 
+ * 	<JLabel lblSeventiethPercentileOutput>
+ * 	Label for displaying grade cutoff for seventieth percentile of grades
+ * 
+ * 	<JLabel lblEightiethPercentileOutput>
+ * 	Label for displaying grade cutoff for eightieth percentile of grades
+ * 
+ * 	<JLabel lblNinetiethPercentileOutput>
+ * 	Label for displaying grade cutoff for ninetieth percentile of grades
+ * 
+ * 	<List<Grade> grades>
+ * 	List for holding a series of Grade type objects
+ * 
+ * 	<List<Float> tempGrades>
+ * 	List for holding a series of Float type variables representing grades to perform analysis on
+ * 
+ * 	<List<Float> originalGrades>
+ * 	List for holding a series of Float type variables representing unanalyzed grades
+ * 
+ * 	<float minimumGrade>
+ * 	Variable holding the minimum grade set
+ * 
+ * 	<float maximumGrade>
+ * 	Variable holding the maximum grade set
+ * 
+ * 	<float lowestGrade>
+ * 	Variable holding the lowest grade detected
+ * 
+ * 	<float highestGrade>
+ * 	Variable holding the highest grade detected
+ * 
+ * 	<float medianGrade>
+ * 	Variable holding the median grade calculated
+ * 
+ * 	<float averageGrade>
+ * 	Variable holding the average grade calculated
+ * 
+ * 	<float percentA>
+ * 	Variable holding the number for the grade cutoff for "A" grades
+ * 
+ *  <float percentB>
+ *  Variable holding the number for the grade cutoff for "B" grades
+ *  
+ *  <float percentC>
+ *  Variable holding the number for the grade cutoff for "C" grades
+ *  
+ *  <float percentD>
+ *  Variable holding the number for the grade cutoff for "D" grades
+ *  
+ *  <float percentF>
+ *  Variable holding the number for the grade cutoff for "F" grades
+ *  
+ *  <int countA>
+ *  Variable holding the amount of "A" grades
+ *  
+ *  <int countB>
+ *  Variable holding the amount of "B" grades
+ *  
+ *  <int countC>
+ *  Variable holding the amount of "C" grades
+ *  
+ *  <int countD>
+ *  Variable holding the amount of "D" grades
+ *  
+ *  <int countF>
+ *  Variable holding the amount of "F" grades
+ *  
+ *  <main(String[] args)>
+ *  The main class for running the system
+ *  
+ *  <run()>
+ *  Runs the GUI program
+ *  
+ *  <GradeAppGUIMain()>
+ *  Constructor to call <Initialize()>
+ *  
+ *  <initialize()>
+ *  Initially creates the GUI with default values
+ *  
+ *  <mouseClicked(MouseEvent changeScale)>
+ *  Method to allow click to change "A" cutoff number
+ *  
+ *  <mouseClicked(MouseEvent changeScale)>
+ *  Method to allow click to change "B" cutoff number
+ *  
+ *  <mouseClicked(MouseEvent changeScale)>
+ *  Method to allow click to change "C" cutoff number
+ *  
+ *  <mouseClicked(MouseEvent changeScale)>
+ *  Method to allow click to change "D" cutoff number
+ *  
+ *  <mouseClicked(MouseEvent changeScale)>
+ *  Method to allow click to change "F" cutoff number
+ *  
+ *  <actionPerformed(ActionEvent event)>
+ *  Method to allow percentile table window to be closed by the "close" button
+ *  
+ *  <actionPerformed(ActionEvent openFileEvent)>
+ *  Method to open File Chooser via the "Open File" button to open a file
+ *  
+ *  <actionPerformed(ActionEvent saveFileEvent)>
+ *  Method to open File Chooser via the "Save File" button to save a file
+ *  
+ *  <actionPerformed(ActionEvent addGradeEvent)>
+ *  Method to allow a grade to be added by clicking the "Add Grade" button
+ *  
+ *  <actionPerformed(ActionEvent removeGradeEvent)>
+ *  Method to allow a grade to be removed by clicking the "Remove Grade" button
+ *  
+ *  <actionPerformed(ActionEvent ammendGradeEvent)>
+ *  Method to allow a grade to be changed by clicking the "Amend Grade" button
+ *  
+ *  <actionPerformed(ActionEvent e)>
+ *  Method to allow the minimum grade to be set by clicking the "Set Min Grade"
+ *  button
+ *  
+ *  <actionPerformed(ActionEvent e)>
+ *  Method to allow the maximum grade to be set by clicking the "Set Max Grade"
+ *  button
+ *  
+ *  <actionPerformed(ActionEvent event)>
+ *  Method to allow the percentile table to appear by clicking the 
+ *  "Percentile Rank" button
+ *  
+ *  <actionPerformed(ActionEvent e)>
+ *  Method to allow a report to be generated by clicking the "Generate Report"
+ *  button
+ *  
+ *  <actionPerformed(ActionEvent e)>
+ *  Method to allow the program to be exited by clicking the "Exit Program"
+ *  button
+ *  
+ *  <actionPerformed(ActionEvent e)>
+ *  Method to allow all input and calculated data to be reset to default values
+ *  and positions by clicking the "Clear Everything" button
+ *  
+ *  <updateGradeData()>
+ *  Copies Grade objects that fall between min and max values from <originalGrades>
+ *  to <tempGrades>, then performs analysis on Grade objects in <tempGrades>
+ *  
+ *  <generateReport()>
+ *  Retrieves the necessary data and formats all of it into a nice looking report
+ *  
+ */
 
 
 
@@ -69,7 +296,9 @@ public class GradeAppGUIMain {
 	private List<Grade> grades = new ArrayList<Grade>();
 	private List<Float> tempGrades, originalGrades;
 
-	//private float minimumGrade = 0.0f, maximumGrade = 100.0f;
+vvadodar_edit
+	// private float minimumGrade = 0.0f, maximumGrade = 100.0f;
+master
 	private float minimumGrade = 0.0f, maximumGrade = Float.MAX_VALUE;
 	private float lowestGrade, highestGrade, medianGrade, averageGrade;
 	private float percentA = 90.0f, percentB = 80.0f;
@@ -1094,7 +1323,10 @@ public class GradeAppGUIMain {
 				lowestGrade = tempGrades.get(0);
 				highestGrade = tempGrades.get(tempGrades.size()-1);
 				averageGrade = averageGrade / tempGrades.size();
-				//Median Grade Calculation
+vvadodar_edit
+				
+				/* Median grade calculation */
+master
 				if (tempGrades.size() % 2 == 0) {
 					medianGrade = (tempGrades.get( tempGrades.size() / 2 ) + 
 							tempGrades.get( ( tempGrades.size() / 2 ) - 1) ) / 2;
