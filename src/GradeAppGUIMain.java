@@ -46,6 +46,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.EventQueue;
+import javax.swing.JRadioButton;
+import javax.swing.JToggleButton;
 
 /*	This main class contains two JFrames, five JTextfields, eighteen JLabels,
  * 	three lists, ten private float variables, five private int variables, and 
@@ -1203,7 +1205,7 @@ public class GradeAppGUIMain {
 		btnClearEverything.setBackground(new Color(128, 0, 128));
 		btnClearEverything.setBounds(458, 644, 190, 45);
 		frame.getContentPane().add(btnClearEverything);
-				
+		
 		btnClearEverything.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1245,6 +1247,74 @@ public class GradeAppGUIMain {
 				gradeListModel.clear();
 				grades.clear();
 				
+			}
+		});
+		
+		JToggleButton tglbtnAbsoluteGrade = new JToggleButton("Absolute Grades");
+		tglbtnAbsoluteGrade.setToolTipText("Select this if grades read in are not percentages");
+		tglbtnAbsoluteGrade.setFont(new Font("Tahoma", Font.BOLD, 16));
+		tglbtnAbsoluteGrade.setBounds(12, 160, 190, 45);
+		frame.getContentPane().add(tglbtnAbsoluteGrade);
+		
+		tglbtnAbsoluteGrade.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (tglbtnAbsoluteGrade.isSelected()) {
+					try {
+						String maxGradeInput = JOptionPane.showInputDialog(frame,
+								"Enter maximum possible grade: ");
+						maximumGrade = Float.parseFloat(maxGradeInput);
+				
+						percentA = (float) 0.9 * maximumGrade;
+						percentB = (float) 0.8 * maximumGrade;
+						percentC = (float) 0.7 * maximumGrade;
+						percentD = (float) 0.6 * maximumGrade;
+				
+						tfGradeA.setText(Float.toString(percentA));
+						tfGradeB.setText(Float.toString(percentB));
+						tfGradeC.setText(Float.toString(percentC));
+						tfGradeD.setText(Float.toString(percentD));
+						tfGradeF.setText(Float.toString(percentD));
+						
+						minimumGrade = 0;
+						
+						lblMinGrade.setText(Float.toString(minimumGrade));
+						lblMaxGrade.setText(Float.toString(maximumGrade));
+						
+						updateGradeData();
+					}
+					catch(NumberFormatException error) {
+						JOptionPane.showMessageDialog(null, 
+								"Error! Must enter a number");
+							System.err.println("NumberFormatException: " 
+							+ error.getMessage());
+							tglbtnAbsoluteGrade.setSelected(false);
+					}
+					catch(NullPointerException error) {
+						tglbtnAbsoluteGrade.setSelected(false);
+					}
+				}
+				else {
+					percentA = 90.0f;
+					percentB = 80.0f;
+					percentC = 70.0f;
+					percentD = 60.0f;
+					
+					tfGradeA.setText(Float.toString(percentA));
+					tfGradeB.setText(Float.toString(percentB));
+					tfGradeC.setText(Float.toString(percentC));
+					tfGradeD.setText(Float.toString(percentD));
+					tfGradeF.setText(Float.toString(percentD));
+					
+					minimumGrade = 0;
+					maximumGrade = Float.MAX_VALUE;
+					
+					lblMinGrade.setText(Float.toString(minimumGrade));
+					lblMaxGrade.setText("N/A");
+					
+					updateGradeData();
+				}
 			}
 		});
 	}
