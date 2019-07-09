@@ -1565,21 +1565,33 @@ public class GradeAppGUIMain {
 			
 			sb.append(String.format("%n"));
 			
-			sb.append(String.format("%-8s %-18s %-8s%n", "Grade", 
-					"  Percentage", "Total"));
-			sb.append(String.format("%-8s %-18s %-8s%n", "-----", 
-					"--------------", "-----"));
-			sb.append(String.format("%-1s %-6s %-18s %-8s%n", "", "A", 
-					percentA + "% - " + maximumGrade + "%", countA));
-			sb.append(String.format("%-1s %-6s %-18s %-8s%n", "", "B", 
-					percentB + "% -  " + percentA + "%", countB));
-			sb.append(String.format("%-1s %-6s %-18s %-8s%n", "", "C",
-					percentC + "% -  " + percentB + "%", countC));
-			sb.append(String.format("%-1s %-6s %-18s %-8s%n", "", "D",
-					percentD + "% -  " + percentC + "%", countD));
-			sb.append(String.format("%-1s %-6s %-18s %-8s%n", "", "F",
-					" " + minimumGrade + "% -  " + percentD + "%", countF));
+			sb.append(String.format("%-8s %-18s%n", "Grade", 
+					"    Scale"));
+			sb.append(String.format("%-8s %-18s%n", "-----", 
+					"--------------"));
+			sb.append(String.format("%-1s %-6s %-18s%n", "", "A", 
+					percentA + " - " + maximumGrade));
+			sb.append(String.format("%-1s %-6s %-18s %n", "", "B", 
+					percentB + " -  " + percentA));
+			sb.append(String.format("%-1s %-6s %-18s%n", "", "C",
+					percentC + " -  " + percentB));
+			sb.append(String.format("%-1s %-6s %-18s%n", "", "D",
+					percentD + " -  " + percentC));
+			sb.append(String.format("%-1s %-6s %-18s%n", "", "F",
+					" " + minimumGrade + " -  " + percentD));
 			
+			sb.append(String.format("%n"));
+			
+			sb.append(String.format("%-8s %-18s%n", "Grade", 
+					"    Total"));
+			sb.append(String.format("%-8s %-18s%n", "-----", 
+					"--------------"));
+			sb.append(String.format("%-1s %-6s %-18s%n", "", "A", countA));
+			sb.append(String.format("%-1s %-6s %-18s%n", "", "B", countB));
+			sb.append(String.format("%-1s %-6s %-18s%n", "", "C", countC));
+			sb.append(String.format("%-1s %-6s %-18s%n", "", "D", countD));
+			sb.append(String.format("%-1s %-6s %-18s%n", "", "F", countF));
+
 			sb.append(String.format("%n"));
 			
 			sb.append(String.format("%47s%n", "Percentile Chart"));
