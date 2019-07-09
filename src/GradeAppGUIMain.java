@@ -1213,16 +1213,7 @@ public class GradeAppGUIMain {
 		btnExit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//JOptionPane exitPane = new JOptionPane();
-				int option = JOptionPane.showConfirmDialog(btnExit, 
-						"Have you saved your grade data?", "Exit Check", 0);
-				if (option == 0) {
-						System.exit(0);			
-			
-				}
-				else {
-					// Do nothing and exit prompt
-				}
+				System.exit(0);			
 			}
 		});
 		
@@ -1281,6 +1272,44 @@ public class GradeAppGUIMain {
 				else {
 					// Do nothing and exit prompt
 				}
+				
+				percentA = 90.0f;
+				percentB = 80.0f;
+				percentC = 70.0f;
+				percentD = 60.0f;
+				
+				tfGradeA.setText(Float.toString(percentA));
+				tfGradeB.setText(Float.toString(percentB));
+				tfGradeC.setText(Float.toString(percentC));
+				tfGradeD.setText(Float.toString(percentD));
+				tfGradeF.setText(Float.toString(percentD));
+				
+				countA = 0;
+				countB = 0;
+				countC = 0;
+				countD = 0;
+				countF = 0;
+				
+				lblACount.setText(Integer.toString(countA));
+				lblBCount.setText(Integer.toString(countB));
+				lblCCount.setText(Integer.toString(countC));
+				lblDCount.setText(Integer.toString(countD));
+				lblFCount.setText(Integer.toString(countF));
+				
+				lblLowestGradeOutput.setText("");
+				lblHighestGradeOutput.setText("");
+				lblMedianGradeOutput.setText("");
+				lblAverageGradeOutput.setText("");
+				
+				minimumGrade = 0;
+				maximumGrade = Float.MAX_VALUE;
+				
+				lblMinGrade.setText(Float.toString(minimumGrade));
+				lblMaxGrade.setText("N/A");
+				
+				gradeListModel.clear();
+				grades.clear();
+				
 			}
 		});
 		
@@ -1381,6 +1410,7 @@ public class GradeAppGUIMain {
 		if (!grades.isEmpty()) {
 			try {
 				float temp = 0;
+				float roundedTemp =  0;
 				averageGrade = 0;
 				countA = 0;
 				countB = 0;
@@ -1388,68 +1418,74 @@ public class GradeAppGUIMain {
 				countD = 0;
 				countF = 0;
 				
-				//Grade Rounding
 				for(Grade gradeInput:grades) {
-					
+					//Round grades correctly
 					temp = gradeInput.getGrade();
-					float tempFloor;
+					float tempFloor = (int)Math.floor(gradeInput.getGrade());
 					
-					if (temp < minimumGrade) {
-						temp = minimumGrade;
-					}
-					else if (temp > maximumGrade) {
-						temp = maximumGrade;
+					if (temp % tempFloor > 0.5) {
+						roundedTemp = Math.round(temp);
 					}
 					else {
-						// do not change temp
+						roundedTemp = temp;
+					}
+					//Replace scores outside of set range
+					if (temp < minimumGrade) {
+						tempGrades.add(minimumGrade);
+						roundedTemp = Math.round(minimumGrade);
+					}
+					else if (temp > maximumGrade) {
+						tempGrades.add(maximumGrade);
+						roundedTemp = Math.round(maximumGrade);
+					}
+					else {
+						tempGrades.add(temp);
 					}
 					
-					tempFloor = (int) Math.floor(temp);
-					if (temp % tempFloor > 0.5) {
-						temp = Math.round(temp);
-					}
+					gradeInput.setAdjustedGrade(roundedTemp);
 					
-					tempGrades.add(temp);				
-					gradeInput.setAdjustedGrade(temp);
-					
-					if (temp >= percentA) {
+					//Set the letter grade for each object Grade
+					if (roundedTemp >= percentA) {
 						gradeInput.setLetterGrade("A");
 					}
-					else if (temp >= percentB) {
+					else if (roundedTemp >= percentB) {
 						gradeInput.setLetterGrade("B");
 					}
-					else if (temp >= percentC) {
+					else if (roundedTemp >= percentC) {
 						gradeInput.setLetterGrade("C");
 					}
-					else if (temp >= percentD) {
+					else if (roundedTemp >= percentD) {
 						gradeInput.setLetterGrade("D");
 					}
 					else {
 						gradeInput.setLetterGrade("F");
 					}
-				}
-				
-				Collections.sort(tempGrades);
-				
-				for (int gIndex = 0; gIndex < tempGrades.size(); gIndex++) {
-					if (tempGrades.get(gIndex) >= percentA) {
+					
+					//Determine grade count
+					if (roundedTemp >= percentA) {
 						countA++;
 					}
-					else if (tempGrades.get(gIndex) >= percentB) {
+					else if (roundedTemp >= percentB) {
 						countB++;
 					}
-					else if (tempGrades.get(gIndex) >= percentC) {
+					else if (roundedTemp >= percentC) {
 						countC++;
 					}
-					else if (tempGrades.get(gIndex) >= percentD) {
+					else if (roundedTemp >= percentD) {
 						countD++;
 					}
 					else {
 						countF++;
 					}
-					
+				}
+				
+				Collections.sort(tempGrades);
+				
+				//Find sum of grades for later use in average calculation
+				for (int gIndex = 0; gIndex < tempGrades.size(); gIndex++) {
 					averageGrade = averageGrade + tempGrades.get(gIndex);
 				}
+				
 				lblACount.setText(Integer.toString(countA));;
 				lblBCount.setText(Integer.toString(countB));;
 				lblCCount.setText(Integer.toString(countC));;
@@ -1487,6 +1523,10 @@ public class GradeAppGUIMain {
 				for (Grade updatedGrades : grades) {
 					gradeListModel.addElement(updatedGrades.toString());
 				}
+				
+				//Calculate percentiles
+				//Percentile nth defined as number that is greater
+				//or equal to n% of the data set
 				for (int rankIndex = tempGrades.size() - 1; rankIndex >= 0;
 						rankIndex--) {
 					
