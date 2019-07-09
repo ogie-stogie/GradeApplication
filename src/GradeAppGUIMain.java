@@ -1342,9 +1342,8 @@ public class GradeAppGUIMain {
 				countD = 0;
 				countF = 0;
 				
-				//Grade Rounding
 				for(Grade gradeInput:grades) {
-					
+					//Round grades correctly
 					temp = gradeInput.getGrade();
 					float tempFloor = (int)Math.floor(gradeInput.getGrade());
 					
@@ -1354,7 +1353,7 @@ public class GradeAppGUIMain {
 					else {
 						roundedTemp = temp;
 					}
-							
+					//Replace scores outside of set range
 					if (temp < minimumGrade) {
 						tempGrades.add(minimumGrade);
 						roundedTemp = Math.round(minimumGrade);
@@ -1369,6 +1368,7 @@ public class GradeAppGUIMain {
 					
 					gradeInput.setAdjustedGrade(roundedTemp);
 					
+					//Set the letter grade for each object Grade
 					if (roundedTemp >= percentA) {
 						gradeInput.setLetterGrade("A");
 					}
@@ -1384,29 +1384,32 @@ public class GradeAppGUIMain {
 					else {
 						gradeInput.setLetterGrade("F");
 					}
-				}
-				
-				Collections.sort(tempGrades);
-				
-				for (int gIndex = 0; gIndex < tempGrades.size(); gIndex++) {
-					if (tempGrades.get(gIndex) >= percentA) {
+					
+					//Determine grade count
+					if (roundedTemp >= percentA) {
 						countA++;
 					}
-					else if (tempGrades.get(gIndex) >= percentB) {
+					else if (roundedTemp >= percentB) {
 						countB++;
 					}
-					else if (tempGrades.get(gIndex) >= percentC) {
+					else if (roundedTemp >= percentC) {
 						countC++;
 					}
-					else if (tempGrades.get(gIndex) >= percentD) {
+					else if (roundedTemp >= percentD) {
 						countD++;
 					}
 					else {
 						countF++;
 					}
-					
+				}
+				
+				Collections.sort(tempGrades);
+				
+				//Find sum of grades for later use in average calculation
+				for (int gIndex = 0; gIndex < tempGrades.size(); gIndex++) {
 					averageGrade = averageGrade + tempGrades.get(gIndex);
 				}
+				
 				lblACount.setText(Integer.toString(countA));;
 				lblBCount.setText(Integer.toString(countB));;
 				lblCCount.setText(Integer.toString(countC));;
@@ -1436,6 +1439,10 @@ public class GradeAppGUIMain {
 				for (Grade updatedGrades : grades) {
 					gradeListModel.addElement(updatedGrades.toString());
 				}
+				
+				//Calculate percentiles
+				//Percentile nth defined as number that is greater
+				//or equal to n% of the data set
 				for (int rankIndex = tempGrades.size() - 1; rankIndex >= 0;
 						rankIndex--) {
 					
