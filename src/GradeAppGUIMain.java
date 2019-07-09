@@ -1278,8 +1278,6 @@ public class GradeAppGUIMain {
 					temp = gradeInput.getGrade();
 					float tempFloor = (int)Math.floor(gradeInput.getGrade());
 					
-					System.out.println(tempFloor);
-					
 					if (temp % tempFloor > 0.5) {
 						roundedTemp = Math.round(temp);
 					}
