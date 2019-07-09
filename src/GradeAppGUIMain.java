@@ -1,12 +1,26 @@
 /*	Names: Taylor Bart, Vipul Vadodaria, Benjamin Veach
  * 	Class ID: 41792
  * 	Grading Analytics System
- * 	Description:	Contains the entire GUI framework for the system
- * 					Contains two frames for the main GUI and the percentile table
- * 					Contains five textfields and eighteen labels
- * 					Contains two lists: one for holding Grade objects, the other 
+ * 	Description:	Contains the entire GUI framework for the Grading Analytics
+ * 					system and all input, output, analysis, report making, 
+ * 					and file opening and saving is done through this class
+ * 
+ * 					Contains two JFrames for the main GUI and the percentile table
+ * 
+ * 					Contains five JTextfields for use in editing the grade cutoffs
+ * 					
+ * 					Contains eighteen JLabels to label all portions of input and output
+ * 
+ * 					Contains three lists: one for holding Grade objects, the other two 
  * 										for holding float variables
- * 					Contains ten private float variables and five private int variables
+ * 
+ * 					Contains ten private float variables for storing results of analysis
+ * 				
+ * 					Contains five private int variables for holding the amount of grades
+ * 					in each cutoff
+ * 
+ * 					Contains twenty three methods for implementation of all functionality
+ * 					of the system
  * 
  */
 
@@ -48,6 +62,219 @@ import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
 import java.awt.EventQueue;
 
+/*	This main class contains two JFrames, five JTextfields, eighteen JLabels,
+ * 	three lists, ten private float variables, five private int variables, and 
+ * 	twenty-three methods
+ * 
+ * 	<JFrame frame>
+ * 	The main GUI frame
+ * 
+ * 	<JFrame frmTableOfPercentile>
+ * 	The GUI frame for the percentile rank table
+ * 
+ * 	<JTextField tfGradeA>
+ * 	Text field for displaying cutoff for "A" grades
+ * 
+ * 	<JTextField tfGradeB>
+ * 	Text field for displaying cutoff for "B" grades
+ * 
+ * 	<JTextField tfGradeC>
+ * 	Text field for displaying cutoff for "C" grades
+ * 
+ * 	<JTextField tfGradeD>
+ * 	Text field for displaying cutoff for "D" grades
+ * 
+ * 	<JTextField tfGradeF>
+ * 	Text field for displaying cutoff for "F" grades
+ * 
+ * 	<JLabel lblLowestGradeOutput>
+ * 	Label for displaying lowest grade detected
+ * 
+ * 	<JLabel lblHighestGradeOutput>
+ * 	Label for displaying highest grade detected
+ * 
+ * 	<JLabel lblMedianGradeOutput>
+ * 	Label for displaying median grade calculated
+ * 
+ * 	<JLabel lblAverageGradeOutput>
+ * 	Label for displaying average grade calculated
+ * 
+ * 	<JLabel lblACount>
+ * 	Label for displaying amount of "A" grades detected
+ * 
+ * 	<JLabel lblBCount>
+ * 	Label for displaying amount of "B" grades detected
+ * 
+ * 	<JLabel lblCCount>
+ * 	Label for displaying amount of "C" grades detected
+ * 
+ * 	<JLabel lblDCount>
+ * 	Label for displaying amount of "D" grades detected
+ * 
+ * 	<JLabel lblFCount>
+ * 	Label for displaying amount of "F" grades detected
+ * 
+ * 	<JLabel lblTenthPercentileOutput>
+ * 	Label for displaying grade cutoff for tenth percentile of grades
+ * 
+ * 	<JLabel lblTwentiethPercentileOutput>
+ * 	Label for displaying grade cutoff for twentieth percentile of grades
+ * 
+ * 	<Jlabel lblThirtiethPercentileOutput>
+ * 	Label for displaying grade cutoff for thirtieth percentile of grades
+ * 
+ * 	<JLabel lblFourtiethPercentileOutput>
+ * 	Label for displaying grade cutoff for fortieth percentile of grades
+ * 
+ * 	<JLabel lblFiftiethPercentileOutput>
+ * 	Label for displaying grade cutoff for fiftieth percentile of grades
+ * 
+ * 	<JLabel lblSixtiethPercentileOutput>
+ * 	Label for displaying grade cutoff for sixtieth percentile of grades
+ * 
+ * 	<JLabel lblSeventiethPercentileOutput>
+ * 	Label for displaying grade cutoff for seventieth percentile of grades
+ * 
+ * 	<JLabel lblEightiethPercentileOutput>
+ * 	Label for displaying grade cutoff for eightieth percentile of grades
+ * 
+ * 	<JLabel lblNinetiethPercentileOutput>
+ * 	Label for displaying grade cutoff for ninetieth percentile of grades
+ * 
+ * 	<List<Grade> grades>
+ * 	List for holding a series of Grade type objects
+ * 
+ * 	<List<Float> tempGrades>
+ * 	List for holding a series of Float type variables representing grades to perform analysis on
+ * 
+ * 	<List<Float> originalGrades>
+ * 	List for holding a series of Float type variables representing unanalyzed grades
+ * 
+ * 	<float minimumGrade>
+ * 	Variable holding the minimum grade set
+ * 
+ * 	<float maximumGrade>
+ * 	Variable holding the maximum grade set
+ * 
+ * 	<float lowestGrade>
+ * 	Variable holding the lowest grade detected
+ * 
+ * 	<float highestGrade>
+ * 	Variable holding the highest grade detected
+ * 
+ * 	<float medianGrade>
+ * 	Variable holding the median grade calculated
+ * 
+ * 	<float averageGrade>
+ * 	Variable holding the average grade calculated
+ * 
+ * 	<float percentA>
+ * 	Variable holding the number for the grade cutoff for "A" grades
+ * 
+ *  <float percentB>
+ *  Variable holding the number for the grade cutoff for "B" grades
+ *  
+ *  <float percentC>
+ *  Variable holding the number for the grade cutoff for "C" grades
+ *  
+ *  <float percentD>
+ *  Variable holding the number for the grade cutoff for "D" grades
+ *  
+ *  <float percentF>
+ *  Variable holding the number for the grade cutoff for "F" grades
+ *  
+ *  <int countA>
+ *  Variable holding the amount of "A" grades
+ *  
+ *  <int countB>
+ *  Variable holding the amount of "B" grades
+ *  
+ *  <int countC>
+ *  Variable holding the amount of "C" grades
+ *  
+ *  <int countD>
+ *  Variable holding the amount of "D" grades
+ *  
+ *  <int countF>
+ *  Variable holding the amount of "F" grades
+ *  
+ *  <main(String[] args)>
+ *  The main class for running the system
+ *  
+ *  <run()>
+ *  Runs the GUI program
+ *  
+ *  <GradeAppGUIMain()>
+ *  Constructor to call <Initialize()>
+ *  
+ *  <initialize()>
+ *  Initially creates the GUI with default values
+ *  
+ *  <mouseClicked(MouseEvent changeScale)>
+ *  Method to allow click to change "A" cutoff number
+ *  
+ *  <mouseClicked(MouseEvent changeScale)>
+ *  Method to allow click to change "B" cutoff number
+ *  
+ *  <mouseClicked(MouseEvent changeScale)>
+ *  Method to allow click to change "C" cutoff number
+ *  
+ *  <mouseClicked(MouseEvent changeScale)>
+ *  Method to allow click to change "D" cutoff number
+ *  
+ *  <mouseClicked(MouseEvent changeScale)>
+ *  Method to allow click to change "F" cutoff number
+ *  
+ *  <actionPerformed(ActionEvent event)>
+ *  Method to allow percentile table window to be closed by the "close" button
+ *  
+ *  <actionPerformed(ActionEvent openFileEvent)>
+ *  Method to open File Chooser via the "Open File" button to open a file
+ *  
+ *  <actionPerformed(ActionEvent saveFileEvent)>
+ *  Method to open File Chooser via the "Save File" button to save a file
+ *  
+ *  <actionPerformed(ActionEvent addGradeEvent)>
+ *  Method to allow a grade to be added by clicking the "Add Grade" button
+ *  
+ *  <actionPerformed(ActionEvent removeGradeEvent)>
+ *  Method to allow a grade to be removed by clicking the "Remove Grade" button
+ *  
+ *  <actionPerformed(ActionEvent ammendGradeEvent)>
+ *  Method to allow a grade to be changed by clicking the "Amend Grade" button
+ *  
+ *  <actionPerformed(ActionEvent e)>
+ *  Method to allow the minimum grade to be set by clicking the "Set Min Grade"
+ *  button
+ *  
+ *  <actionPerformed(ActionEvent e)>
+ *  Method to allow the maximum grade to be set by clicking the "Set Max Grade"
+ *  button
+ *  
+ *  <actionPerformed(ActionEvent event)>
+ *  Method to allow the percentile table to appear by clicking the 
+ *  "Percentile Rank" button
+ *  
+ *  <actionPerformed(ActionEvent e)>
+ *  Method to allow a report to be generated by clicking the "Generate Report"
+ *  button
+ *  
+ *  <actionPerformed(ActionEvent e)>
+ *  Method to allow the program to be exited by clicking the "Exit Program"
+ *  button
+ *  
+ *  <actionPerformed(ActionEvent e)>
+ *  Method to allow all input and calculated data to be reset to default values
+ *  and positions by clicking the "Clear Everything" button
+ *  
+ *  <updateGradeData()>
+ *  Copies Grade objects that fall between min and max values from <originalGrades>
+ *  to <tempGrades>, then performs analysis on Grade objects in <tempGrades>
+ *  
+ *  <generateReport()>
+ *  Retrieves the necessary data and formats all of it into a nice looking report
+ *  
+ */
 
 
 
@@ -69,7 +296,8 @@ public class GradeAppGUIMain {
 	private List<Grade> grades = new ArrayList<Grade>();
 	private List<Float> tempGrades, originalGrades;
 
-	private float minimumGrade = 0.0f, maximumGrade = 100.0f;
+	// private float minimumGrade = 0.0f, maximumGrade = 100.0f;
+	private float minimumGrade = 0.0f, maximumGrade = Float.MAX_VALUE;
 	private float lowestGrade, highestGrade, medianGrade, averageGrade;
 	private float percentA = 90.0f, percentB = 80.0f;
 	private float percentC = 70.0f, percentD = 60.0f;
@@ -445,22 +673,16 @@ public class GradeAppGUIMain {
 			
 		});
 		
+		JLabel lblJScroll = new JLabel("Grade     Adjusted     Letter Grade");
+		lblJScroll.setFont(new Font("Dialog", Font.BOLD, 16));
+		lblJScroll.setHorizontalAlignment(SwingConstants.CENTER);
+		lblJScroll.setBounds(661, 9, 330, 45);
+		frame.getContentPane().add(lblJScroll);
+		
 		JLabel lblTitle = new JLabel("Grade Helper v23");
 		lblTitle.setFont(new Font("Dialog", Font.BOLD, 20));
 		lblTitle.setBounds(12, 12, 636, 36);
 		frame.getContentPane().add(lblTitle);
-		
-		JLabel lblGradeJList = new JLabel("Letter Grade");
-		lblGradeJList.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblGradeJList.setHorizontalAlignment(SwingConstants.CENTER);
-		lblGradeJList.setBounds(683, 15, 128, 45);
-		frame.getContentPane().add(lblGradeJList);
-		
-		JLabel lblLetterGrade = new JLabel("Grade");
-		lblLetterGrade.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblLetterGrade.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLetterGrade.setBounds(823, 15, 130, 45);
-		frame.getContentPane().add(lblLetterGrade);
 		
 		JLabel lblGradeScaling = new JLabel("Grade Scale");
 		lblGradeScaling.setHorizontalAlignment(SwingConstants.CENTER);
@@ -583,7 +805,7 @@ public class GradeAppGUIMain {
 		lblMinGrade.setBounds(210, 290, 50, 45);
 		frame.getContentPane().add(lblMinGrade);
 		
-		JLabel lblMaxGrade = new JLabel(Float.toString(maximumGrade));
+		JLabel lblMaxGrade = new JLabel("N/A");
 		lblMaxGrade.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMaxGrade.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblMaxGrade.setBounds(210, 340, 50, 45);
@@ -639,11 +861,14 @@ public class GradeAppGUIMain {
 						gradeInput = Float.parseFloat(line);
 						Grade newGrade = new Grade(gradeInput,letterGrade);
 						GradeAppGUIMain.this.grades.add(newGrade);
-						gradeListModel.addElement(newGrade.toString());
+						//gradeListModel.addElement(newGrade.toString());
 						gradeList.clearSelection();
 					}
 					bufferedReader.close();
 					updateGradeData();
+					for(Grade updatedGrades:grades) {
+						gradeListModel.addElement(updatedGrades.toString());
+					}
 				}
 				catch(FileNotFoundException fileException) {
 					JOptionPane.showMessageDialog(null, "Error! File " 
@@ -681,7 +906,7 @@ public class GradeAppGUIMain {
 			    int returnVal = chooser.showSaveDialog(null);
 			    if(returnVal == JFileChooser.APPROVE_OPTION) {
 			    	JOptionPane.showMessageDialog(null, 
-			    			"You chose to save to this file: " +
+			    			"Attempting to save " +
 			            chooser.getSelectedFile().getName());
 			    }
 			    File file = chooser.getSelectedFile();
@@ -740,12 +965,10 @@ public class GradeAppGUIMain {
 						= JOptionPane.showInputDialog(frame, "Enter grade: ");
 					String letterGradeInput = "A";
 					float gradeInput = Float.parseFloat(addedGrade);
-					if (gradeInput < minimumGrade || gradeInput > maximumGrade)
+					if (gradeInput < 0)
 					{
-						JOptionPane.showMessageDialog(null, "Grade cannot be less"
-								+ " than minimum set grade, or greater"
-								+ " than the maximum set grade.");
-						gradeInput = Float.parseFloat(addedGrade);
+						JOptionPane.showMessageDialog(null, "Cannot enter "
+								+ "negative grades.");
 					}
 					else
 					{
@@ -766,6 +989,9 @@ public class GradeAppGUIMain {
 					 System.err.println("NumberFormatException: " 
 							+ incorrectAddEvent.getMessage());
 				}
+				catch(NullPointerException incorrectAddEvent) {
+					
+				}
 				gradeList.clearSelection();
 			}
 		});
@@ -781,7 +1007,7 @@ public class GradeAppGUIMain {
 			@Override
 			public void actionPerformed(ActionEvent removeGradeEvent) {
 				try {
-					if(GradeAppGUIMain.this.grades != null) {
+					if(!GradeAppGUIMain.this.grades.isEmpty()) {
 						GradeAppGUIMain.this.grades.remove(
 								gradeList.getSelectedIndex());
 						gradeListModel.remove(
@@ -893,8 +1119,8 @@ public class GradeAppGUIMain {
 				JFrame frame = new JFrame("Set Maximum Grade");
 				String maxGradeInput = JOptionPane.showInputDialog(frame,
 					"Enter maximum possible grade: ");
-				float newMaxGrade = Float.parseFloat(maxGradeInput);
 				try {
+					float newMaxGrade = Float.parseFloat(maxGradeInput);
 					if 
 					(newMaxGrade < minimumGrade) {
 						JOptionPane.showMessageDialog(null, "Maximum Grade "
@@ -903,7 +1129,7 @@ public class GradeAppGUIMain {
 					}
 					else {
 						maximumGrade = newMaxGrade;
-						lblMaxGrade.setText(maxGradeInput);
+						lblMaxGrade.setText(Float.toString(maximumGrade));
 						updateGradeData();
 					}
 					
@@ -963,8 +1189,7 @@ public class GradeAppGUIMain {
 		btnClearEverything.setBackground(new Color(128, 0, 128));
 		btnClearEverything.setBounds(458, 644, 190, 45);
 		frame.getContentPane().add(btnClearEverything);
-		
-		
+				
 		btnClearEverything.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -998,10 +1223,10 @@ public class GradeAppGUIMain {
 				lblAverageGradeOutput.setText("");
 				
 				minimumGrade = 0;
-				maximumGrade = 100;
+				maximumGrade = Float.MAX_VALUE;
 				
 				lblMinGrade.setText(Float.toString(minimumGrade));
-				lblMaxGrade.setText(Float.toString(maximumGrade));
+				lblMaxGrade.setText("Not Set");
 				
 				gradeListModel.clear();
 				grades.clear();
@@ -1022,141 +1247,167 @@ public class GradeAppGUIMain {
 	public void updateGradeData() {
 		
 		GradeAppGUIMain.this.tempGrades = new ArrayList<Float>();
-		try {
-			float temp = 0;
-			float roundedTemp =  0;
-			averageGrade = 0;
-			countA = 0;
-			countB = 0;
-			countC = 0;
-			countD = 0;
-			countF = 0;
-			
-			for(Grade gradeInput:grades) {
-				temp = gradeInput.getGrade();
-				roundedTemp = Math.round(gradeInput.getGrade());
-				if (temp < minimumGrade) {
-					tempGrades.add(minimumGrade);
-					roundedTemp = Math.round(minimumGrade);
+		if (!grades.isEmpty()) {
+			try {
+				float temp = 0;
+				float roundedTemp =  0;
+				averageGrade = 0;
+				countA = 0;
+				countB = 0;
+				countC = 0;
+				countD = 0;
+				countF = 0;
+				
+				for(Grade gradeInput:grades) {
+					temp = gradeInput.getGrade();
+					roundedTemp = Math.round(gradeInput.getGrade());
+					if (temp < minimumGrade) {
+						tempGrades.add(minimumGrade);
+						roundedTemp = Math.round(minimumGrade);
+					}
+					else if (temp > maximumGrade) {
+						tempGrades.add(maximumGrade);
+						roundedTemp = Math.round(maximumGrade);
+						
+					}
+					else {
+						tempGrades.add(temp);
+					}
+					gradeInput.setAdjustedGrade(roundedTemp);
+					
+					if (roundedTemp >= percentA) {
+						gradeInput.setLetterGrade("A");
+					}
+					else if (roundedTemp >= percentB) {
+						gradeInput.setLetterGrade("B");
+					}
+					else if (roundedTemp >= percentC) {
+						gradeInput.setLetterGrade("C");
+					}
+					else if (roundedTemp >= percentD) {
+						gradeInput.setLetterGrade("D");
+					}
+					else {
+						gradeInput.setLetterGrade("F");
+					}
 				}
-				else if (temp > maximumGrade) {
-					tempGrades.add(maximumGrade);
-					roundedTemp = Math.round(maximumGrade);
+				Collections.sort(tempGrades);
+				
+				for (int gIndex = 0; gIndex < tempGrades.size(); gIndex++) {
+					if (tempGrades.get(gIndex) >= percentA) {
+						countA++;
+					}
+					else if (tempGrades.get(gIndex) >= percentB) {
+						countB++;
+					}
+					else if (tempGrades.get(gIndex) >= percentC) {
+						countC++;
+					}
+					else if (tempGrades.get(gIndex) >= percentD) {
+						countD++;
+					}
+					else {
+						countF++;
+					}
+					
+					averageGrade = averageGrade + tempGrades.get(gIndex);
+				}
+				lblACount.setText(Integer.toString(countA));;
+				lblBCount.setText(Integer.toString(countB));;
+				lblCCount.setText(Integer.toString(countC));;
+				lblDCount.setText(Integer.toString(countD));;
+				lblFCount.setText(Integer.toString(countF));;
+				
+				lowestGrade = tempGrades.get(0);
+				highestGrade = tempGrades.get(tempGrades.size()-1);
+				averageGrade = averageGrade / tempGrades.size();
+				
+				/*	Median grade calculation */
+				if (tempGrades.size() % 2 == 0) {
+					medianGrade = (tempGrades.get( tempGrades.size() / 2 ) + 
+							tempGrades.get( ( tempGrades.size() / 2 ) - 1) ) / 2;
+					medianGrade = ((tempGrades.get(tempGrades.size() / 2) + 
+							tempGrades.get(tempGrades.size() / 2) - 1 )) / 2;
 				}
 				else {
-					tempGrades.add(temp);
+					medianGrade = (tempGrades.get(tempGrades.size() / 2));
 				}
 				
-				if (roundedTemp >= percentA) {
-					gradeInput.setLetterGrade("A");
-				}
-				else if (roundedTemp >= percentB) {
-					gradeInput.setLetterGrade("B");
-				}
-				else if (roundedTemp >= percentC) {
-					gradeInput.setLetterGrade("C");
-				}
-				else if (roundedTemp >= percentD) {
-					gradeInput.setLetterGrade("D");
-				}
-				else {
-					gradeInput.setLetterGrade("F");
-				}
-			}
-			
-			Collections.sort(tempGrades);
-			
-			for (int gIndex = 0; gIndex < tempGrades.size(); gIndex++) {
-				if (tempGrades.get(gIndex) >= percentA) {
-					countA++;
-				}
-				else if (tempGrades.get(gIndex) >= percentB) {
-					countB++;
-				}
-				else if (tempGrades.get(gIndex) >= percentC) {
-					countC++;
-				}
-				else if (tempGrades.get(gIndex) >= percentD) {
-					countD++;
-				}
-				else {
-					countF++;
-				}
+				lblLowestGradeOutput.setText(Float.toString(lowestGrade));
+				lblHighestGradeOutput.setText(Float.toString(highestGrade));
+				lblMedianGradeOutput.setText(Float.toString(medianGrade));
+				lblAverageGradeOutput.setText(String.format("%.1f", averageGrade));
+				gradeListModel.clear();
 				
-				averageGrade = averageGrade + tempGrades.get(gIndex);
+				for (Grade updatedGrades : grades) {
+					gradeListModel.addElement(updatedGrades.toString());
+				}
+				for (int rankIndex = tempGrades.size() - 1; rankIndex >= 0;
+						rankIndex--) {
+					
+					double total = tempGrades.size();
+					double rank = rankIndex + 1;
+					String rankOutput = tempGrades.get(rankIndex).toString();
+					
+					if(rank / total > 0.10) {
+						lblTenthPercentileOutput.setText(rankOutput);
+					}
+					if(rank / total > 0.20) {
+						lblTwentiethPercentileOutput.setText(rankOutput);
+					}
+					if(rank / total > 0.30) {
+						lblThirtiethPercentileOutput.setText(rankOutput);
+					}
+					if(rank / total > 0.40) {
+						lblFourtiethPercentileOutput.setText(rankOutput);
+					}
+					if(rank / total > 0.50) {
+						lblFiftiethPercentileOutput.setText(rankOutput);
+					}
+					if(rank / total > 0.60) {
+						lblSixtiethPercentileOutput.setText(rankOutput);
+					}
+					if(rank / total > 0.70) {
+						lblSeventiethPercentileOutput.setText(rankOutput);
+					}
+					if(rank / total > 0.80) {
+						lblEightiethPercentileOutput.setText(rankOutput);
+					}
+					if(rank / total > 0.90) {
+						lblNinetiethPercentileOutput.setText(rankOutput);
+					}
+				}
 			}
-			System.out.println(averageGrade);
-			lblACount.setText(Integer.toString(countA));;
-			lblBCount.setText(Integer.toString(countB));;
-			lblCCount.setText(Integer.toString(countC));;
-			lblDCount.setText(Integer.toString(countD));;
-			lblFCount.setText(Integer.toString(countF));;
-			
-			lowestGrade = tempGrades.get(0);
-			highestGrade = tempGrades.get(tempGrades.size()-1);
-			averageGrade = averageGrade / tempGrades.size();
-			//Median Grade Calculation
-			if (tempGrades.size() % 2 == 0) {
-				medianGrade = (tempGrades.get( tempGrades.size() / 2 ) + 
-						tempGrades.get( ( tempGrades.size() / 2 ) - 1) ) / 2;
-				medianGrade = ((tempGrades.get(tempGrades.size() / 2) + 
-						tempGrades.get(tempGrades.size() / 2) - 1 )) / 2;
+			catch (NullPointerException error) {
+				/*
+				 *  NullPointerException occurs if there are no elements
+				 *	in the grades ArrayList.
+				 */
+				
 			}
+		}
 			else {
-				medianGrade = (tempGrades.get(tempGrades.size() / 2));
-			}
-			
-			lblLowestGradeOutput.setText(Float.toString(lowestGrade));
-			lblHighestGradeOutput.setText(Float.toString(highestGrade));
-			lblMedianGradeOutput.setText(Float.toString(medianGrade));
-			lblAverageGradeOutput.setText(String.format("%.1f", averageGrade));
-			gradeListModel.clear();
-			for (Grade updatedGrades : grades) {
-				gradeListModel.addElement(updatedGrades.toString());
-			}
-			for (int rankIndex = tempGrades.size() - 1; rankIndex >= 0;
-					rankIndex--) {
+				lblACount.setText("0");
+				lblBCount.setText("0");
+				lblCCount.setText("0");
+				lblDCount.setText("0");
+				lblFCount.setText("0");
+				lblLowestGradeOutput.setText("");
+				lblHighestGradeOutput.setText("");
+				lblMedianGradeOutput.setText("");
+				lblAverageGradeOutput.setText("");
+				lblTenthPercentileOutput.setText("0");
+				lblTwentiethPercentileOutput.setText("0");
+				lblThirtiethPercentileOutput.setText("0");
+				lblFourtiethPercentileOutput.setText("0");
+				lblFiftiethPercentileOutput.setText("0");
+				lblSixtiethPercentileOutput.setText("0");
+				lblSeventiethPercentileOutput.setText("0");
+				lblEightiethPercentileOutput.setText("0");
+				lblNinetiethPercentileOutput.setText("0");
 				
-				double total = tempGrades.size();
-				double rank = rankIndex + 1;
-				String rankOutput = tempGrades.get(rankIndex).toString();
-				
-				if(rank / total > 0.10) {
-					lblTenthPercentileOutput.setText(rankOutput);
-				}
-				if(rank / total > 0.20) {
-					lblTwentiethPercentileOutput.setText(rankOutput);
-				}
-				if(rank / total > 0.30) {
-					lblThirtiethPercentileOutput.setText(rankOutput);
-				}
-				if(rank / total > 0.40) {
-					lblFourtiethPercentileOutput.setText(rankOutput);
-				}
-				if(rank / total > 0.50) {
-					lblFiftiethPercentileOutput.setText(rankOutput);
-				}
-				if(rank / total > 0.60) {
-					lblSixtiethPercentileOutput.setText(rankOutput);
-				}
-				if(rank / total > 0.70) {
-					lblSeventiethPercentileOutput.setText(rankOutput);
-				}
-				if(rank / total > 0.80) {
-					lblEightiethPercentileOutput.setText(rankOutput);
-				}
-				if(rank / total > 0.90) {
-					lblNinetiethPercentileOutput.setText(rankOutput);
-				}
 			}
-		}
-		catch (NullPointerException error) {
-			/*
-			 *  NullPointerException occurs if there are no elements
-			 *	in the grades ArrayList.
-			 */
-			
-		}
+		JOptionPane.showMessageDialog(null, "Grades Updated");
 	}
 	
 	/*
