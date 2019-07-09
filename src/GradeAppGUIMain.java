@@ -1195,7 +1195,16 @@ public class GradeAppGUIMain {
 		btnExit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);			
+				//JOptionPane exitPane = new JOptionPane();
+				int option = JOptionPane.showConfirmDialog(btnExit, 
+						"Have you saved your grade data?", "Exit Check", 0);
+				if (option == 0) {
+						System.exit(0);			
+			
+				}
+				else {
+					// Do nothing and exit prompt
+				}
 			}
 		});
 		
@@ -1209,44 +1218,50 @@ public class GradeAppGUIMain {
 		btnClearEverything.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				percentA = 90.0f;
-				percentB = 80.0f;
-				percentC = 70.0f;
-				percentD = 60.0f;
-				
-				tfGradeA.setText(Float.toString(percentA));
-				tfGradeB.setText(Float.toString(percentB));
-				tfGradeC.setText(Float.toString(percentC));
-				tfGradeD.setText(Float.toString(percentD));
-				tfGradeF.setText(Float.toString(percentD));
-				
-				countA = 0;
-				countB = 0;
-				countC = 0;
-				countD = 0;
-				countF = 0;
-				
-				lblACount.setText(Integer.toString(countA));
-				lblBCount.setText(Integer.toString(countB));
-				lblCCount.setText(Integer.toString(countC));
-				lblDCount.setText(Integer.toString(countD));
-				lblFCount.setText(Integer.toString(countF));
-				
-				lblLowestGradeOutput.setText("");
-				lblHighestGradeOutput.setText("");
-				lblMedianGradeOutput.setText("");
-				lblAverageGradeOutput.setText("");
-				
-				minimumGrade = 0;
-				maximumGrade = Float.MAX_VALUE;
-				
-				lblMinGrade.setText(Float.toString(minimumGrade));
-				lblMaxGrade.setText("N/A");
-				
-				gradeListModel.clear();
-				grades.clear();
-				
+				int option = JOptionPane.showConfirmDialog(btnExit, 
+						"Have you saved your grade data?", 
+						"Clear Everything Check", 0);
+				if (option == 0) {
+					percentA = 90.0f;
+					percentB = 80.0f;
+					percentC = 70.0f;
+					percentD = 60.0f;
+					
+					tfGradeA.setText(Float.toString(percentA));
+					tfGradeB.setText(Float.toString(percentB));
+					tfGradeC.setText(Float.toString(percentC));
+					tfGradeD.setText(Float.toString(percentD));
+					tfGradeF.setText(Float.toString(percentD));
+					
+					countA = 0;
+					countB = 0;
+					countC = 0;
+					countD = 0;
+					countF = 0;
+					
+					lblACount.setText(Integer.toString(countA));
+					lblBCount.setText(Integer.toString(countB));
+					lblCCount.setText(Integer.toString(countC));
+					lblDCount.setText(Integer.toString(countD));
+					lblFCount.setText(Integer.toString(countF));
+					
+					lblLowestGradeOutput.setText("");
+					lblHighestGradeOutput.setText("");
+					lblMedianGradeOutput.setText("");
+					lblAverageGradeOutput.setText("");
+					
+					minimumGrade = 0;
+					maximumGrade = Float.MAX_VALUE;
+					
+					lblMinGrade.setText(Float.toString(minimumGrade));
+					lblMaxGrade.setText("N/A");
+					
+					gradeListModel.clear();
+					grades.clear();
+				}
+				else {
+					// Do nothing and exit prompt
+				}
 			}
 		});
 		
@@ -1334,7 +1349,6 @@ public class GradeAppGUIMain {
 		if (!grades.isEmpty()) {
 			try {
 				float temp = 0;
-				float roundedTemp =  0;
 				averageGrade = 0;
 				countA = 0;
 				countB = 0;
@@ -1346,39 +1360,36 @@ public class GradeAppGUIMain {
 				for(Grade gradeInput:grades) {
 					
 					temp = gradeInput.getGrade();
-					float tempFloor = (int)Math.floor(gradeInput.getGrade());
+					float tempFloor;
 					
-					if (temp % tempFloor > 0.5) {
-						roundedTemp = Math.round(temp);
-					}
-					else {
-						roundedTemp = temp;
-					}
-							
 					if (temp < minimumGrade) {
-						tempGrades.add(minimumGrade);
-						roundedTemp = Math.round(minimumGrade);
+						temp = minimumGrade;
 					}
 					else if (temp > maximumGrade) {
-						tempGrades.add(maximumGrade);
-						roundedTemp = Math.round(maximumGrade);
+						temp = maximumGrade;
 					}
 					else {
-						tempGrades.add(temp);
+						// do not change temp
 					}
 					
-					gradeInput.setAdjustedGrade(roundedTemp);
+					tempFloor = (int) Math.floor(temp);
+					if (temp % tempFloor > 0.5) {
+						temp = Math.round(temp);
+					}
 					
-					if (roundedTemp >= percentA) {
+					tempGrades.add(temp);				
+					gradeInput.setAdjustedGrade(temp);
+					
+					if (temp >= percentA) {
 						gradeInput.setLetterGrade("A");
 					}
-					else if (roundedTemp >= percentB) {
+					else if (temp >= percentB) {
 						gradeInput.setLetterGrade("B");
 					}
-					else if (roundedTemp >= percentC) {
+					else if (temp >= percentC) {
 						gradeInput.setLetterGrade("C");
 					}
-					else if (roundedTemp >= percentD) {
+					else if (temp >= percentD) {
 						gradeInput.setLetterGrade("D");
 					}
 					else {

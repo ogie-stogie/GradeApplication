@@ -99,7 +99,6 @@ public class Grade {
 	 * 	@return this.letterGrade : Returns the value of <letterGrade>
 	 * 	Description: Returns the <letterGrade> value of a Grade object
 	 */
-	
 	public String getLetterGrade() {
 		return this.letterGrade;
 	}
@@ -108,7 +107,6 @@ public class Grade {
 	 * 	@return this.adjustedGrade : Returns the value of <adjustedGrade>
 	 * 	
 	 */
-
 	public float getAdjustedGrade() {
 		return this.adjustedGrade;
 	}
@@ -119,7 +117,6 @@ public class Grade {
 	 * 	Description:   Converts the <grade> and <letterGrade> value in a Grade
 	 * 				   object to a specific display format
 	 */
-
 	public String toString() {
 		String output = String.format("%-10.2f%10.2f%10s",this.getGrade(),
 				this.getAdjustedGrade(),this.getLetterGrade());	
