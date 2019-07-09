@@ -24,7 +24,6 @@
  * 
  */
 
-import java.awt.EventQueue;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,29 +36,15 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.text.NumberFormatter;
+import javax.swing.ListSelectionModel;
+import javax.swing.DefaultListModel;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.ListSelectionModel;
-import javax.swing.AbstractListModel;
-import javax.swing.DefaultListModel;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.ActionEvent;
-import java.awt.GridLayout;
 import java.awt.EventQueue;
 
 /*	This main class contains two JFrames, five JTextfields, eighteen JLabels,
@@ -385,6 +370,9 @@ public class GradeAppGUIMain {
 					System.err.println("NumberFormatException: "
 							+ error.getMessage());
 				}
+				catch(NullPointerException error ) {
+					//Do nothing - catches textField edit cancel
+				}
 			}
 		});
 		
@@ -428,6 +416,9 @@ public class GradeAppGUIMain {
 							+ "Must enter a number");
 					System.err.println("NumberFormatException: "
 							+ error.getMessage());
+				}
+				catch(NullPointerException error ) {
+					//Do nothing - catches textField edit cancel
 				}
 			}
 		});
@@ -473,6 +464,9 @@ public class GradeAppGUIMain {
 					System.err.println("NumberFormatException: "
 							+ error.getMessage());
 				}
+				catch(NullPointerException error ) {
+					//Do nothing - catches textField edit cancel
+				}
 			}
 		});
 
@@ -512,6 +506,9 @@ public class GradeAppGUIMain {
 							+ "Must enter a number");
 					System.err.println("NumberFormatException: "
 							+ error.getMessage());
+				}
+				catch(NullPointerException error ) {
+					//Do nothing - catches textField edit cancel
 				}
 			}
 		});
@@ -888,6 +885,9 @@ public class GradeAppGUIMain {
 					 System.err.println("NumberFormatException: " 
 							+ numberFormatException.getMessage());
 				}
+				catch(NullPointerException incorrectAddEvent) {
+					//Do Nothing but catch canceled open files
+				}
 			}
 		});
 		
@@ -909,9 +909,10 @@ public class GradeAppGUIMain {
 			    			"Attempting to save " +
 			            chooser.getSelectedFile().getName());
 			    }
+			    String fileName = null;
+			    try {
 			    File file = chooser.getSelectedFile();
-			    String fileName = file.getAbsolutePath();
-				try {
+			    fileName = file.getAbsolutePath();
 					if (!file.exists()) {
 						file.createNewFile();
 					}
@@ -945,6 +946,9 @@ public class GradeAppGUIMain {
 							+ fileName + "contains invalid characters.");
 					System.err.println("ArgumentException: "
 							+ argumentException.getMessage());
+				}
+				catch(NullPointerException incorrectAddEvent) {
+					//Do Nothing but catch canceled save file
 				}
 			}
 		});
@@ -1062,6 +1066,9 @@ public class GradeAppGUIMain {
 					System.err.println("NumberFormatException: " 
 							+ incorrectInputEvent.getMessage());
 				}
+				catch(NullPointerException error) {
+					//Do nothing - catches amend grade cancel
+				}
 			}
 		});
 		
@@ -1078,8 +1085,8 @@ public class GradeAppGUIMain {
 				JFrame frame = new JFrame("Set Minimum Grade");
 				String minGradeInput = JOptionPane.showInputDialog(frame,
 					"Enter minimum possible grade: ");
-				float newMinGrade = Float.parseFloat(minGradeInput);
 				try {
+					float newMinGrade = Float.parseFloat(minGradeInput);
 					if 
 					(newMinGrade > maximumGrade) {
 						JOptionPane.showMessageDialog(null, "Minimum Grade "
@@ -1102,7 +1109,9 @@ public class GradeAppGUIMain {
 						System.err.println("NumberFormatException: " 
 						+ error.getMessage());
 				}
-				
+				catch(NullPointerException error) {
+					//Do nothing - catches amend grade cancel
+				}
 			}
 		});
 		
@@ -1139,7 +1148,10 @@ public class GradeAppGUIMain {
 							"Error! Must enter a number");
 						System.err.println("NumberFormatException: " 
 						+ error.getMessage());
-				}				
+				}
+				catch(NullPointerException error) {
+					//Do nothing - catches amend grade cancel
+				}
 			}
 		});
 		
@@ -1165,7 +1177,12 @@ public class GradeAppGUIMain {
 		
 		btnGenerateReport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				generateReport();
+				try {
+					generateReport();
+				}
+				catch(NullPointerException error ) {
+					//Do nothing - catches textField edit cancel
+				}
 			}
 		});
 		
@@ -1226,7 +1243,7 @@ public class GradeAppGUIMain {
 				maximumGrade = Float.MAX_VALUE;
 				
 				lblMinGrade.setText(Float.toString(minimumGrade));
-				lblMaxGrade.setText("Not Set");
+				lblMaxGrade.setText("N/A");
 				
 				gradeListModel.clear();
 				grades.clear();
