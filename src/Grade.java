@@ -78,19 +78,22 @@ public class Grade {
 		this.letterGrade = letterGradeInput;
 	}
 	
+vvadodar_edit
 	/*	Method name: setAdjustedGrade
 	 * 	@param adjustedInput : external value for <adjustedGrade>
 	 * 	Description: 	Sets the value of <adjustedGrade> in a Grade object as the 
 	 * 					parameter value
 	 */
+master
 	public void setAdjustedGrade(float adjustedInput) {
 		this.adjustedGrade = adjustedInput;
 	}
-	
+vvadodar_edit
 	/*	Method name: getGrade()
 	 * 	@return this.grade : Returns the value of <grade>
 	 * 	Description: Returns the <grade> value of a Grade object
-	 */
+   */
+master
 	public float getGrade() {
 		return this.grade;
 	}
@@ -103,20 +106,24 @@ public class Grade {
 		return this.letterGrade;
 	}
 	
+vvadodar_edit
 	/*	Method name: getAdjustedGrade()
 	 * 	@return this.adjustedGrade : Returns the value of <adjustedGrade>
 	 * 	
 	 */
+ master
 	public float getAdjustedGrade() {
 		return this.adjustedGrade;
 	}
 	
+vvadodar_edit
 	/*	Method name: toString
 	 * 	@return strOutput :  returns <grade> and <letterGrade> values
 	 * 						 in a specific format for display
 	 * 	Description:   Converts the <grade> and <letterGrade> value in a Grade
 	 * 				   object to a specific display format
 	 */
+ master
 	public String toString() {
 		String strGrade = Float.toString(this.getGrade());
 		String strAdjGrade = Float.toString(this.getAdjustedGrade());
