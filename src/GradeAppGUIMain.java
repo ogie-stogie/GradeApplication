@@ -296,9 +296,7 @@ public class GradeAppGUIMain {
 	private List<Grade> grades = new ArrayList<Grade>();
 	private List<Float> tempGrades, originalGrades;
 
-vvadodar_edit
 	// private float minimumGrade = 0.0f, maximumGrade = 100.0f;
-master
 	private float minimumGrade = 0.0f, maximumGrade = Float.MAX_VALUE;
 	private float lowestGrade, highestGrade, medianGrade, averageGrade;
 	private float percentA = 90.0f, percentB = 80.0f;
@@ -1260,9 +1258,21 @@ master
 				countD = 0;
 				countF = 0;
 				
+				//Grade Rounding
 				for(Grade gradeInput:grades) {
+					
 					temp = gradeInput.getGrade();
-					roundedTemp = Math.round(gradeInput.getGrade());
+					float tempFloor = (int)Math.floor(gradeInput.getGrade());
+					
+					System.out.println(tempFloor);
+					
+					if (temp % tempFloor > 0.5) {
+						roundedTemp = Math.round(temp);
+					}
+					else {
+						roundedTemp = temp;
+					}
+							
 					if (temp < minimumGrade) {
 						tempGrades.add(minimumGrade);
 						roundedTemp = Math.round(minimumGrade);
@@ -1270,11 +1280,11 @@ master
 					else if (temp > maximumGrade) {
 						tempGrades.add(maximumGrade);
 						roundedTemp = Math.round(maximumGrade);
-						
 					}
 					else {
 						tempGrades.add(temp);
 					}
+					
 					gradeInput.setAdjustedGrade(roundedTemp);
 					
 					if (roundedTemp >= percentA) {
@@ -1293,6 +1303,7 @@ master
 						gradeInput.setLetterGrade("F");
 					}
 				}
+				
 				Collections.sort(tempGrades);
 				
 				for (int gIndex = 0; gIndex < tempGrades.size(); gIndex++) {
@@ -1323,10 +1334,9 @@ master
 				lowestGrade = tempGrades.get(0);
 				highestGrade = tempGrades.get(tempGrades.size()-1);
 				averageGrade = averageGrade / tempGrades.size();
-vvadodar_edit
+			
 				
 				/* Median grade calculation */
-master
 				if (tempGrades.size() % 2 == 0) {
 					medianGrade = (tempGrades.get( tempGrades.size() / 2 ) + 
 							tempGrades.get( ( tempGrades.size() / 2 ) - 1) ) / 2;
