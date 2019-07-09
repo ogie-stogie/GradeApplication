@@ -863,9 +863,6 @@ public class GradeAppGUIMain {
 					}
 					bufferedReader.close();
 					updateGradeData();
-					for(Grade updatedGrades:grades) {
-						gradeListModel.addElement(updatedGrades.toString());
-					}
 				}
 				catch(FileNotFoundException fileException) {
 					JOptionPane.showMessageDialog(null, "Error! File " 
@@ -1380,31 +1377,31 @@ public class GradeAppGUIMain {
 					double rank = rankIndex + 1;
 					String rankOutput = tempGrades.get(rankIndex).toString();
 					
-					if(rank / total > 0.10) {
+					if(rank / total >= 0.10) {
 						lblTenthPercentileOutput.setText(rankOutput);
 					}
-					if(rank / total > 0.20) {
+					if(rank / total >= 0.20) {
 						lblTwentiethPercentileOutput.setText(rankOutput);
 					}
-					if(rank / total > 0.30) {
+					if(rank / total >= 0.30) {
 						lblThirtiethPercentileOutput.setText(rankOutput);
 					}
-					if(rank / total > 0.40) {
+					if(rank / total >= 0.40) {
 						lblFourtiethPercentileOutput.setText(rankOutput);
 					}
-					if(rank / total > 0.50) {
+					if(rank / total >= 0.50) {
 						lblFiftiethPercentileOutput.setText(rankOutput);
 					}
-					if(rank / total > 0.60) {
+					if(rank / total >= 0.60) {
 						lblSixtiethPercentileOutput.setText(rankOutput);
 					}
-					if(rank / total > 0.70) {
+					if(rank / total >= 0.70) {
 						lblSeventiethPercentileOutput.setText(rankOutput);
 					}
-					if(rank / total > 0.80) {
+					if(rank / total >= 0.80) {
 						lblEightiethPercentileOutput.setText(rankOutput);
 					}
-					if(rank / total > 0.90) {
+					if(rank / total >= 0.90) {
 						lblNinetiethPercentileOutput.setText(rankOutput);
 					}
 				}

@@ -121,40 +121,8 @@ public class Grade {
 	 */
 
 	public String toString() {
-		String strGrade = Float.toString(this.getGrade());
-		String strAdjGrade = Float.toString(this.getAdjustedGrade());
-		char[] output = new char[44];
-		int i = 0;
-		for(int j = 0; j < strGrade.length(); j++) {
-			output[i] = strGrade.charAt(i);		
-			i++;
-		}
-		while (i < 10) {
-			output[i] = '0';
-			i++;
-		}
-		output[11] = ' ';
-		output[12] = ' ';
-		i += 2;
-		
-		for(int j = 0; j < strAdjGrade.length(); j++) {
-			output[i] = strAdjGrade.charAt(j);
-			i++;
-		}
-		while (i < 22) {
-			output[i] = '0';
-			i++;
-		}
-		
-		output[23] = ' ';
-		output[24] = ' ';
-		
-		i += 2;
-		
-		output[25] = this.getLetterGrade().charAt(0);
-		System.out.println(i);
-		String strOutput = new String(output);
-		return strOutput;
-		
+		String output = String.format("%-10.2f%10.2f%10s",this.getGrade(),
+				this.getAdjustedGrade(),this.getLetterGrade());	
+		return output;
 	}
 }
