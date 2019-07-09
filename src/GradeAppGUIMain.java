@@ -1586,11 +1586,11 @@ public class GradeAppGUIMain {
 					"    Total"));
 			sb.append(String.format("%-8s %-18s%n", "-----", 
 					"--------------"));
-			sb.append(String.format("%-1s %-6s %-18s%n", "", "A", countA));
-			sb.append(String.format("%-1s %-6s %-18s%n", "", "B", countB));
-			sb.append(String.format("%-1s %-6s %-18s%n", "", "C", countC));
-			sb.append(String.format("%-1s %-6s %-18s%n", "", "D", countD));
-			sb.append(String.format("%-1s %-6s %-18s%n", "", "F", countF));
+			sb.append(String.format("%-1s %-6s %7s%n", "", "A", countA));
+			sb.append(String.format("%-1s %-6s %7s%n", "", "B", countB));
+			sb.append(String.format("%-1s %-6s %7s%n", "", "C", countC));
+			sb.append(String.format("%-1s %-6s %7s%n", "", "D", countD));
+			sb.append(String.format("%-1s %-6s %7s%n", "", "F", countF));
 
 			sb.append(String.format("%n"));
 			
@@ -1612,6 +1612,13 @@ public class GradeAppGUIMain {
 					lblEightiethPercentileOutput.getText(),
 					lblNinetiethPercentileOutput.getText()));
 			
+			sb.append(String.format("%n%n%2s%n", "Grades read in for report:"));
+			sb.append(String.format("%-10s%10s%15s%n", "Grades",
+					"Adjusted", "Letter Grade"));
+			for(Grade reportedGrades : grades) {
+				sb.append(reportedGrades.toString());
+				sb.append(String.format("%n"));
+			}
 			bufferedWriter.write(sb.toString());
 			bufferedWriter.close();
 		}
