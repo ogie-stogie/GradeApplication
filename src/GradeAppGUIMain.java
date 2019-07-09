@@ -1463,11 +1463,11 @@ public class GradeAppGUIMain {
 			
 			sb.append(String.format("%-80s%n", "####################"
 					+ "########################################"
-					+ "####################"));
+					+ "###################"));
 			sb.append(String.format("%45s%n", "Grade Report"));
 			sb.append(String.format("%-80s%n", "####################"
 					+ "########################################"
-					+ "####################"));
+					+ "###################"));
 			
 			sb.append(String.format("%n"));
 			
@@ -1476,14 +1476,23 @@ public class GradeAppGUIMain {
 			
 			sb.append(String.format("%n"));
 			
+			sb.append(String.format("%-30s %-40s%n", 
+					"Minimum Grade Possible", "Maximum Grade Possible"));
+			sb.append(String.format("%-30s %-30s%n", 
+					"----------------------", "----------------------"));
+			sb.append(String.format("%-30s %-30s%n", 
+					minimumGrade, maximumGrade));
+			
+			sb.append(String.format("%n"));
+			
 			sb.append(String.format("%-20s %-20s %-20s %-20s%n", 
-					"Minimum Grade", "Maximum Grade", "Median Grade",
+					"Lowest Grade", "Highest Grade", "Median Grade",
 					"Average Grade"));
 			sb.append(String.format("%-20s %-20s %-20s %-20s%n", 
 					"-------------", "-------------", "------------",
 					"-------------"));
 			sb.append(String.format("%-20s %-20s %-20s %-20s%n", 
-					minimumGrade, maximumGrade, medianGrade,
+					lowestGrade, highestGrade, medianGrade,
 					averageGrade));
 			
 			sb.append(String.format("%n"));
@@ -1499,7 +1508,7 @@ public class GradeAppGUIMain {
 			sb.append(String.format("%-1s %-6s %-18s %-8s%n", "", "C",
 					percentC + "% -  " + percentB + "%", countC));
 			sb.append(String.format("%-1s %-6s %-18s %-8s%n", "", "D",
-					percentD + "% -  " + percentD + "%", countD));
+					percentD + "% -  " + percentC + "%", countD));
 			sb.append(String.format("%-1s %-6s %-18s %-8s%n", "", "F",
 					" " + minimumGrade + "% -  " + percentD + "%", countF));
 			
