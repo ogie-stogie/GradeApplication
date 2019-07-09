@@ -269,6 +269,7 @@ public class GradeAppGUIMain {
 
 	/* Global Variables */
 	private JFrame frame, frmTableOfPercentile;
+	private JLabel lblMinGrade, lblMaxGrade;
 	private JTextField tfGradeA, tfGradeB, tfGradeC, tfGradeD, tfGradeF;
 	private JLabel lblLowestGradeOutput, lblHighestGradeOutput;
 	private JLabel lblMedianGradeOutput, lblAverageGradeOutput;
@@ -277,6 +278,7 @@ public class GradeAppGUIMain {
 	private JLabel lblTenthPercentileOutput, lblTwentiethPercentileOutput, lblThirtiethPercentileOutput;
 	private JLabel lblFourtiethPercentileOutput, lblFiftiethPercentileOutput, lblSixtiethPercentileOutput;
 	private JLabel lblSeventiethPercentileOutput, lblEightiethPercentileOutput, lblNinetiethPercentileOutput;
+	private JToggleButton tglbtnAbsoluteGrade;
 	DefaultListModel gradeListModel;
 	
 	private List<Grade> grades = new ArrayList<Grade>();
@@ -814,13 +816,13 @@ public class GradeAppGUIMain {
 		lblFCount.setBounds(391, 490, 50, 45);
 		frame.getContentPane().add(lblFCount);
 		
-		JLabel lblMinGrade = new JLabel(Float.toString(minimumGrade) + valueType);
+		lblMinGrade = new JLabel(Float.toString(minimumGrade) + valueType);
 		lblMinGrade.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMinGrade.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblMinGrade.setBounds(210, 290, 120, 45);
 		frame.getContentPane().add(lblMinGrade);
 		
-		JLabel lblMaxGrade = new JLabel("N/A");
+		lblMaxGrade = new JLabel("N/A");
 		lblMaxGrade.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMaxGrade.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblMaxGrade.setBounds(210, 340, 120, 45);
@@ -1259,9 +1261,20 @@ public class GradeAppGUIMain {
 					lblMedianGradeOutput.setText("");
 					lblAverageGradeOutput.setText("");
 					
+					lblTenthPercentileOutput.setText("0" + valueType);
+					lblTwentiethPercentileOutput.setText("0" + valueType);
+					lblThirtiethPercentileOutput.setText("0" + valueType);
+					lblFourtiethPercentileOutput.setText("0" + valueType);
+					lblFiftiethPercentileOutput.setText("0" + valueType);
+					lblSixtiethPercentileOutput.setText("0" + valueType);
+					lblSeventiethPercentileOutput.setText("0" + valueType);
+					lblEightiethPercentileOutput.setText("0" + valueType);
+					lblNinetiethPercentileOutput.setText("0" + valueType);
+					
 					minimumGrade = 0;
 					maximumGrade = Float.MAX_VALUE;
 					valueType = "%";
+					tglbtnAbsoluteGrade.setSelected(false);
 					
 					lblMinGrade.setText(Float.toString(minimumGrade) + valueType);
 					lblMaxGrade.setText("N/A");
@@ -1272,48 +1285,10 @@ public class GradeAppGUIMain {
 				else {
 					// Do nothing and exit prompt
 				}
-				
-				percentA = 90.0f;
-				percentB = 80.0f;
-				percentC = 70.0f;
-				percentD = 60.0f;
-				
-				tfGradeA.setText(Float.toString(percentA));
-				tfGradeB.setText(Float.toString(percentB));
-				tfGradeC.setText(Float.toString(percentC));
-				tfGradeD.setText(Float.toString(percentD));
-				tfGradeF.setText(Float.toString(percentD));
-				
-				countA = 0;
-				countB = 0;
-				countC = 0;
-				countD = 0;
-				countF = 0;
-				
-				lblACount.setText(Integer.toString(countA));
-				lblBCount.setText(Integer.toString(countB));
-				lblCCount.setText(Integer.toString(countC));
-				lblDCount.setText(Integer.toString(countD));
-				lblFCount.setText(Integer.toString(countF));
-				
-				lblLowestGradeOutput.setText("");
-				lblHighestGradeOutput.setText("");
-				lblMedianGradeOutput.setText("");
-				lblAverageGradeOutput.setText("");
-				
-				minimumGrade = 0;
-				maximumGrade = Float.MAX_VALUE;
-				
-				lblMinGrade.setText(Float.toString(minimumGrade));
-				lblMaxGrade.setText("N/A");
-				
-				gradeListModel.clear();
-				grades.clear();
-				
 			}
 		});
 		
-		JToggleButton tglbtnAbsoluteGrade = new JToggleButton("Absolute Grades");
+		tglbtnAbsoluteGrade = new JToggleButton("Absolute Grades");
 		tglbtnAbsoluteGrade.setBackground(new Color(139, 0, 139));
 		tglbtnAbsoluteGrade.setForeground(Color.WHITE);
 		tglbtnAbsoluteGrade.setToolTipText("Select this if grades read in are not percentages");
@@ -1509,7 +1484,6 @@ public class GradeAppGUIMain {
 // MODIFIEDPOSITION
 			/*	lblLowestGradeOutput.setText(Float.toString(lowestGrade));
 				lblHighestGradeOutput.setText(Float.toString(highestGrade));
-				lblMedianGradeOutput.setText(Float.toString(medianGrade));
 				lblAverageGradeOutput.setText(String.format("%.1f", averageGrade));
 			*/
 				lblLowestGradeOutput.setText(Float.toString(lowestGrade) + valueType);
