@@ -43,16 +43,24 @@
  * 	Converts Grade data to specific format for display purposes
  */
 
+/**
+ * This class is used to define the object Grade.
+ * The grade score, letter grade and adjusted grade can be set/get from here.
+ * Contains a toString method that returns the grade, adjusted grade and
+ * letter grade.
+ * @authors Taylor Bart, Vipul Vadodaria, Benjamin Veach 
+ * @version 100
+ */
+
 public class Grade {
 	
 	private float grade, adjustedGrade;
 	private String letterGrade;
 	
-	/*	Method name: Grade
-	 * 	@param gradeInput: new grade value to change <grade> to
-	 * 	@param letterGradeInput: new letter grade value to change <letterGrade> to
-	 * 	Description:	Sets the <grade> and <letterGrade> values of a Grade object
-	 * 					to the parameter values
+	/**Description:	Sets the grade and letterGrade values of a Grade object
+	 * 	to the parameter values
+	 * 	@param gradeInput new grade value to change grade to
+	 * 	@param letterGradeInput new letter grade value to change letterGrade to
 	 */
 	public Grade(float gradeInput, String letterGradeInput) {
 		this.grade = gradeInput;
@@ -60,62 +68,55 @@ public class Grade {
 		this.adjustedGrade = gradeInput;
 	}
 	
-	/*	Method name: setGrade
-	 * 	@param gradeInput : External value for <grade>
-	 * 	Description: 	Sets the value of <grade> in a Grade object as the parameter
-	 * 				 	value
+	/**	Description: Sets the value of grade in a Grade object as the parameter
+	 * 	value
+	 * 	@param gradeInput External value for grade
 	 */
 	public void setGrade(float gradeInput) {
 		this.grade = gradeInput;
 	}
 	
-	/*	Method name: setLetterGrade
-	 * 	@param letterGradeInput : External value for <letterGrade>
-	 * 	Description:	Sets the value of <letterGrade> in a Grade object as the 
+	/**Description:	Sets the value of letterGrade in a Grade object as the 
 	 * 					parameter value
+	 * 	@param letterGradeInput External value for letterGrade
 	 */
 	public void setLetterGrade(String letterGradeInput) {
 		this.letterGrade = letterGradeInput;
 	}
 	
-	/*	Method name: setAdjustedGrade
-	 * 	@param adjustedInput : external value for <adjustedGrade>
-	 * 	Description: 	Sets the value of <adjustedGrade> in a Grade object as the 
-	 * 					parameter value
+	/**	Description: Sets the value of adjustedGrade in a Grade object as the 
+	 * 	parameter value
+	 * 	@param adjustedInput external value for adjustedGrade
 	 */
 	public void setAdjustedGrade(float adjustedInput) {
 		this.adjustedGrade = adjustedInput;
 	}
 	
-	/*	Method name: getGrade()
-	 * 	@return this.grade : Returns the value of <grade>
-	 * 	Description: Returns the <grade> value of a Grade object
-   */
+	/**	Description: Returns the grade value of a Grade object
+	 * 	@return grade
+	 */
 	public float getGrade() {
 		return this.grade;
 	}
 	
-	/*	Method name: getLetterGrade()
-	 * 	@return this.letterGrade : Returns the value of <letterGrade>
-	 * 	Description: Returns the <letterGrade> value of a Grade object
+	/**	Description: Returns the letterGrade value of a Grade object
+	 * 	@return letterGrade
+	 * 
 	 */
 	public String getLetterGrade() {
 		return this.letterGrade;
 	}
 	
-	/*	Method name: getAdjustedGrade()
-	 * 	@return this.adjustedGrade : Returns the value of <adjustedGrade>
-	 * 	Description: Returns the <adjustedGrade> value of a Grade object
+	/**	Description: Returns the adjustedGrade value of a Grade object
+	 * 	@return adjustedGrade 	
 	 */
 	public float getAdjustedGrade() {
 		return this.adjustedGrade;
 	}
 	
-	/*	Method name: toString
-	 * 	@return output :  returns <grade> and <letterGrade> values
-	 * 						 in a specific format for display
-	 * 	Description:   Converts the <grade> and <letterGrade> value in a Grade
-	 * 				   object to a specific display format
+	/** Description: Converts the grade, adjustedGrade and letterGrade value
+	 *  in a Grade object to a specific display format
+	 * 	@return output 	
 	 */
 	public String toString() {
 		String output = String.format("%-10.2f%10.2f%10s",this.getGrade(),
