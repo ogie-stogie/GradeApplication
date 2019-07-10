@@ -1,3 +1,4 @@
+vvadodar_edit
 /*	Names: Taylor Bart, Vipul Vadodaria, Benjamin Veach
  * 	Class ID: 41792
  * 	Grading Analytics System
@@ -123,3 +124,4 @@ public class Grade {
 		return output;
 	}
 }
+master
