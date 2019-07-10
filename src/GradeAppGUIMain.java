@@ -1,28 +1,20 @@
-vvadodar_edit
 /*	Names: Taylor Bart, Vipul Vadodaria, Benjamin Veach
  * 	Class ID: 41792
  * 	Grading Analytics System
- * 	Description:	Contains the entire GUI framework for the Grading Analytics
- * 					system and all input, output, analysis, report making, 
- * 					and file opening and saving is done through this class
- * 
- * 					Contains two JFrames for the main GUI and the percentile table
- * 
- * 					Contains five JTextfields for use in editing the grade cutoffs
- * 					
- * 					Contains eighteen JLabels to label all portions of input and output
- * 
- * 					Contains three lists: one for holding Grade objects, the other two 
- * 										  for holding float variables
- * 
- * 					Contains ten private float variables for storing results of analysis
- * 				
- * 					Contains five private int variables for holding the amount of grades
- * 					in each cutoff
- * 
- * 					Contains twenty four methods for implementation of all functionality
- * 					of the system
- * 
+ * 	Description: 
+ * Allows a user to add grades by file or individually.
+ * Allows user to save a file of the unadjusted grades.
+ * Grades can be removed or amended.
+ * User can set the min/max possible score.
+ * Can determine the lowest, highest, median and average of the grade set.
+ * Can display a window of percentiles at 10% intervals.
+ * Determines count for each letter grade.
+ * Rounds grades correctly.
+ * Grade scales can be set by user.
+ * User can exit from program at any time.
+ * User can clear everything at any time.
+ * Generates a thorough report based on all info pertaining to this app.
+ * Displays info on grades in scrollable list.
  */
 
 import java.io.*;
@@ -273,6 +265,11 @@ import javax.swing.JToggleButton;
  *  
  */
 
+/**
+ * Class implementation of the GUI
+ * @author Taylor Bart, Vipul Vadodaria, Benjamin Veach
+ * @version 100
+ */
 public class GradeAppGUIMain {
 
 	/* Global Variables */
@@ -329,7 +326,9 @@ public class GradeAppGUIMain {
 	 * Create the application.
 	 * ########################################################################
 	 */
-	
+	/**
+	 * Launches the grade app GUI
+	 */
 	public GradeAppGUIMain() {
 		initialize();
 	}
@@ -1477,7 +1476,6 @@ public class GradeAppGUIMain {
 	
 	
 	/**
-	 * Method Name: updateGradeData
 	 * Description: copies grade elements from grades ArrayList that fall
 	 * 			within the min and max grade limits and adds those values
 	 * 			to a tempGrade ArrayList which is then sorted and used
@@ -1816,4 +1814,3 @@ public class GradeAppGUIMain {
 		}
 	}
 }
- master
