@@ -1413,16 +1413,23 @@ public class GradeAppGUIMain {
 				
 						valueType = " pts";
 		
-						tfGradeA.setText(String.format("%.1f", percentA) + valueType);
-						tfGradeB.setText(String.format("%.1f", percentB) + valueType);
-						tfGradeC.setText(String.format("%.1f", percentC) + valueType);
-						tfGradeD.setText(String.format("%.1f", percentD) + valueType);
-						tfGradeF.setText(String.format("%.1f", percentD) + valueType);
+						tfGradeA.setText(String.format("%.1f", percentA)
+								+ valueType);
+						tfGradeB.setText(String.format("%.1f", percentB)
+								+ valueType);
+						tfGradeC.setText(String.format("%.1f", percentC) 
+								+ valueType);
+						tfGradeD.setText(String.format("%.1f", percentD) 
+								+ valueType);
+						tfGradeF.setText(String.format("%.1f", percentD) 
+								+ valueType);
 						
 						minimumGrade = 0;
 					
-						lblMinGrade.setText(String.format("%.1f",minimumGrade) + valueType);
-						lblMaxGrade.setText(String.format("%.1f",maximumGrade) + valueType);
+						lblMinGrade.setText(String.format("%.1f",minimumGrade)
+								+ valueType);
+						lblMaxGrade.setText(String.format("%.1f",maximumGrade)
+								+ valueType);
 						
 						updateGradeData();
 					}
@@ -1456,7 +1463,8 @@ public class GradeAppGUIMain {
 					
 					minimumGrade = 0;
 					
-					lblMinGrade.setText(Float.toString(minimumGrade) + valueType);
+					lblMinGrade.setText(Float.toString(minimumGrade) +
+							valueType);
 					lblMaxGrade.setText("N/A");
 					
 					updateGradeData();
@@ -1570,16 +1578,20 @@ public class GradeAppGUIMain {
 				/* Median grade calculation */
 				if (tempGrades.size() % 2 == 0) {
 					medianGrade = (tempGrades.get( tempGrades.size() / 2 ) + 
-							tempGrades.get( ( tempGrades.size() / 2 ) - 1) ) / 2;
+							tempGrades.get(( tempGrades.size() / 2 ) - 1)) / 2;
 				}
 				else {
 					medianGrade = (tempGrades.get(tempGrades.size() / 2));
 				}
 
-				lblLowestGradeOutput.setText(Float.toString(lowestGrade) + valueType);
-				lblHighestGradeOutput.setText(Float.toString(highestGrade) + valueType);
-				lblMedianGradeOutput.setText(Float.toString(medianGrade) + valueType);
-				lblAverageGradeOutput.setText(String.format("%.1f", averageGrade) + valueType);
+				lblLowestGradeOutput.setText(Float.toString(lowestGrade) +
+						valueType);
+				lblHighestGradeOutput.setText(Float.toString(highestGrade) +
+						valueType);
+				lblMedianGradeOutput.setText(Float.toString(medianGrade) + 
+						valueType);
+				lblAverageGradeOutput.setText(String.format("%.1f", 
+						averageGrade) + valueType);
 				
 
 				gradeListModel.clear();
@@ -1600,31 +1612,40 @@ public class GradeAppGUIMain {
 					String rankOutput = tempGrades.get(rankIndex).toString();
 					
 					if(rank / total >= 0.10) {
-						lblTenthPercentileOutput.setText(rankOutput + valueType);
+						lblTenthPercentileOutput.setText(rankOutput + 
+								valueType);
 					}
 					if(rank / total >= 0.20) {
-						lblTwentiethPercentileOutput.setText(rankOutput + valueType);
+						lblTwentiethPercentileOutput.setText(rankOutput + 
+								valueType);
 					}
 					if(rank / total >= 0.30) {
-						lblThirtiethPercentileOutput.setText(rankOutput + valueType);
+						lblThirtiethPercentileOutput.setText(rankOutput + 
+								valueType);
 					}
 					if(rank / total >= 0.40) {
-						lblFourtiethPercentileOutput.setText(rankOutput + valueType);
+						lblFourtiethPercentileOutput.setText(rankOutput + 
+								valueType);
 					}
 					if(rank / total >= 0.50) {
-						lblFiftiethPercentileOutput.setText(rankOutput + valueType);
+						lblFiftiethPercentileOutput.setText(rankOutput + 
+								valueType);
 					}
 					if(rank / total >= 0.60) {
-						lblSixtiethPercentileOutput.setText(rankOutput + valueType);
+						lblSixtiethPercentileOutput.setText(rankOutput + 
+								valueType);
 					}
 					if(rank / total >= 0.70) {
-						lblSeventiethPercentileOutput.setText(rankOutput + valueType);
+						lblSeventiethPercentileOutput.setText(rankOutput +
+								valueType);
 					}
 					if(rank / total >= 0.80) {
-						lblEightiethPercentileOutput.setText(rankOutput + valueType);
+						lblEightiethPercentileOutput.setText(rankOutput + 
+								valueType);
 					}
 					if(rank / total >= 0.90) {
-						lblNinetiethPercentileOutput.setText(rankOutput + valueType);
+						lblNinetiethPercentileOutput.setText(rankOutput +
+								valueType);
 					}
 				}
 			}

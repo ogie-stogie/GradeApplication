@@ -57,7 +57,7 @@ public class Grade {
 	private float grade, adjustedGrade;
 	private String letterGrade;
 	
-	/**Description:	Sets the grade and letterGrade values of a Grade object
+	/** Description: Sets the grade and letterGrade values of a Grade object
 	 * 	to the parameter values
 	 * 	@param gradeInput new grade value to change grade to
 	 * 	@param letterGradeInput new letter grade value to change letterGrade to
