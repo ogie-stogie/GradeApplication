@@ -1,5 +1,4 @@
-vvadodar_edit
-/*	Names: Taylor Bart, Vipul Vadodaria, Benjamin Veach
+/**	Names: Taylor Bart, Vipul Vadodaria, Benjamin Veach
  * 	Class ID: 41792
  * 	Grading Analytics System
  * 	Description:	Contains the entire GUI framework for the Grading Analytics
@@ -28,6 +27,7 @@ vvadodar_edit
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Formatter;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -296,8 +296,7 @@ public class GradeAppGUIMain {
 	private float lowestGrade, highestGrade, medianGrade, averageGrade;
 	private float percentA = 90.0f, percentB = 80.0f;
 	private float percentC = 70.0f, percentD = 60.0f;
-
-	/* MODIFIEDPOSITION */
+	
 	private String valueType = "%";
 
 	private int countA = 0;
@@ -378,7 +377,7 @@ public class GradeAppGUIMain {
 					}
 					else {
 						percentA = tempPercentA;
-						tfGradeA.setText(Float.toString(percentA) + valueType);
+						tfGradeA.setText(String.format("%.1f", percentA) + valueType);
 						updateGradeData();
 					}
 				}
@@ -433,7 +432,7 @@ public class GradeAppGUIMain {
 					}
 					else {
 						percentB = tempPercentB;
-						tfGradeB.setText(Float.toString(percentB) + valueType);
+						tfGradeB.setText(String.format("%.1f", percentB) + valueType);
 						updateGradeData();
 					}
 				}
@@ -463,7 +462,7 @@ public class GradeAppGUIMain {
 		tfGradeC.addMouseListener(new MouseAdapter() {
 			@Override
 			
-			/*	Method: mouseClicked(MouseEvent changeScale)
+			/**	Method: mouseClicked(MouseEvent changeScale)
 			 * 	Description: 	Allows a click of the mouse on the "C"
 			 * 					grade cutoff number to create a pop-up
 			 * 					in order to change the cutoff number. 
@@ -488,7 +487,7 @@ public class GradeAppGUIMain {
 					}
 					else {
 						percentC = tempPercentC;
-						tfGradeC.setText(Float.toString(percentC) + valueType);
+						tfGradeC.setText(String.format("%.1f", percentC) + valueType);
 						updateGradeData();
 					}
 				}
@@ -543,8 +542,8 @@ public class GradeAppGUIMain {
 					}
 					else {
 						percentD = tempPercentD;
-						tfGradeD.setText(Float.toString(percentD) + valueType);
-						tfGradeF.setText(Float.toString(percentD) + valueType);
+						tfGradeD.setText(String.format("%.1f", percentD) + valueType);
+						tfGradeF.setText(String.format("%.1f", Float.toString(percentD)) + valueType);
 						updateGradeData();
 					}
 				}
@@ -724,8 +723,7 @@ public class GradeAppGUIMain {
 			 */
 			public void actionPerformed(ActionEvent event) {
 				frmTableOfPercentile.setVisible(false);
-			}
-			
+			}	
 		});
 		
 		JLabel lblJScroll = new JLabel("Grade     Adjusted     Letter Grade");
@@ -1188,7 +1186,7 @@ public class GradeAppGUIMain {
 					}
 					else {
 						minimumGrade = newMinGrade;
-						lblMinGrade.setText(minGradeInput + valueType);
+						lblMinGrade.setText(Float.toString(minimumGrade) + valueType);
 						updateGradeData();
 					}
 				}
@@ -1394,7 +1392,6 @@ public class GradeAppGUIMain {
 		frame.getContentPane().add(tglbtnAbsoluteGrade);
 		
 		tglbtnAbsoluteGrade.addActionListener(new ActionListener() {
-			
 			@Override
 			
 			/*	Method name: 	actionPerformed(ActionEvent e)
@@ -1414,20 +1411,18 @@ public class GradeAppGUIMain {
 						percentC = (float) 0.7 * maximumGrade;
 						percentD = (float) 0.6 * maximumGrade;
 				
-						/* MODIFIEDPOSITION */
 						valueType = " pts";
-
-						
-						tfGradeA.setText(Float.toString(percentA) + valueType);
-						tfGradeB.setText(Float.toString(percentB) + valueType);
-						tfGradeC.setText(Float.toString(percentC) + valueType);
-						tfGradeD.setText(Float.toString(percentD) + valueType);
-						tfGradeF.setText(Float.toString(percentD) + valueType);
+		
+						tfGradeA.setText(String.format("%.1f", percentA) + valueType);
+						tfGradeB.setText(String.format("%.1f", percentB) + valueType);
+						tfGradeC.setText(String.format("%.1f", percentC) + valueType);
+						tfGradeD.setText(String.format("%.1f", percentD) + valueType);
+						tfGradeF.setText(String.format("%.1f", percentD) + valueType);
 						
 						minimumGrade = 0;
 					
-						lblMinGrade.setText(Float.toString(minimumGrade) + valueType);
-						lblMaxGrade.setText(Float.toString(maximumGrade) + valueType);
+						lblMinGrade.setText(String.format("%.1f",minimumGrade) + valueType);
+						lblMaxGrade.setText(String.format("%.1f",maximumGrade) + valueType);
 						
 						updateGradeData();
 					}
@@ -1460,11 +1455,6 @@ public class GradeAppGUIMain {
 					tfGradeF.setText(Float.toString(percentD) + valueType);
 					
 					minimumGrade = 0;
-					
-					/* MODIFIEDPOSITION */					
-					/* maximumGrade = Float.MAX_VALUE; */
-					
-					/* maximumGrade = 100; */
 					
 					lblMinGrade.setText(Float.toString(minimumGrade) + valueType);
 					lblMaxGrade.setText("N/A");
@@ -1503,7 +1493,7 @@ public class GradeAppGUIMain {
 					temp = gradeInput.getGrade();
 					float tempFloor = (int)Math.floor(gradeInput.getGrade());
 					
-					if (temp % tempFloor > 0.5) {
+					if (temp % tempFloor >= 0.5) {
 						roundedTemp = Math.round(temp);
 					}
 					else {
@@ -1586,11 +1576,6 @@ public class GradeAppGUIMain {
 					medianGrade = (tempGrades.get(tempGrades.size() / 2));
 				}
 
-				/* MODIFIEDPOSITION */
-			/*	lblLowestGradeOutput.setText(Float.toString(lowestGrade));
-				lblHighestGradeOutput.setText(Float.toString(highestGrade));
-				lblAverageGradeOutput.setText(String.format("%.1f", averageGrade));
-			*/
 				lblLowestGradeOutput.setText(Float.toString(lowestGrade) + valueType);
 				lblHighestGradeOutput.setText(Float.toString(highestGrade) + valueType);
 				lblMedianGradeOutput.setText(Float.toString(medianGrade) + valueType);
@@ -1648,7 +1633,6 @@ public class GradeAppGUIMain {
 				 *  NullPointerException occurs if there are no elements
 				 *	in the grades ArrayList.
 				 */
-				
 			}
 		}
 			else {
@@ -1816,4 +1800,3 @@ public class GradeAppGUIMain {
 		}
 	}
 }
- master
