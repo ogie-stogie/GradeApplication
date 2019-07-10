@@ -1,3 +1,4 @@
+vvadodar_edit
 /*	Names: Taylor Bart, Vipul Vadodaria, Benjamin Veach
  * 	Class ID: 41792
  * 	Grading Analytics System
@@ -105,14 +106,14 @@ public class Grade {
 	
 	/*	Method name: getAdjustedGrade()
 	 * 	@return this.adjustedGrade : Returns the value of <adjustedGrade>
-	 * 	
+	 * 	Dexcription: Returns the <adjustedGrade> value of a Grade object
 	 */
 	public float getAdjustedGrade() {
 		return this.adjustedGrade;
 	}
 	
 	/*	Method name: toString
-	 * 	@return strOutput :  returns <grade> and <letterGrade> values
+	 * 	@return output :  returns <grade> and <letterGrade> values
 	 * 						 in a specific format for display
 	 * 	Description:   Converts the <grade> and <letterGrade> value in a Grade
 	 * 				   object to a specific display format
@@ -123,3 +124,4 @@ public class Grade {
 		return output;
 	}
 }
+master

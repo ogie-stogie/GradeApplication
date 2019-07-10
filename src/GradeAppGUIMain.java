@@ -1,3 +1,4 @@
+vvadodar_edit
 /*	Names: Taylor Bart, Vipul Vadodaria, Benjamin Veach
  * 	Class ID: 41792
  * 	Grading Analytics System
@@ -12,14 +13,14 @@
  * 					Contains eighteen JLabels to label all portions of input and output
  * 
  * 					Contains three lists: one for holding Grade objects, the other two 
- * 										for holding float variables
+ * 										  for holding float variables
  * 
  * 					Contains ten private float variables for storing results of analysis
  * 				
  * 					Contains five private int variables for holding the amount of grades
  * 					in each cutoff
  * 
- * 					Contains twenty three methods for implementation of all functionality
+ * 					Contains twenty four methods for implementation of all functionality
  * 					of the system
  * 
  */
@@ -49,8 +50,8 @@ import java.awt.EventQueue;
 import javax.swing.JToggleButton;
 
 /*	This main class contains two JFrames, five JTextfields, eighteen JLabels,
- * 	three lists, ten private float variables, five private int variables, and 
- * 	twenty-three methods
+ * 	three lists, ten private float variables, five private int variables, one
+ * 	private string variable and twenty-four methods
  * 
  * 	<JFrame frame>
  * 	The main GUI frame
@@ -127,6 +128,9 @@ import javax.swing.JToggleButton;
  * 	<JLabel lblNinetiethPercentileOutput>
  * 	Label for displaying grade cutoff for ninetieth percentile of grades
  * 
+ * 	<DefaultListModel gradeListModel>
+ * 	Used to update JList containing grades inside scrollpane
+ * 
  * 	<List<Grade> grades>
  * 	List for holding a series of Grade type objects
  * 
@@ -168,6 +172,9 @@ import javax.swing.JToggleButton;
  *  
  *  <float percentF>
  *  Variable holding the number for the grade cutoff for "F" grades
+ *  
+ *  <String valueType>
+ *  Variable holding the percent symbol for use when displaying grade percentages
  *  
  *  <int countA>
  *  Variable holding the amount of "A" grades
@@ -253,6 +260,10 @@ import javax.swing.JToggleButton;
  *  Method to allow all input and calculated data to be reset to default values
  *  and positions by clicking the "Clear Everything" button
  *  
+ *  <actionPerformed(ActionEvent e)>
+ *  Method to allow grades to be converted to percentages by clicking the 
+ *  "Absolute Grades" button
+ *  
  *  <updateGradeData()>
  *  Copies Grade objects that fall between min and max values from <originalGrades>
  *  to <tempGrades>, then performs analysis on Grade objects in <tempGrades>
@@ -261,9 +272,6 @@ import javax.swing.JToggleButton;
  *  Retrieves the necessary data and formats all of it into a nice looking report
  *  
  */
-
-
-
 
 public class GradeAppGUIMain {
 
@@ -284,23 +292,20 @@ public class GradeAppGUIMain {
 	private List<Grade> grades = new ArrayList<Grade>();
 	private List<Float> tempGrades, originalGrades;
 
-	// private float minimumGrade = 0.0f, maximumGrade = 100.0f;
 	private float minimumGrade = 0.0f, maximumGrade = Float.MAX_VALUE;
 	private float lowestGrade, highestGrade, medianGrade, averageGrade;
 	private float percentA = 90.0f, percentB = 80.0f;
 	private float percentC = 70.0f, percentD = 60.0f;
 
-// MODIFIEDPOSITION
+	/* MODIFIEDPOSITION */
 	private String valueType = "%";
-//
-	
+
 	private int countA = 0;
 	private int countB = 0;
 	private int countC = 0;
 	private int countD = 0;
 	private int countF = 0;
 	
-
 	/*
 	 * ########################################################################
 	 * Launch the application.
@@ -319,7 +324,6 @@ public class GradeAppGUIMain {
 		});
 	}
 
-	
 	/*
 	 * ########################################################################
 	 * Create the application.
@@ -330,7 +334,6 @@ public class GradeAppGUIMain {
 		initialize();
 	}
 
-	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -355,6 +358,12 @@ public class GradeAppGUIMain {
 		
 		tfGradeA.addMouseListener(new MouseAdapter() {
 			@Override
+			
+			/*	Method: mouseClicked(MouseEvent changeScale)
+			 * 	Description: 	Allows a click of the mouse on the "A"
+			 * 					grade cutoff number to create a pop-up
+			 * 					in order to change the cutoff number. 
+			 */
 			public void mouseClicked(MouseEvent changeScale) {
 				JFrame frame = new JFrame("Grade Scale");
 				String gradePercentage = 
@@ -380,7 +389,7 @@ public class GradeAppGUIMain {
 							+ error.getMessage());
 				}
 				catch(NullPointerException error ) {
-					//Do nothing - catches textField edit cancel
+					/* Do nothing - catches textField edit cancel */
 				}
 			}
 		});
@@ -398,6 +407,12 @@ public class GradeAppGUIMain {
 		
 		tfGradeB.addMouseListener(new MouseAdapter() {
 			@Override
+			
+			/*	Method: mouseClicked(MouseEvent changeScale)
+			 * 	Description: 	Allows a click of the mouse on the "B"
+			 * 					grade cutoff number to create a pop-up
+			 * 					in order to change the cutoff number. 
+			 */
 			public void mouseClicked(MouseEvent changeScale) {
 				JFrame frame = new JFrame("Grade Scale");
 				String gradePercentage = 
@@ -429,7 +444,7 @@ public class GradeAppGUIMain {
 							+ error.getMessage());
 				}
 				catch(NullPointerException error ) {
-					//Do nothing - catches textField edit cancel
+					/* Do nothing - catches textField edit cancel */
 				}
 			}
 		});
@@ -447,6 +462,12 @@ public class GradeAppGUIMain {
 		
 		tfGradeC.addMouseListener(new MouseAdapter() {
 			@Override
+			
+			/*	Method: mouseClicked(MouseEvent changeScale)
+			 * 	Description: 	Allows a click of the mouse on the "C"
+			 * 					grade cutoff number to create a pop-up
+			 * 					in order to change the cutoff number. 
+			 */
 			public void mouseClicked(MouseEvent changeScale) {
 				JFrame frame = new JFrame("Grade Scale");
 				String gradePercentage = 
@@ -478,7 +499,7 @@ public class GradeAppGUIMain {
 							+ error.getMessage());
 				}
 				catch(NullPointerException error ) {
-					//Do nothing - catches textField edit cancel
+					/* Do nothing - catches textField edit cancel */
 				}
 			}
 		});
@@ -496,6 +517,12 @@ public class GradeAppGUIMain {
 		
 		tfGradeD.addMouseListener(new MouseAdapter() {
 			@Override
+			
+			/*	Method: mouseClicked(MouseEvent changeScale)
+			 * 	Description: 	Allows a click of the mouse on the "D"
+			 * 					grade cutoff number to create a pop-up
+			 * 					in order to change the cutoff number. 
+			 */
 			public void mouseClicked(MouseEvent changeScale) {
 				JFrame frame = new JFrame("Grade Scale");
 				String gradePercentage = 
@@ -528,7 +555,7 @@ public class GradeAppGUIMain {
 							+ error.getMessage());
 				}
 				catch(NullPointerException error ) {
-					//Do nothing - catches textField edit cancel
+					/* Do nothing - catches textField edit cancel */
 				}
 			}
 		});
@@ -545,6 +572,12 @@ public class GradeAppGUIMain {
 		
 		tfGradeF.addMouseListener(new MouseAdapter() {
 			@Override
+			
+			/*	Method: mouseClicked(MouseEvent changeScale)
+			 * 	Description: 	Allows a click of the mouse on the "F"
+			 * 					grade cutoff number to create a pop-up
+			 * 					in order to change the cutoff number. 
+			 */
 			public void mouseClicked(MouseEvent changeScale) {
 				JOptionPane.showMessageDialog(frame, "Anything less than a "
 						+ "\"D\" is an \"F\"");
@@ -684,6 +717,11 @@ public class GradeAppGUIMain {
 		frmTableOfPercentile.getContentPane().add(btnClose);
 		
 		btnClose.addActionListener(new ActionListener() {
+			
+			/*	Method name: actionPerformed(ActionEvent event)
+			 * 	Description:	Allows a click of the mouse on the "Close"
+			 * 					button to close the Percentile Rank Table window
+			 */
 			public void actionPerformed(ActionEvent event) {
 				frmTableOfPercentile.setVisible(false);
 			}
@@ -856,6 +894,11 @@ public class GradeAppGUIMain {
 		
 		btnOpenFile.addActionListener(new ActionListener() {
 			@Override
+			
+			/*	Method name: actionPerformed(ActionEvent openFileEvent)
+			 * 	Description: 	Allows a click of the mouse on the "Open File"
+			 * 					button to open the Java File Chooser
+			 */
 			public void actionPerformed(ActionEvent openFileEvent) {
 				JFileChooser chooser = new JFileChooser();
 			    int returnVal = chooser.showOpenDialog(null);
@@ -879,7 +922,7 @@ public class GradeAppGUIMain {
 						gradeInput = Float.parseFloat(line);
 						Grade newGrade = new Grade(gradeInput,letterGrade);
 						GradeAppGUIMain.this.grades.add(newGrade);
-						//gradeListModel.addElement(newGrade.toString());
+						/* gradeListModel.addElement(newGrade.toString()); */
 						gradeList.clearSelection();
 					}
 					bufferedReader.close();
@@ -904,7 +947,7 @@ public class GradeAppGUIMain {
 							+ numberFormatException.getMessage());
 				}
 				catch(NullPointerException incorrectAddEvent) {
-					//Do Nothing but catch canceled open files
+					/* Do Nothing but catch canceled open files */
 				}
 			}
 		});
@@ -920,6 +963,11 @@ public class GradeAppGUIMain {
 		
 		btnSaveFile.addActionListener(new ActionListener() {
 			@Override
+			
+			/*	Method name: actionPerformed(ActionEvent saveFileEvent)
+			 * 	Description: 	Allows a click of the mouse on the "Save File"
+			 * 					button to open the Java File Chooser
+			 */
 			public void actionPerformed(ActionEvent saveFileEvent) {
 				JFileChooser chooser = new JFileChooser();
 			    int returnVal = chooser.showSaveDialog(null);
@@ -967,7 +1015,7 @@ public class GradeAppGUIMain {
 							+ argumentException.getMessage());
 				}
 				catch(NullPointerException incorrectAddEvent) {
-					//Do Nothing but catch canceled save file
+					/* Do Nothing but catch canceled save file */
 				}
 			}
 		});
@@ -981,6 +1029,11 @@ public class GradeAppGUIMain {
 		
 		btnAddGrade.addActionListener(new ActionListener() {
 			@Override
+			
+			/*	Method name: actionPerformed(ActionEvent addGradeEvent)
+			 * 	Description: 	Allows a click of the mouse on the "Add Grade"
+			 * 					button to open a pop-up to add a grade value
+			 */
 			public void actionPerformed(ActionEvent addGradeEvent) {
 				try {
 					JFrame frame = new JFrame("Add Grade");
@@ -1028,6 +1081,12 @@ public class GradeAppGUIMain {
 		
 		btnRemoveGrade.addActionListener(new ActionListener() {
 			@Override
+			
+			/*	Method name: actionPerformed(ActionEvent removeGradeEvent)
+			 * 	Description:	Allows a click of the mouse on the "Remove Grade"
+			 * 					button to remove the grade selected on the 
+			 * 					scroll pane
+			 */
 			public void actionPerformed(ActionEvent removeGradeEvent) {
 				try {
 					if(!GradeAppGUIMain.this.grades.isEmpty()) {
@@ -1058,6 +1117,12 @@ public class GradeAppGUIMain {
 		
 		btnAmendGrade.addActionListener(new ActionListener() {
 			@Override
+			
+			/*	Method name: actionPerformed(ActionEvent ammendGradeEvent)
+			 * 	Description:	Allows a click of the mouse on the "Amend Grade"
+			 * 					button to amend the grade selected on the 
+			 * 					scroll pane
+			 */
 			public void actionPerformed(ActionEvent ammendGradeEvent) {
 				try {
 					JFrame frame = new JFrame("Amend Grade");
@@ -1086,7 +1151,7 @@ public class GradeAppGUIMain {
 							+ incorrectInputEvent.getMessage());
 				}
 				catch(NullPointerException error) {
-					//Do nothing - catches amend grade cancel
+					/* Do nothing - catches amend grade cancel */
 				}
 			}
 		});
@@ -1100,6 +1165,11 @@ public class GradeAppGUIMain {
 		
 		buttonSetMinGrade.addActionListener(new ActionListener() {
 			@Override
+			
+			/*	Method name: actionPerformed(ActionEvent e)
+			 * 	Description:	Allows a click of the mouse on the "Set Min Grade"
+			 * 					to open a pop-up to change the set minimum grade
+			 */
 			public void actionPerformed(ActionEvent e) {
 				JFrame frame = new JFrame("Set Minimum Grade");
 				String minGradeInput = JOptionPane.showInputDialog(frame,
@@ -1129,7 +1199,7 @@ public class GradeAppGUIMain {
 						+ error.getMessage());
 				}
 				catch(NullPointerException error) {
-					//Do nothing - catches amend grade cancel
+					/* Do nothing - catches amend grade cancel */
 				}
 			}
 		});
@@ -1143,6 +1213,11 @@ public class GradeAppGUIMain {
 		
 		btnSetMaxGrade.addActionListener(new ActionListener() {
 			@Override
+			
+			/*	Method name: actionPerformed(ActionEvent e)
+			 * 	Description:	Allows a click of the mouse on the "Set Max Grade"
+			 * 					button to open a pop-up to change the set max grade
+			 */
 			public void actionPerformed(ActionEvent e) {
 				JFrame frame = new JFrame("Set Maximum Grade");
 				String maxGradeInput = JOptionPane.showInputDialog(frame,
@@ -1169,7 +1244,7 @@ public class GradeAppGUIMain {
 						+ error.getMessage());
 				}
 				catch(NullPointerException error) {
-					//Do nothing - catches amend grade cancel
+					/* Do nothing - catches amend grade cancel */
 				}
 			}
 		});
@@ -1182,6 +1257,11 @@ public class GradeAppGUIMain {
 		frame.getContentPane().add(btnPercentile);
 		
 		btnPercentile.addActionListener(new ActionListener() {
+			
+			/*	Method name: actionPerformed(ActionEvent event)
+			 * 	Description:	Allows a click of the mouse on the "Percentile Rank"
+			 * 					button to have the Percentile Rank Window appear
+			 */
 			public void actionPerformed(ActionEvent event) {
 				frmTableOfPercentile.setVisible(true);
 			}
@@ -1195,12 +1275,18 @@ public class GradeAppGUIMain {
 		frame.getContentPane().add(btnGenerateReport);
 		
 		btnGenerateReport.addActionListener(new ActionListener() {
+			
+			/*	Method name: actionPerformed(ActionEvent e)
+			 * 	Description:	Allows a click of the mouse on the "Generate Report"
+			 * 					button to open the Java File Chooser to save the 
+			 * 					report file to a user designated location
+			 */
 			public void actionPerformed(ActionEvent e) {
 				try {
 					generateReport();
 				}
 				catch(NullPointerException error ) {
-					//Do nothing - catches textField edit cancel
+					/* Do nothing - catches textField edit cancel */
 				}
 			}
 		});
@@ -1214,6 +1300,11 @@ public class GradeAppGUIMain {
 		
 		btnExit.addActionListener(new ActionListener() {
 			@Override
+			
+			/*	Method name: actionPerformed(ActionEvent e)
+			 * 	Description:	Allows a click of the mouse on the "Exit Program" button
+			 * 					to exit the program and close the system window
+			 */
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);			
 			}
@@ -1228,6 +1319,12 @@ public class GradeAppGUIMain {
 		
 		btnClearEverything.addActionListener(new ActionListener() {
 			@Override
+			
+			/*	Method name: actionPerformed(ActionEvent e)
+			 * 	Description:	Allows a click of the mouse on the "Clear Everything"
+			 * 					button to reset all input data in the system to default
+			 * 					value
+			 */
 			public void actionPerformed(ActionEvent e) {
 				int option = JOptionPane.showConfirmDialog(btnExit, 
 						"Have you saved your grade data?", 
@@ -1283,7 +1380,7 @@ public class GradeAppGUIMain {
 					grades.clear();
 				}
 				else {
-					// Do nothing and exit prompt
+					/* Do nothing and exit prompt */
 				}
 			}
 		});
@@ -1299,6 +1396,12 @@ public class GradeAppGUIMain {
 		tglbtnAbsoluteGrade.addActionListener(new ActionListener() {
 			
 			@Override
+			
+			/*	Method name: 	actionPerformed(ActionEvent e)
+			 * 	Description:	Allows a click of the mouse on the "Absolute Grades"
+			 * 					button to allow a pop-up to appear to change grade values to
+			 * 					percentages
+			 */
 			public void actionPerformed(ActionEvent e) {
 				if (tglbtnAbsoluteGrade.isSelected()) {
 					try {
@@ -1311,9 +1414,9 @@ public class GradeAppGUIMain {
 						percentC = (float) 0.7 * maximumGrade;
 						percentD = (float) 0.6 * maximumGrade;
 				
-// MODIFIEDPOSITION
+						/* MODIFIEDPOSITION */
 						valueType = " pts";
-//
+
 						
 						tfGradeA.setText(Float.toString(percentA) + valueType);
 						tfGradeB.setText(Float.toString(percentB) + valueType);
@@ -1344,10 +1447,11 @@ public class GradeAppGUIMain {
 					percentB = 80.0f;
 					percentC = 70.0f;
 					percentD = 60.0f;
-// MODIFIEDPOSITION					
+					
+					/* MODIFIEDPOSITION */					
 					maximumGrade = 100;
 					valueType = "%";
-//			
+			
 					
 					tfGradeA.setText(Float.toString(percentA) + valueType);
 					tfGradeB.setText(Float.toString(percentB) + valueType);
@@ -1356,11 +1460,12 @@ public class GradeAppGUIMain {
 					tfGradeF.setText(Float.toString(percentD) + valueType);
 					
 					minimumGrade = 0;
-// MODIFIEDPOSITION					
-					//maximumGrade = Float.MAX_VALUE;
 					
-					//maximumGrade = 100;
-//					
+					/* MODIFIEDPOSITION */					
+					/* maximumGrade = Float.MAX_VALUE; */
+					
+					/* maximumGrade = 100; */
+					
 					lblMinGrade.setText(Float.toString(minimumGrade) + valueType);
 					lblMaxGrade.setText("N/A");
 					
@@ -1419,7 +1524,7 @@ public class GradeAppGUIMain {
 					
 					gradeInput.setAdjustedGrade(roundedTemp);
 					
-					//Set the letter grade for each object Grade
+					/* Set the letter grade for each object Grade */
 					if (roundedTemp >= percentA) {
 						gradeInput.setLetterGrade("A");
 					}
@@ -1436,7 +1541,7 @@ public class GradeAppGUIMain {
 						gradeInput.setLetterGrade("F");
 					}
 					
-					//Determine grade count
+					/* Determine grade count */
 					if (roundedTemp >= percentA) {
 						countA++;
 					}
@@ -1456,7 +1561,7 @@ public class GradeAppGUIMain {
 				
 				Collections.sort(tempGrades);
 				
-				//Find sum of grades for later use in average calculation
+				/* Find sum of grades for later use in average calculation */
 				for (int gIndex = 0; gIndex < tempGrades.size(); gIndex++) {
 					averageGrade = averageGrade + tempGrades.get(gIndex);
 				}
@@ -1481,7 +1586,7 @@ public class GradeAppGUIMain {
 					medianGrade = (tempGrades.get(tempGrades.size() / 2));
 				}
 
-// MODIFIEDPOSITION
+				/* MODIFIEDPOSITION */
 			/*	lblLowestGradeOutput.setText(Float.toString(lowestGrade));
 				lblHighestGradeOutput.setText(Float.toString(highestGrade));
 				lblAverageGradeOutput.setText(String.format("%.1f", averageGrade));
@@ -1491,16 +1596,17 @@ public class GradeAppGUIMain {
 				lblMedianGradeOutput.setText(Float.toString(medianGrade) + valueType);
 				lblAverageGradeOutput.setText(String.format("%.1f", averageGrade) + valueType);
 				
-//
+
 				gradeListModel.clear();
 				
 				for (Grade updatedGrades : grades) {
 					gradeListModel.addElement(updatedGrades.toString());
 				}
 				
-				//Calculate percentiles
-				//Percentile nth defined as number that is greater
-				//or equal to n% of the data set
+				/*	Calculate percentiles
+					Percentile nth defined as number that is greater
+					or equal to n% of the data set
+				*/
 				for (int rankIndex = tempGrades.size() - 1; rankIndex >= 0;
 						rankIndex--) {
 					
@@ -1710,3 +1816,4 @@ public class GradeAppGUIMain {
 		}
 	}
 }
+ master
