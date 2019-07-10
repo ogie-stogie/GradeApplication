@@ -562,7 +562,7 @@ public class GradeAppGUIMain {
 						tfGradeD.setText(String.format("%.1f", percentD) 
 								+ valueType);
 						tfGradeF.setText(String.format("%.1f", 
-								Float.toString(percentD)) + valueType);
+								(percentD)) + valueType);
 						updateGradeData();
 					}
 				}
